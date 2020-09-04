@@ -1,0 +1,38 @@
+
+---------------------------------
+Did you check the box Do not store password? If so, please make sure the Logon as batch job policy is set for the user. This policy is accessible by opening the Control Panel, Administrative Tools, and then Local Security Policy. In the Local Security Policy window, click Local Policy, User Rights Assignment, and then Logon as batch job.
+ 
+Or you can uncheck the box Do not store password to test the result.
+ 
+For more information, please refer to the following article:
+Task Security Context
+http://technet.microsoft.com/en-us/library/cc722152.aspx
+----------------------------------
+
+Check the task, you may need to fill in the "Start in" property if the script is running off a certain path/directory.
+
+----------------------------------
+
+Enter the new and improved Task Scheduler that uses Session 0 isolation. In Vista/2008 and higher, we mitigate this security risk by isolating services in Session 0, and making it non-interactive. Only system processes and services now run in Session 0. The first user who logs onto a machine does so in Session 1. Subsequent users log into Session 2, 3, 4, etc. Doing this isolation protects services and system processes from tasks ran in this session.
+
+So, how does this isolation prevent my task from running?
+
+There is no active Shell (explorer.exe)
+If a process/service tries to display a message box, the task will not complete
+Non-interactive
+Apps creating globally named objects
+Possible network communication failures
+
+Now, how do we troubleshoot this and get your task to run? Well, in troubleshooting these issues, I’ve come across multiple ways to fix them. You may have to experiment to see which of the following works for you in your scenario.
+
+- If your Task requires UAC Elevation, select the “Run with highest privileges” option under Security on the General tab
+- If you are launching a Batch script (.vbs/.cmd/.bat/.ps1), modify your script to add some type of logging to see where it may be failing – see the following blog for examples: Two Minute Drill: Quickly test Task Scheduler
+- Try creating a new task, but select the Configure for: option to be “Windows Server 2003, Windows XP, or Windows 2000” – this will create an XP/2003 fashioned task
+- If running a .vbs / .ps1 script, try launching it from a .cmd / .bat script – for example: “cscript.exe myscript.vbs” would be in my .cmd/.bat script, and I would then launch it from my Scheduled Task
+- Check your scripts for environmental issues – when we run a script, we default to the “%SystemRoot%\System32” folder unless specified in the script (i.e. CD C:\Scripts\Test)
+- If you are running nested scripts/programs within one script, try breaking them out as multiple Actions so, when script1.cmd finishes, script2.cmd will be launched. Then when script2.cmd completes, script3.cmd will run.
+- If running a 3rd party app/script, engage the app vendor to check if their app/process will run correctly in a non-interactive session
+Try running your script with the SYSTEM account
+- Check the History tab for clues as to why your task is not running
+- If copying files to network shares via script, use UNC paths instead of mapped drives, especially if you are selecting the “Run whether user is logged on or not” security option
+- If all else fails, your only choice may be to “Run only when user is logged on”
