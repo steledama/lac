@@ -1,2 +1,2 @@
 # lac
-Open source and free solutions for managed printers service
+Multi Function Printer (MFP) consumables and page monitoring system 
