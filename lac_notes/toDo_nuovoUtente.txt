@@ -1,0 +1,31 @@
+- creare sigla gruppo su lac.cmd
+- creare host group se non presente su zabbix
+- creare user group se non presente su zabbix
+- dare privilegi allo user group (no accesso front o meno) di lettura scrittura sull'host group
+- creare utente come zabbix admin
+- creare azione di notifica autoregistrazione
+- creare azione di notifica Allerta
+- creare azione di notifica Rapporto (facoltativo)
+
+LISTA UTENTI ZABBIX
+print.clasrl.com:1080/zabbix
+
+Admin				Pomodoro$ecc0	stefano.pompa@gmail.com
+cla					cla
+stefano.pompa		pomodoro		stefano@clasrl.com
+andrea.castellucci	pomodoro		andrea@clasrl.com
+alessio.olmastroni	Germania8		alessio@clasrl.com
+celestina.napoli	Napoli2017
+
+leonardo.pestellini	Budapest9		leonardo@termomarket.it
+matteo.ostrogovich	Parigi88		matteo@panaoffice.it
+oasys				Barcellona32	info@oasys.org
+enzo.negri			Lisbona23		assistenza@ellediufficio.it
+davide.rinaldi		Bergen42		daviderinaldi@sammersrl.com
+andrea.bernardini 	Praga57			andrea@biemmeufficio.net
+
+LAC EMAIL
+????
+Andrea Fedi 	EFFELLE 		commerciale@effelle.net
+Stefano 		READYTEC 		s.pizziconi@readytec.it
+Leonardo 		NINCIUFFICIO 	leonardo.ninci@ninciufficio.it

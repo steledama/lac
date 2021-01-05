@@ -1,0 +1,483 @@
+8c13m13 8c13m_13p lexmark XC9235 XC9245 XC9255 XC9265
+
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.1 = Counter32: 96 TOT
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.5 = Counter32: 21 BN
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.6 = Counter32: 75 COL
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.4.1.1 = Counter32: 10 BNG
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.5.1.1 = Counter32: 72 COLG
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.22 = Counter32: 12 COL3
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.23 = Counter32: 35 COL2
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.24 = Counter32: 28 COL1
+
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.1 = STRING: 200K HCF Maintenance Kit
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.2 = STRING: 200K MPF Maintenance Kit
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.3 = STRING: 300K Maintenance Kit
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.4 = STRING: ADF Kit
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.5 = STRING: Black Developer
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.6 = STRING: Black Photoconductor
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.7 = STRING: Black Cartridge
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.8 = STRING: Color Developer Kit (CMY)
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.9 = STRING: Cyan Photoconductor
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.10 = STRING: Cyan Cartridge
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.11 = STRING: Fuser Kit
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.12 = STRING: Magenta Photoconductor
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.13 = STRING: Magenta Cartridge
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.14 = STRING: Waste Toner Bottle
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.15 = STRING: Yellow Photoconductor
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.16 = STRING: Yellow Cartridge
+
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.1 = INTEGER: 200000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.2 = INTEGER: 200000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.3 = INTEGER: 300000 KITT
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.4 = INTEGER: 200000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.5 = INTEGER: 600000 DEVKT
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.6 = INTEGER: 100000 DRUMKT
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.7 = INTEGER: 5000	BLKT
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.8 = INTEGER: 600000 DEVCT
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.9 = INTEGER: 90000 DRUMCT
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.10 = INTEGER: 6000 CYAT
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.11 = INTEGER: 600000 FUST
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.12 = INTEGER: 90000 DRUMMT
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.13 = INTEGER: 6000 MAGT
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.14 = INTEGER: 50000 WAST
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.15 = INTEGER: 90000 DRUMYT
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.16 = INTEGER: 6000 YELT
+
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.1 = INTEGER: 200000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.2 = INTEGER: 200000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.3 = INTEGER: 297000 KITR
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.4 = INTEGER: 198000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.5 = INTEGER: 594000 DEVKR
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.6 = INTEGER: 99000	DRUMKR
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.7 = INTEGER: 4750	BLKR
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.8 = INTEGER: 594000	DEVCR
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.9 = INTEGER: 89100 DRUMCR
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.10 = INTEGER: 6000 CYAR
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.11 = INTEGER: 594000 FUSR
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.12 = INTEGER: 89100 DRUMMR
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.13 = INTEGER: 5880 MAGR
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.14 = INTEGER: 50000 WASR
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.15 = INTEGER: 89100 DRUMYR
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.16 = INTEGER: 5700 YELR
+
+Totale	 
+Mono	21
+Colore	75
+Totale	96
+Lati mono stampati	 
+A3-Carta normale	10
+A4-Carta normale	11
+Totale	21
+Lati a colori stampati	 
+A3-Carta normale	72
+A4-Carta normale	3
+Totale	75
+
+
+Pagine a colori in base a livello toner	 
+Pagine a colori uso toner limitato	28
+Pagine a colori uso toner medio	35
+Pagine a colori uso toner elevato	12
+Totale	75
+
+
+CONTATORI 
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.1 = INTEGER: 1
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.2 = INTEGER: 1
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.3 = INTEGER: 2
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.4 = INTEGER: 2
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.5 = INTEGER: 3
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.6 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.7 = INTEGER: 5
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.8 = INTEGER: 6
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.9 = INTEGER: 16
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.10 = INTEGER: 17
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.11 = INTEGER: 18
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.12 = INTEGER: 32
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.13 = INTEGER: 33
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.14 = INTEGER: 34
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.15 = INTEGER: 48
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.16 = INTEGER: 49
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.17 = INTEGER: 50
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.18 = INTEGER: 64
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.19 = INTEGER: 65
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.20 = INTEGER: 66
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.21 = INTEGER: 67
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.22 = INTEGER: 92
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.23 = INTEGER: 91
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.24 = INTEGER: 90
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.25 = INTEGER: 100
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.26 = INTEGER: 101
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.27 = INTEGER: 102
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.28 = INTEGER: 103
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.2.1.29 = INTEGER: 104
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.1 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.2 = INTEGER: 5
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.3 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.4 = INTEGER: 5
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.5 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.6 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.7 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.8 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.9 = INTEGER: 5
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.10 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.11 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.12 = INTEGER: 5
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.13 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.14 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.15 = INTEGER: 5
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.16 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.17 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.18 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.19 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.20 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.21 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.22 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.23 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.24 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.25 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.26 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.27 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.28 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.3.1.29 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.1 = Counter32: 96
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.2 = Counter32: 59
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.3 = Counter32: 96
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.4 = Counter32: 59
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.5 = Counter32: 21
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.6 = Counter32: 75
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.7 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.8 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.9 = Counter32: 54
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.10 = Counter32: 16
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.11 = Counter32: 75
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.12 = Counter32: 5
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.13 = Counter32: 5
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.14 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.15 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.16 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.17 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.18 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.19 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.20 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.21 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.22 = Counter32: 12
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.23 = Counter32: 35
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.24 = Counter32: 28
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.25 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.26 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.27 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.28 = Counter32: 85
+SNMPv2-SMI::enterprises.641.6.4.2.1.1.4.1.29 = Counter32: 6
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.2.1.1 = INTEGER: 67
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.2.1.2 = INTEGER: 68
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.3.1.1 = INTEGER: 3
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.3.1.2 = INTEGER: 3
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.4.1.1 = Counter32: 10
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.4.1.2 = Counter32: 11
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.5.1.1 = Counter32: 72
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.5.1.2 = Counter32: 3
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.6.1.1 = Counter32: 10
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.6.1.2 = Counter32: 11
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.7.1.1 = Counter32: 72
+SNMPv2-SMI::enterprises.641.6.4.2.2.1.7.1.2 = Counter32: 3
+SNMPv2-SMI::enterprises.641.6.4.2.3.1.2.1.1 = INTEGER: 67
+SNMPv2-SMI::enterprises.641.6.4.2.3.1.2.1.2 = INTEGER: 68
+SNMPv2-SMI::enterprises.641.6.4.2.3.1.3.1.1 = INTEGER: 3
+SNMPv2-SMI::enterprises.641.6.4.2.3.1.3.1.2 = INTEGER: 3
+SNMPv2-SMI::enterprises.641.6.4.2.3.1.4.1.1 = Counter32: 45
+SNMPv2-SMI::enterprises.641.6.4.2.3.1.4.1.2 = Counter32: 14
+SNMPv2-SMI::enterprises.641.6.4.2.3.1.5.1.1 = Counter32: 45
+SNMPv2-SMI::enterprises.641.6.4.2.3.1.5.1.2 = Counter32: 14
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.2.1.1 = INTEGER: 1
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.2.1.2 = INTEGER: 2
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.2.1.3 = INTEGER: 3
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.2.1.4 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.2.1.5 = INTEGER: 6
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.2.1.6 = INTEGER: 9
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.2.1.7 = INTEGER: 12
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.2.1.8 = INTEGER: 16
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.3.1.1 = Counter32: 96
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.3.1.2 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.3.1.3 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.3.1.4 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.3.1.5 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.3.1.6 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.3.1.7 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.3.1.8 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.4.1.1 = Counter32: 96
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.4.1.2 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.4.1.3 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.4.1.4 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.4.1.5 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.4.1.6 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.4.1.7 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.4.1.4.1.8 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.2.1.1 = INTEGER: 1
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.2.1.2 = INTEGER: 2
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.2.1.3 = INTEGER: 5
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.2.1.4 = INTEGER: 11
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.2.1.5 = INTEGER: 21
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.2.1.6 = INTEGER: 31
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.2.1.7 = INTEGER: 51
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.2.1.8 = INTEGER: 75
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.2.1.9 = INTEGER: 101
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.3.1.1 = INTEGER: 1
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.3.1.2 = INTEGER: 4
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.3.1.3 = INTEGER: 10
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.3.1.4 = INTEGER: 20
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.3.1.5 = INTEGER: 30
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.3.1.6 = INTEGER: 50
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.3.1.7 = INTEGER: 74
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.3.1.8 = INTEGER: 100
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.3.1.9 = INTEGER: 65535
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.4.1.1 = Counter32: 2
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.4.1.2 = Counter32: 12
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.4.1.3 = Counter32: 82
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.4.1.4 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.4.1.5 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.4.1.6 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.4.1.7 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.4.1.8 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.4.1.9 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.5.1.1 = Counter32: 2
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.5.1.2 = Counter32: 4
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.5.1.3 = Counter32: 13
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.5.1.4 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.5.1.5 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.5.1.6 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.5.1.7 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.5.1.8 = Counter32: 0
+SNMPv2-SMI::enterprises.641.6.4.2.5.1.5.1.9 = Counter32: 0
+
+Info materiali consumo	 
+Cartuccia nero	 
+Numero di serie	LEX03018010011013004007002255
+Data install.	2019-04-12
+Liv.mat. consumo	95%
+Capacità	5000
+Lati su materiale di consumo	96
+Programma di restituzione	No
+Originale	
+Cronologia coperture stimata	 
+Ultimo proc.	2
+Durata stampante	5.9
+Materiale di consumo installato	5.9
+Cartuccia ciano	 
+Numero di serie	LEX00018010026015016052002255
+Data install.	2019-04-12
+Liv.mat. consumo	100%
+Capacità	6000
+Lati su materiale di consumo	74
+Programma di restituzione	No
+Originale	
+Cronologia coperture stimata	 
+Ultimo proc.	0
+Durata stampante	3.2
+Materiale di consumo installato	3.2
+Cartuccia magenta	 
+Numero di serie	LEX02018010008011040002002255
+Data install.	2019-04-12
+Liv.mat. consumo	98%
+Capacità	6000
+Lati su materiale di consumo	74
+Programma di restituzione	No
+Originale	
+Cronologia coperture stimata	 
+Ultimo proc.	0
+Durata stampante	3.0
+Materiale di consumo installato	3.1
+Cartuccia giallo	 
+Numero di serie	LEX01018010001010054044002255
+Data install.	2019-04-12
+Liv.mat. consumo	95%
+Capacità	6000
+Lati su materiale di consumo	73
+Programma di restituzione	No
+Originale	
+Cronologia coperture stimata	 
+Ultimo proc.	0
+Durata stampante	2.8
+Materiale di consumo installato	2.9
+Fotoconduttore nero	 
+Data install.	2012-03-02
+Liv.mat. consumo	99%
+Capacità	100000
+Numero di serie	LEX10F0
+Originale	
+Fotoconduttore ciano	 
+Data install.	2012-03-02
+Liv.mat. consumo	99%
+Capacità	90000
+Numero di serie	LEX11F0
+Originale	
+Fotoconduttore magenta	 
+Data install.	2012-03-02
+Liv.mat. consumo	99%
+Capacità	90000
+Numero di serie	LEX12F0
+Originale	
+Fotoconduttore giallo	 
+Data install.	2012-03-02
+Liv.mat. consumo	99%
+Capacità	90000
+Numero di serie	LEX13F0
+Originale	
+Kit fusore	 
+Liv.mat. consumo	99%
+Capacità	600000
+Kit di manutenzione 300K	 
+Liv.mat. consumo	99%
+Capacità	300000
+Kit di manutenzione MPF 200K	 
+Liv.mat. consumo	OK
+ 
+Capacità	200000
+Kit di manutenzione HCF 200K	 
+Liv.mat. consumo	OK
+ 
+Capacità	200000
+Sviluppatore nero	 
+Data install.	2019-04-23
+Liv.mat. consumo	99%
+Capacità	600000
+Kit sviluppatore colore (CMY)	 
+Liv.mat. consumo	99%
+Capacità	600000
+Cont. toner scarto	 
+Liv.mat. consumo	OK
+ 
+Capacità	50000
+Kit ADF	 
+Liv.mat. consumo	OK
+
+
+COMSUMABILI 
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.1 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.2 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.3 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.4 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.5 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.6 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.7 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.8 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.9 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.10 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.11 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.12 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.13 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.14 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.15 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.2.1.16 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.1 = INTEGER: 0
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.2 = INTEGER: 0
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.3 = INTEGER: 0
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.4 = INTEGER: 0
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.5 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.6 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.7 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.8 = INTEGER: 4
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.9 = INTEGER: 2
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.10 = INTEGER: 2
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.11 = INTEGER: 0
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.12 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.13 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.14 = INTEGER: 0
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.15 = INTEGER: 5
+SNMPv2-SMI::mib-2.43.11.1.1.3.1.16 = INTEGER: 5
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.1 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.2 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.3 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.4 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.5 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.6 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.7 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.8 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.9 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.10 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.11 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.12 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.13 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.14 = INTEGER: 4
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.15 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.4.1.16 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.1 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.2 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.3 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.4 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.5 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.6 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.7 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.8 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.9 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.10 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.11 = INTEGER: 15
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.12 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.13 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.14 = INTEGER: 4
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.15 = INTEGER: 1
+SNMPv2-SMI::mib-2.43.11.1.1.5.1.16 = INTEGER: 3
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.1 = STRING: 200K HCF Maintenance Kit
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.2 = STRING: 200K MPF Maintenance Kit
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.3 = STRING: 300K Maintenance Kit
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.4 = STRING: ADF Kit
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.5 = STRING: Black Developer
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.6 = STRING: Black Photoconductor
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.7 = STRING: Black Cartridge
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.8 = STRING: Color Developer Kit (CMY)
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.9 = STRING: Cyan Photoconductor
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.10 = STRING: Cyan Cartridge
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.11 = STRING: Fuser Kit
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.12 = STRING: Magenta Photoconductor
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.13 = STRING: Magenta Cartridge
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.14 = STRING: Waste Toner Bottle
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.15 = STRING: Yellow Photoconductor
+SNMPv2-SMI::mib-2.43.11.1.1.6.1.16 = STRING: Yellow Cartridge
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.1 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.2 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.3 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.4 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.5 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.6 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.7 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.8 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.9 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.10 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.11 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.12 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.13 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.14 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.15 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.7.1.16 = INTEGER: 7
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.1 = INTEGER: 200000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.2 = INTEGER: 200000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.3 = INTEGER: 300000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.4 = INTEGER: 200000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.5 = INTEGER: 600000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.6 = INTEGER: 100000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.7 = INTEGER: 5000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.8 = INTEGER: 600000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.9 = INTEGER: 90000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.10 = INTEGER: 6000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.11 = INTEGER: 600000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.12 = INTEGER: 90000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.13 = INTEGER: 6000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.14 = INTEGER: 50000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.15 = INTEGER: 90000
+SNMPv2-SMI::mib-2.43.11.1.1.8.1.16 = INTEGER: 6000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.1 = INTEGER: 200000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.2 = INTEGER: 200000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.3 = INTEGER: 297000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.4 = INTEGER: 198000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.5 = INTEGER: 594000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.6 = INTEGER: 99000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.7 = INTEGER: 4750
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.8 = INTEGER: 594000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.9 = INTEGER: 89100
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.10 = INTEGER: 6000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.11 = INTEGER: 594000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.12 = INTEGER: 89100
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.13 = INTEGER: 5880
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.14 = INTEGER: 50000
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.15 = INTEGER: 89100
+SNMPv2-SMI::mib-2.43.11.1.1.9.1.16 = INTEGER: 5700

@@ -1,10 +1,11 @@
 @echo off
-REM LAC LetturaAutomaticaContatori by stefano@clasrl.com
+REM LAC_setup by stefano.pompa@gmail.com
 SETLOCAL
 
-set _versione=4.1.5
+:: Glabal variable
+set _version=4.1.6
 set _dir=%~dp0
-set _log="%_dir%lac.log"
+set _log=%_dir%lac.log
 set _server=print.clasrl.com
 
 set _lista=no
@@ -12,27 +13,26 @@ set _lista=no
 echo. >> %_log%
 echo %date%-%time% >> %_log%
 
-if [%1]==[] goto benvenuto
+if [%1]==[] goto welcome
 if /i %1==uninstall goto killall
 echo Parametro non valido
 goto fine
 
 :killall
-for /f "delims=|" %%f in ('dir /b *.conf') do call zabbix_agentd.exe --config %%~nxf --stop --multiple-agents
-for /f "delims=|" %%f in ('dir /b *.conf') do call zabbix_agentd.exe --config %%~nxf --uninstall --multiple-agents
-for /f "delims=|" %%f in ('dir /b *.conf') do del %%~nxf
-for /f "delims=|" %%f in ('dir /b *_*.cmd') do del %%~nxf
-for /f "delims=|" %%f in ('dir /b *_*.log') do del %%~nxf
+for /f delims=| %%f in ('dir /b *.conf') do call zabbix_agentd.exe --config %%~nxf --stop --multiple-agents
+for /f delims=| %%f in ('dir /b *.conf') do call zabbix_agentd.exe --config %%~nxf --uninstall --multiple-agents
+for /f delims=| %%f in ('dir /b *.conf') do del %%~nxf
+for /f delims=| %%f in ('dir /b *_*.cmd') do del %%~nxf
+for /f delims=| %%f in ('dir /b *_*.log') do del %%~nxf
 echo Tutti i servizi sono stati disintallati >> %_log%
 goto fine
 
-:benvenuto
-echo benvenuto >> %_log%
+:welcome
+echo welcome >> %_log%
 echo.
 echo            LAC
-echo LetturaAutomaticaContatori
-echo     --- %_versione% ---
-echo   by stefano@clasrl.com
+echo     --- %_version% ---
+echo   by stefano.pompa@gmail.com
 echo.
 echo u. uscita
 echo -
@@ -50,7 +50,7 @@ if %rivenditore%==BIE goto goal
 if /i %rivenditore%==u goto fine
 @echo Nome non valido: Inserisci la tua sigla in MAIUSCOLO oppure u per uscire
 echo.
-goto benvenuto
+goto welcome
 
 :goal
 echo u. uscita
@@ -80,6 +80,7 @@ set /p ip_profilo=Inserisci l'indirizzo ip:
 echo.
 set /p modello_profilo=Inserisci il modello da profilare:
 echo.
+
 :marca_profilo
 echo u. uscita
 echo r. ricomincia
@@ -99,14 +100,17 @@ if /i %marca_profilo%==x goto xerox_profilo
 @echo Scelta non valida: scegli x,l,a oppure u per uscire, r per ricominciare
 echo.
 goto profilo
+
 :xerox_profilo
 set marca_profilo=xerox
 set mib_contatori=1.3.6.1.4.1.253.8.53.13.2.1
 goto profila
+
 :lexmark_profilo
 set marca_profilo=lexmark
 set mib_contatori=SNMPv2-SMI::enterprises.641.6.4.2
 goto profila
+
 :profila
 set mib_consumabili=1.3.6.1.2.1.43.11.1.1
 echo CONTATORI > %marca_profilo%_%modello_profilo%.txt
@@ -115,6 +119,7 @@ echo. >> %marca_profilo%_%modello_profilo%.txt
 echo COMSUMABILI >> %marca_profilo%_%modello_profilo%.txt
 SNMPWALK -v1 -c public %ip_profilo% %mib_consumabili% >> %marca_profilo%_%modello_profilo%.txt
 goto fine
+
 :tutto_profilo
 set marca_profilo=altro
 echo GENERALE > %marca_profilo%_%modello_profilo%.txt
@@ -136,13 +141,14 @@ set _lista=si
 set /p file=Scrivi il nome del file che contiene la lista di dispositivi da monitorare:
 echo.
 IF not exist %file%.txt (
-	echo Il file deve essere in formato .txt e deve essere nella stessa cartella di lax_zabbix.exe e contenere la lista delle macchine da monitorare nel formato MARCA MODELLO SERIE IP
+	echo Il file deve essere in formato .txt e deve essere nella stessa cartella di lac_zabbix.exe e contenere la lista delle macchine da monitorare nel formato MARCA MODELLO SERIE IP
 	goto lista
 	)
-for /F "tokens=1,2,3,4" %%a in (%file%.txt) do (
+for /F tokens=1,2,3,4 %%a in (%file%.txt) do (
 	call :variabili %%a %%b %%c %%d
 	)
 goto fine
+
 :variabili
 set marca=%1
 set modello=%2
@@ -169,17 +175,18 @@ if /i %chi%==t goto killall
 echo Scelta non valida: scegli t,e oppure u per uscire, r per ricominciare
 echo.
 goto uninstall
+
 :elenca
 echo Di seguito i servizi attualmente installati:
-for /f "delims=|" %%f in ('dir /b *.conf') do echo %%~nf
+for /f delims=| %%f in ('dir /b *.conf') do echo %%~nf
 echo.
 set /p kill=inserisci il nome (o una parte) del servizio da disinstallare:
 echo.
-for /f "delims=|" %%f in ('dir /b *%kill%*.conf') do call zabbix_agentd.exe --config %%~nxf --stop --multiple-agents
-for /f "delims=|" %%f in ('dir /b *%kill%*.conf') do call zabbix_agentd.exe --config %%~nxf --uninstall --multiple-agents
-for /f "delims=|" %%f in ('dir /b *%kill%*.conf') do del %%~nxf
-for /f "delims=|" %%f in ('dir /b *%kill%*.cmd') do del %%~nxf
-for /f "delims=|" %%f in ('dir /b *%kill%*.log') do del %%~nxf
+for /f delims=| %%f in ('dir /b *%kill%*.conf') do call zabbix_agentd.exe --config %%~nxf --stop --multiple-agents
+for /f delims=| %%f in ('dir /b *%kill%*.conf') do call zabbix_agentd.exe --config %%~nxf --uninstall --multiple-agents
+for /f delims=| %%f in ('dir /b *%kill%*.conf') do del %%~nxf
+for /f delims=| %%f in ('dir /b *%kill%*.cmd') do del %%~nxf
+for /f delims=| %%f in ('dir /b *%kill%*.log') do del %%~nxf
 echo Servizio disinstallato correttamente >> %_log%
 echo Servizio disinstallato correttamente
 pause
@@ -189,9 +196,11 @@ goto fine
 echo installa >> %_log%
 set /p ip=Scrivi l'indirizzo IP:
 echo.
+
 :serie
 set /p serie=%ip% Scrivi il numero di SERIE:
 echo.
+
 :marca
 echo u. uscita
 echo r. ricomincia
@@ -216,11 +225,11 @@ set /p modello=%ip% %serie% %marca% Inserisci il modello:
 echo.
 :xerox_modelli
 FOR %%G IN (
-"3200"
-"3320"
-"3635"
+3200
+3320
+3635
 ) DO (
-IF "%modello%"=="%%~G" (
+IF %modello%==%%~G (
 	set profilo=1c1m
 	set template=1c1m_1p
 	if /i %_lista%==si goto configurazione
@@ -229,11 +238,11 @@ IF "%modello%"=="%%~G" (
 )
 
 FOR %%G IN (
-"3315"
-"3325"
-"3550"
+3315
+3325
+3550
 ) DO (
-IF "%modello%"=="%%~G" (
+IF %modello%==%%~G (
 	set profilo=1c1m1
 	set template=1c1m_1p
 	if /i %_lista%==si goto configurazione
@@ -242,15 +251,15 @@ IF "%modello%"=="%%~G" (
 )
 
 FOR %%G IN (
-"3330"
-"3610"
-"4600"
-"3335"
-"3345"
-"3615"
-"4250"
+3330
+3610
+4600
+3335
+3345
+3615
+4250
 ) DO (
-IF "%modello%"=="%%~G" (
+IF %modello%==%%~G (
 	set profilo=1c2m2
 	set template=1c2m_2p
 	if /i %_lista%==si goto configurazione
@@ -259,10 +268,10 @@ IF "%modello%"=="%%~G" (
 )
 
 FOR %%G IN (
-"B400"
-"B405"
+B400
+B405
 ) DO (
-IF "%modello%"=="%%~G" (
+IF %modello%==%%~G (
 	set profilo=1c3m2
 	set template=1c3m_2p1b
 	if /i %_lista%==si goto configurazione
@@ -271,14 +280,14 @@ IF "%modello%"=="%%~G" (
 )
 
 FOR %%G IN (
-"5225"
-"5230"
-"B600"
-"B610"
-"B605"
-"B615"
+5225
+5230
+B600
+B610
+B605
+B615
 ) DO (
-IF "%modello%"=="%%~G" (
+IF %modello%==%%~G (
 	set profilo=1c4m2
 	set template=1c4m_2p2b
 	if /i %_lista%==si goto configurazione
@@ -287,9 +296,9 @@ IF "%modello%"=="%%~G" (
 )
 
 FOR %%G IN (
-"3655"
+3655
 ) DO (
-IF "%modello%"=="%%~G" (
+IF %modello%==%%~G (
 	set profilo=1c5m1
 	set template=1c5m_5p
 	if /i %_lista%==si goto configurazione
@@ -298,11 +307,11 @@ IF "%modello%"=="%%~G" (
 )
 
 FOR %%G IN (
-"5325"
-"5330"
-"5335"
+5325
+5330
+5335
 ) DO (
-IF "%modello%"=="%%~G" (
+IF %modello%==%%~G (
 	set profilo=2c3m2
 	set template=2c3m_2p1b
 	if /i %_lista%==si goto configurazione
@@ -311,11 +320,11 @@ IF "%modello%"=="%%~G" (
 )
 
 FOR %%G IN (
-"B7025"
-"B7030"
-"B7035"
+B7025
+B7030
+B7035
 ) DO (
-IF "%modello%"=="%%~G" (
+IF %modello%==%%~G (
 	set profilo=2c4m2
 	set template=2c4m_2p2b
 	if /i %_lista%==si goto configurazione
@@ -324,15 +333,15 @@ IF "%modello%"=="%%~G" (
 )
 
 FOR %%G IN (
-"5945"
-"5955"
-"B8045"
-"B8055"
-"B8065"
-"B8075"
-"B8090"
+5945
+5955
+B8045
+B8055
+B8065
+B8075
+B8090
 ) DO (
-IF "%modello%"=="%%~G" (
+IF %modello%==%%~G (
 	set profilo=2c4m4
 	set template=2c4m_4p
 	if /i %_lista%==si goto configurazione
@@ -341,10 +350,10 @@ IF "%modello%"=="%%~G" (
 )
 
 FOR %%G IN (
-"8570"
-"8580"
+8570
+8580
 ) DO (
-IF "%modello%"=="%%~G" (
+IF %modello%==%%~G (
 	set profilo=3c6m
 	set template=3c6m_5p1b
 	if /i %_lista%==si goto configurazione
@@ -353,10 +362,10 @@ IF "%modello%"=="%%~G" (
 )
 
 FOR %%G IN (
-"C400"
-"C405"
+C400
+C405
 ) DO (
-IF "%modello%"=="%%~G" (
+IF %modello%==%%~G (
 	set profilo=3c8m5
 	set template=3c8m_5p3b
 	if /i %_lista%==si goto configurazione
@@ -365,10 +374,10 @@ IF "%modello%"=="%%~G" (
 )
 
 FOR %%G IN (
-"6600"
-"6605"
+6600
+6605\r
 ) DO (
-IF "%modello%"=="%%~G" (
+IF \r%modello%\r=="%%~G" (
 	set profilo=3c8m8
 	set template=3c8m_8p
 	if /i %_lista%==si goto configurazione
@@ -610,11 +619,10 @@ echo HostMetadata=%rivenditore% %template%
 ::ip
 echo UserParameter=IP,echo %ip%
 ::vrs
-echo UserParameter=VRS,echo %_versione%
+echo UserParameter=VRS,echo %_version%
 ::LAC
 echo UserParameter=LAC,"%_dir%%modello%_%serie%.cmd" %profilo%_%marca% %ip% %modello%_%serie%
 )>%modello%_%serie%.conf
-
 copy "%_dir%send.cmd" "%_dir%%modello%_%serie%.cmd"
 
 :agent
