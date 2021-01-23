@@ -1,9 +1,9 @@
 // scrivere un file
 const fs = require('fs');
 
-let test = 'testo da scrivere sul file'
+const text = 'testo da scrivere sul file';
 
-fs.writeFile("test.txt", (test), (err) => {
+fs.writeFile("test.txt", (text), (err) => {
         if (err) {
             return console.log(err);
         }
