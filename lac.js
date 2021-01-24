@@ -6,10 +6,13 @@ const server = 'print.clasrl.com'
 
 //for each printer to monitored (taken from printers.json) take from tamplates.json oids and names arrays and add to printers
 printers.forEach(printer => {
-    printer['oids'] = templates.find(template => template['model'] === printer['model']).oids;
-    printer['names'] = templates.find(template => template['model'] === printer['model']).names;
+    let template = templates.find(template => template["brand"] === printer["brand"] && template["model"] === printer["model"]);
+    let oids = template.items.map(a => a.oid);
+    console.log(oids);
+    //printer['oids'] = template.items.oid;
+    //printer['names'] = templates.find(template => template['model'] === printer['model']).names;
 });
-console.log(printers);
+//console.log(printers);
 
 //get snmp status and return status array in printers object
 //snmpGet(ip, oids)
