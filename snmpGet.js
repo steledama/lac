@@ -16,12 +16,12 @@ function snmpGet(ip, oids) {
                     //console.log(`${varbinds[i].oid} = ${varbinds[i].value}`);
         }
         session.close();
-        console.log(status);
     });
     session.trap(snmp.TrapType.LinkDown, function (error) {
         if (error)
             console.error(error);
     });
+    return status
 }
 
 exports.snmpGet = snmpGet;

@@ -1,6 +1,8 @@
 const snmp = require ("net-snmp");
 const fs = require('fs');
 
+snmpWalk("7845", "192.168.1.52", "1.3.6.1.2.1.43.11.1.1");
+
 function snmpWalk(model, ip, oid){
     let session = snmp.createSession (ip);
 function doneCb (error) {
