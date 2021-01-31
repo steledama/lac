@@ -1,15 +1,17 @@
 const snmp = require("net-snmp");
-const { sendZabbix} = require ('./sendZabbix');
+const { exec } = require("child_process");
+
 const printersTemplates = require("./printersTemplates.json");
 const monitoredPrinters = require('./monitoredPrinters.json');
+
 const serverZabbix = 'print.clasrl.com'
 
-//for each printer to monitored (taken from monitoredPrinters.json)...
+//for each printer to monitor (taken from monitoredPrinters.json)...
 monitoredPrinters.forEach(printer => {
-    //take from tamplates.json oids and names and add to printers
+    //take from printersTamplates.json oids and names and add to printers
     printer ["oids"] = printersTemplates[printer.brand][printer.family][printer.model];
 
-    //take onlyoid and put in array
+    //take only oid and put in array
     printer ["oidsArray"] = [];
     for (oid in printer.oids){
         printer.oidsArray.push(oid)
@@ -35,8 +37,24 @@ monitoredPrinters.forEach(printer => {
             console.error(error);
     });
 
-    setTimeout(() => {  console.log(printer); }, 10000);
+    setTimeout(() => {console.log(printer.items);}, 10000);
 
     //send results to zabbix server
     //sendZabbix(server, model, serial, names, status)
+
+    setTimeout(() => {
+        for (const [key, value] of Object.entries(printer.items)) {
+            exec(`${__dirname}/zabbix_sender -z ${serverZabbix} -s ${printer.brand}${printer.model}_${printer.serial} -k ${key} -o ${value}`, (error, stdout, stderr) => {
+                if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+                console.log(`stdout: ${stdout}`);
+            });
+        }
+    }, 10000);
 });
