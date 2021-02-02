@@ -9,7 +9,7 @@ If(Test-Path -Path "$env:ProgramData\Chocolatey") {
 }
 Else {
   # InstallChoco
-  Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))      
+  Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))      
 
   # DoYourPackageInstallStuff
   ForEach ($PackageName in $Packages)
@@ -17,4 +17,26 @@ Else {
         choco install $PackageName -y
     }
 }
-# npm install net-snmp child_process
+
+# Create a new task action
+$taskAction = New-ScheduledTaskAction `
+    -Execute 'node' `
+    -Argument '-File C:\LAC\lac.js'
+$taskAction
+# Create a new trigger (Daily at time of installation)
+$time = Get-Date -DisplayHint time
+$taskTrigger = New-ScheduledTaskTrigger -Daily -At $time
+$tasktrigger
+# Register the new Node scheduled task
+# The name of your scheduled task.
+$taskName = "LAC"
+# Describe the scheduled task.
+$description = "Multi Function Printer (MFP) consumables and page monitoring system"
+# Register the scheduled task
+Register-ScheduledTask `
+    -TaskName $taskName `
+    -Action $taskAction `
+    -Trigger $taskTrigger `
+    -Description $description
+
+    npm install net-snmp, child_process
