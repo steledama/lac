@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "LAC"
-#define MyAppVersion "5.0.0.0"
+#define MyAppVersion "1.0.0.1"
 #define MyAppPublisher "Stefano Pompa"
 #define MyAppURL "https://github.com/steledama/lac"
 #define MyAppExeName "monitoredPrinters.json"
@@ -36,7 +36,7 @@ Name: italian; MessagesFile: compiler:Languages\Italian.isl
 Source: C:\Users\stefa\Documents\GitHub\lac\zabbix_sender.exe; DestDir: {app}; Flags: ignoreversion
 Source: C:\Users\stefa\Documents\GitHub\lac\lac.js; DestDir: {app}; Flags: ignoreversion
 Source: C:\Users\stefa\Documents\GitHub\lac\monitoredPrinters.json; DestDir: {app}; Flags: ignoreversion
-Source: C:\Users\stefa\Documents\GitHub\lac\package.json; DestDir: {app}; Flags: ignoreversion
+Source: C:\Users\stefa\Documents\GitHub\lac\node_modules\*; DestDir: {app}\node_modules; Flags: ignoreversion recursesubdirs
 Source: C:\Users\stefa\Documents\GitHub\lac\printersTemplates.json; DestDir: {app}; Flags: ignoreversion
 Source: C:\Users\stefa\Documents\GitHub\lac\install\install.ps1; DestDir: {app}; Flags: ignoreversion
 Source: C:\Users\stefa\Documents\GitHub\lac\install\uninstall.ps1; DestDir: {app}; Flags: ignoreversion

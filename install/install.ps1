@@ -17,13 +17,10 @@
             choco install $PackageName -y
         }
     }
-#install npm modules
-    Set-Location -Path C:\lac
-    npm install
 # Create a new task action
     $taskAction = New-ScheduledTaskAction `
-        -Execute 'node' `
-        -Argument '-File C:\LAC\lac.js'
+        -Execute '"C:\Program Files\nodejs\node.exe"' `
+        -Argument 'C:\LAC\lac.js'
     $taskAction
 # Create a new trigger (Daily at time of installation)
     $time = Get-Date -DisplayHint time
