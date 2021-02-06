@@ -1,0 +1,29 @@
+{
+  "name": "lac",
+  "version": "1.0.0",
+  "description": "MultiFuncionPrinters usage and supplies monitoring with Zabbix over different networks",
+  "main": "lac.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steledama/lac.git"
+  },
+  "keywords": [
+    "MFP",
+    "monitor",
+    "zabbix",
+    "javascript"
+  ],
+  "author": "Stefano Pompa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/steledama/lac/issues"
+  },
+  "homepage": "https://github.com/steledama/lac#readme",
+  "dependencies": {
+    "child-process": "^1.0.2",
+    "net-snmp": "^3.4.3"
+  }
+}
