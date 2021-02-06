@@ -1,12 +1,12 @@
 # LAC
 
-Multi Function Printer (MFP) consumables and page monitoring system
+MultiFuncionPrinters usage and supplies monitoring with Zabbix over different networks
 
 ## What the LAC does
 
-Lac is a web-based fleet management tool that monitors the status of consumables and page counters  of Multi Funcion Printers (MFPs) located in different networks. It is designed for office machine dealers who have to manage hundreds of MFPs installed at various final customers. It is meant to be used for two purposes:
+Lac is an agent that work with zabbix agent that monitors the usage and supplies of Multi Funcion Printers (MFPs) located in different networks. It is designed for office machine dealers who have to manage hundreds of MFPs installed at various final customers network. It is meant to be used for two purposes:
 
-- Obtain the page counters of the MFPs and automatically collect them in a centralized place to effectively manage the periodic billing of technical assistance contracts often linked to a page cost and therefore to the number of pages produced
+- Obtain the page counters of the MFPs and automatically collect them in a centralized place (zabbix server) to effectively manage the periodic billing of technical assistance contracts often linked to a page cost and therefore to the number of pages produced
 
 - Manage the supply of consumables efficiently so that the end customer is never left without but at the same time not to waste unnecessary resources.
 
@@ -14,15 +14,13 @@ It is ment to be a scalable, modern tool that can be managed remotely. It can al
 
 ## How does LAC work
 
-LAC is composed of three parts:
+LAC is composed of two parts:
 
-- Polling part
+- The agent
 
 - Zabbix server
 
-- Web part
-
-### Polling part
+### The agent
 
 An agent installed locally in the network where the MFP to be monitored is located. For each managed MFP in the network the agent:
 
@@ -30,26 +28,16 @@ An agent installed locally in the network where the MFP to be monitored is locat
 
 - Get consumable levels
 
-  - For each consumable convert to percentage (if necessary)
-
-  - Send it to Zabbix server
+- Send it to Zabbix server
 
 ### Zabbix server
 
-Display list of printers, show current supplies status and relevant page counts. Automatically allert for low supplies. View usage history
-
-### Web part
-
-The web part of the system provides two tools (WebApps):
-
-- A web app to help the reseller technician adding a new mfp to be monitored. It build a specific agent to be installed and configured locally (see polling part)
-
-- A web app to help the reseller technician to make a request to the system administrator for adding a new profile to the system
+Display list of printers (hosts), show current supplies status and relevant page counts. Automatically allert for low supplies. View usage history
 
 ## What has been done and what still needs to be done (in development)
 
-There is currently a working system based on windows scripts.
-The intentions are to translate the project into javscript, develop the webApps and share the solution in order to be available for anyone who intends to use it and improve with the open source model.
+There is currently a working system based on windows batch.
+The intentions are to translate the project into javscript, develop the agent and share the solution in order to be available for anyone who intends to use it and improve with the open source model.
 
 ## Who maintains and contributes to LAC
 
