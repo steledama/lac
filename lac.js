@@ -4,7 +4,7 @@ const { exec } = require("child_process");
 const printersTemplates = require("./printersTemplates.json");
 const monitoredPrinters = require('./monitoredPrinters.json');
 
-const serverZabbix = 'print.clasrl.com'
+const serverZabbix = '127.0.0.1'
 
 //for each printer to monitor (taken from monitoredPrinters.json)...
 monitoredPrinters.forEach(printer => {
