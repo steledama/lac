@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Printers</title>
+  <style>
+    input[type='submit'], button, [aria-label]{
+      cursor: pointer;
+    }
+    #spoiler{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>LAC agent</h1>
+  <h2>1) Add printer to monitor</h2>
+
+    <table>
+      <tr style="text-align: left;">
+        <th>Manifacturer</th>
+        <th>Family</th>
+        <th>Model</th>
+        <th>Serial</th>
+        <th>Ip address</th>
+        <th></th>
+      </tr>
+      <tr>
+        <form action="javascript:void(0);" method="POST" onsubmit="app.Add()"> 
+          <td>
+            <select
+              id="manifacturer"
+              name="manifacturer"
+              required
+            ></select>
+          </td>
+          <td>
+            <input
+              type="text"
+              id="add-family"
+              placeholder="family"
+              required
+            >
+          </td>
+          <td>
+            <input
+              type="text"
+              id="add-model"
+              placeholder="model"
+              required
+            >
+          </td>
+          <td>
+            <input
+              type="text"
+              id="add-serial"
+              placeholder="serial"
+              required
+            >
+          </td>
+          <td>
+            <input
+              type="text"
+              id="ip"
+              placeholder="ip address"
+              required
+            >
+          </td>
+          <td>
+            <input
+              type="submit"
+              value="Add"
+            >
+          </td>
+        </form>
+      </tr>
+    </table>
+
+  <div id="spoiler" role="aria-hidden">
+    <form action="javascript:void(0);" method="POST" id="saveEdit">
+      <input type="text" id="edit-name">
+      <input type="submit" value="Edit" /> <a onclick="CloseInput()" aria-label="Close">&#10006;</a>
+    </form>
+  </div>
+
+  <p id="counter"></p>
+
+  <table>
+    <tr>
+      <th>Monitored printers</th>
+    </tr>
+      <tbody id="printers">
+      </tbody>
+  </table>
+  <script src="index.js"></script>
+</body>
+</html>

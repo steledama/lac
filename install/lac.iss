@@ -34,7 +34,7 @@ Name: italian; MessagesFile: compiler:Languages\Italian.isl
 
 [Files]
 Source: C:\Users\stefa\Documents\GitHub\lac\zabbix_sender.exe; DestDir: {app}; Flags: ignoreversion
-Source: C:\Users\stefa\Documents\GitHub\lac\lac.js; DestDir: {app}; Flags: ignoreversion
+Source: C:\Users\stefa\Documents\GitHub\lac\scheduled.js; DestDir: {app}; Flags: ignoreversion
 Source: C:\Users\stefa\Documents\GitHub\lac\monitoredPrinters.json; DestDir: {app}; Flags: ignoreversion
 Source: C:\Users\stefa\Documents\GitHub\lac\node_modules\*; DestDir: {app}\node_modules; Flags: ignoreversion recursesubdirs
 Source: C:\Users\stefa\Documents\GitHub\lac\printersTemplates.json; DestDir: {app}; Flags: ignoreversion
