@@ -82,32 +82,34 @@ function CloseInput() {
 }
 
 // dropdown from here
-let dropdown = document.getElementById('manifacturer');
+let dropdown = document.getElementById('manufacturer');
 dropdown.length = 0;
 let defaultOption = document.createElement('option');
-defaultOption.text = '--select manifacturer--';
+defaultOption.text = '--select manufacturer--';
 dropdown.add(defaultOption);
 dropdown.selectedIndex = 0;
-const url = 'https://jsonplaceholder.typicode.com/users';
+const url = 'templates';
 fetch(url)  
   .then(  
     function(response) {  
       if (response.status !== 200) {  
-        console.warn('Looks like there was a problem. Status Code: ' + 
-          response.status);  
+        console.warn(`Looks like there was a problem. Status Code: ${response.status}`);  
         return;  
       }
-
       // Examine the text in the response  
-      response.json().then(function(data) {  
+      response.json().then(function(data) {
+        list = [];
+        data.forEach(element => {
+          list.push(element.manufacturer)
+        });
+        let unique = [...new Set(list)];
         let option;
-    
-      for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < unique.length; i++) {
           option = document.createElement('option');
-          option.text = data[i].name;
-          option.value = data[i].username;
+          option.text = unique[i];
+          option.value = unique[i];
           dropdown.add(option);
-      }    
+        }
       });  
     }  
   )  

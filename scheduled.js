@@ -8,8 +8,10 @@ const serverZabbix = '127.0.0.1'
 
 //for each printer to monitor (taken from printers.json)...
 printers.forEach(printer => {
-    //take from printers.json oids and names and add to printers
-    printer ["oids"] = templates[printer.manifacuter][printer.family][printer.model];
+    //take from templates.json oids and names and add to printers
+    let printerTemplate = templates.find(template => template.manufacturer === printer.manifactuer && template.family === printer.family && template.model === printer.model);
+    console.log(printerTemplate)
+    printer ["oids"] = printerTemplate.oids;
 
     //take only oid and put in array
     printer ["oidsArray"] = [];
@@ -44,7 +46,7 @@ printers.forEach(printer => {
 
     setTimeout(() => {
         for (const [key, value] of Object.entries(printer.items)) {
-            exec(`${__dirname}/zabbix_sender -z ${serverZabbix} -s ${printer.manifacuter}${printer.model}_${printer.serial} -k ${key} -o ${value}`, (error, stdout, stderr) => {
+            exec(`${__dirname}/zabbix_sender -z ${serverZabbix} -s ${printer.manifacturer}${printer.model}_${printer.serial} -k ${key} -o ${value}`, (error, stdout, stderr) => {
                 if (error) {
                     console.log(`error: ${error.message}`);
                     return;

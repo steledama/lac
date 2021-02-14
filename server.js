@@ -14,11 +14,10 @@ app.use(cors());
 // This is for hosting files
 app.use(express.static('public'));
 
-// Our "database" (in addition to what is in the AFINN-111 list)
-// is "additional.json", check first to see if it exists
+// Printer "database"
 let printers;
-let exists = fs.existsSync('printers.json');
-if (exists) {
+let printersExists = fs.existsSync('./public/printers.json');
+if (printersExists) {
   // Read the file
   console.log('loading printers');
   let txt = fs.readFileSync('./public/printers.json', 'utf8');
@@ -28,6 +27,21 @@ if (exists) {
   // Otherwise start with blank list
   console.log('No printers');
   printers = {};
+}
+
+// Template "database"
+let templates;
+let templatesExists = fs.existsSync('./public/templates.json');
+if (templatesExists) {
+  // Read the file
+  console.log('loading templates');
+  let txt = fs.readFileSync('./public/templates.json', 'utf8');
+  // Parse it  back to object
+  templates = JSON.parse(txt);
+} else {
+  // Otherwise start with blank list
+  console.log('No templates');
+  templates = {};
 }
 
 // Set up the server
@@ -42,30 +56,30 @@ function listen() {
 }
 
 // A route for adding a new printer with a score
-app.get('/add/:printer/:score', addprinter);
+app.get('/add/:manufacturer/:family/:model/:serial/:ip', addPrinter);
 
 // Handle that route
-function addprinter(req, res) {
-  // printer and score
-  let printer = req.params.printer;
-  // Make sure it's not a string by accident
-  let score = Number(req.params.score);
-
-  // Put it in the object
-  printers[printer] = score;
-
+function addPrinter(req, res) {
+  // Put printer parameters in the printer array object
+  let printerToAdd = {
+    "manufacturer": req.params.manufacturer,
+    "family": req.params.family,
+    "model": req.params.model,
+    "serial": req.params.serial,
+    "ip": req.params.ip,
+   }
+   printers.push(printerToAdd);
+   console.log(printers);
   // Let the request know it's all set
   let reply = {
-    status: 'success',
-    printer: printer,
-    score: score
+    status: 'Printer added',
   }
-  console.log('adding: ' + JSON.stringify(reply));
+  console.log(`adding: ${JSON.stringify(reply)}`);
 
   // Write a file each time we get a new printer
   // This is kind of silly but it works
   let json = JSON.stringify(printers, null, 2);
-  fs.writeFile('printers.json', json, 'utf8', finished);
+  fs.writeFile('./public/printers.json', json, 'utf8', finished);
   function finished(err) {
     console.log('Finished writing printers.json');
     // Don't send anything back until everything is done
@@ -73,12 +87,20 @@ function addprinter(req, res) {
   }
 }
 
-// Route for sending all the concordance data
-app.get('/all', showAll);
-
+// Route for sending all the printers
+app.get('/printers', showAllPrinters);
 // Callback
-function showAll(req, res) {
+function showAllPrinters(req, res) {
   // Send the entire dataset
   // express automatically renders objects as JSON
   res.send(printers);
+}
+
+// Route for sending all the templates
+app.get('/templates', showAllTemplates);
+// Callback
+function showAllTemplates(req, res) {
+  // Send the entire dataset
+  // express automatically renders objects as JSON
+  res.send(templates);
 }
