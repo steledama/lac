@@ -33,16 +33,17 @@ let app = new function() {
 
   this.Add = function () {
     el = document.getElementById('ip');
-    // Get the value
-    let printer = el.value;
-    if (printer) {
+    // Validate value
+    let isValid = ValidateIPaddress(el.value)
+    if (isValid===true){
+      let printer = el.value;
       // Add the new value
       this.printers.push(printer.trim());
       // Reset input value
       el.value = '';
       // Dislay the new list
       this.FetchAll();
-    }
+    };
   };
 
   this.Edit = function (item) {
@@ -116,3 +117,15 @@ fetch(url)
   .catch(function(err) {  
     console.error('Fetch Error -', err);  
   });
+
+  //validate Ip address
+  function ValidateIPaddress(ipaddress)
+  {
+   if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress))
+    {
+      return (true)
+    }
+  alert("You have entered an invalid IP address!")
+  return (false)
+  }
+  
