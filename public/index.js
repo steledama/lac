@@ -1,7 +1,7 @@
 let app = new function() {
   this.el = document.getElementById('printers');
 
-  this.printers = [];
+  this.printers = [pluto];
 
   this.Count = function(data) {
     let el   = document.getElementById('counter');
@@ -33,12 +33,12 @@ let app = new function() {
 
   this.Add = function () {
     el = document.getElementById('ip');
-    // Validate value
+    // Validate ip address
     let isValid = ValidateIPaddress(el.value)
     if (isValid===true){
       let printer = el.value;
       // Add the new value
-      this.printers.push(printer.trim());
+      this.printers.push(printer);
       // Reset input value
       el.value = '';
       // Dislay the new list
