@@ -1,7 +1,14 @@
 let app = new function() {
   this.el = document.getElementById('printers');
 
-  this.printers = [pluto];
+  this.printers = [
+    {
+      manufacturer: "xerox",
+      family: "workcentre",
+      model: "78xx",
+      ip: "192.168.1.52"
+    }
+  ];
 
   this.Count = function(data) {
     let el   = document.getElementById('counter');
@@ -21,7 +28,7 @@ let app = new function() {
     if (this.printers.length > 0) {
       for (i = 0; i < this.printers.length; i++) {
         data += '<tr>';
-        data += '<td>' + this.printers[i] + '</td>';
+        data += `<td>${this.printers[i].manufacturer} ${this.printers[i].family} ${this.printers[i].model} ${this.printers[i].ip}</td>`;
         data += '<td><button onclick="app.Edit(' + i + ')">Edit</button></td>';
         data += '<td><button onclick="app.Delete(' + i + ')">Delete</button></td>';
         data += '</tr>';
@@ -91,41 +98,39 @@ dropdown.add(defaultOption);
 dropdown.selectedIndex = 0;
 const url = 'templates';
 fetch(url)  
-  .then(  
-    function(response) {  
-      if (response.status !== 200) {  
-        console.warn(`Looks like there was a problem. Status Code: ${response.status}`);  
-        return;  
-      }
-      // Examine the text in the response  
-      response.json().then(function(data) {
-        list = [];
-        data.forEach(element => {
-          list.push(element.manufacturer)
-        });
-        let unique = [...new Set(list)];
-        let option;
-        for (let i = 0; i < unique.length; i++) {
-          option = document.createElement('option');
-          option.text = unique[i];
-          option.value = unique[i];
-          dropdown.add(option);
-        }
-      });  
-    }  
-  )  
-  .catch(function(err) {  
-    console.error('Fetch Error -', err);  
-  });
-
-  //validate Ip address
-  function ValidateIPaddress(ipaddress)
-  {
-   if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress))
-    {
-      return (true)
+.then(  
+  function(response) {  
+    if (response.status !== 200) {  
+      console.warn(`Looks like there was a problem. Status Code: ${response.status}`);  
+      return;  
     }
-  alert("You have entered an invalid IP address!")
-  return (false)
+    // Examine the text in the response  
+    response.json().then(function(data) {
+      list = [];
+      data.forEach(element => {
+        list.push(element.manufacturer)
+      });
+      let unique = [...new Set(list)];
+      let option;
+      for (let i = 0; i < unique.length; i++) {
+        option = document.createElement('option');
+        option.text = unique[i];
+        option.value = unique[i];
+        dropdown.add(option);
+      }
+    });  
+  }  
+)  
+.catch(function(err) {  
+  console.error('Fetch Error -', err);  
+});
+
+//validate Ip address
+function ValidateIPaddress(ipaddress){
+  if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress)){
+    return (true)
   }
+alert("You have entered an invalid IP address!")
+return (false)
+}
   
