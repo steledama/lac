@@ -1,9 +1,8 @@
 [
   {
-    "manifactuer": "xerox",
-    "family": "workcentre",
-    "model": "78xx",
-    "serial": "3913850890",
-    "ip": "192.168.1.52"
+    "manufactuer": "xerox",
+    "family": "phaser",
+    "model": "6130N",
+    "ip": "192.168.1.3"
   }
 ]

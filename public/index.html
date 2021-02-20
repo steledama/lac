@@ -10,9 +10,6 @@
     input[type='submit'], button, [aria-label]{
       cursor: pointer;
     }
-    #spoiler{
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -73,18 +70,9 @@
       </tr>
     </table>
 
-  <div id="spoiler" role="aria-hidden">
-    <form action="javascript:void(0);" method="POST" id="saveEdit">
-      <input type="text" id="edit-name">
-      <input type="submit" value="Edit" /> <a onclick="CloseInput()" aria-label="Close">&#10006;</a>
-    </form>
-  </div>
-
-  <p id="counter"></p>
-
   <table>
     <tr>
-      <th>Monitored printers</th>
+      <th><p id="counter"></p></th>
     </tr>
       <tbody id="printers">
       </tbody>

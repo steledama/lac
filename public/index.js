@@ -29,7 +29,6 @@ let app = new function() {
       for (i = 0; i < this.printers.length; i++) {
         data += '<tr>';
         data += `<td>${this.printers[i].manufacturer} ${this.printers[i].family} ${this.printers[i].model} ${this.printers[i].ip}</td>`;
-        data += '<td><button onclick="app.Edit(' + i + ')">Edit</button></td>';
         data += '<td><button onclick="app.Delete(' + i + ')">Delete</button></td>';
         data += '</tr>';
       }
@@ -39,41 +38,30 @@ let app = new function() {
   };
 
   this.Add = function () {
-    el = document.getElementById('ip');
+    manufacturer = document.getElementById('manufacturer');
+    family = document.getElementById('family');
+    model = document.getElementById('model');
+    ip = document.getElementById('ip');
     // Validate ip address
-    let isValid = ValidateIPaddress(el.value)
+    let isValid = ValidateIPaddress(ip.value)
     if (isValid===true){
-      let printer = el.value;
+      let printer = {}
+      printer["manufacturer"]= manufacturer.value;
+      printer["family"]= family.value;
+      printer["model"]= model.value;
+      printer["ip"]= ip.value;
       // Add the new value
       this.printers.push(printer);
       // Reset input value
-      el.value = '';
+      manufacturer.value = '';
+      family.value = '';
+      model.value = '';
+      ip.value = '';
       // Dislay the new list
       this.FetchAll();
     };
   };
-
-  this.Edit = function (item) {
-    let el = document.getElementById('edit-name');
-    // Display value in the field
-    el.value = this.printers[item];
-    // Display fields
-    document.getElementById('spoiler').style.display = 'block';
-    self = this;
-    document.getElementById('saveEdit').onsubmit = function() {
-      // Get value
-      let printer = el.value;
-      if (printer) {
-        // Edit value
-        self.printers.splice(item, 1, printer.trim());
-        // Display the new list
-        self.FetchAll();
-        // Hide fields
-        CloseInput();
-      }
-    }
-  };
-
+  
   this.Delete = function (item) {
     // Delete the current row
     this.printers.splice(item, 1);
@@ -84,10 +72,6 @@ let app = new function() {
 }
 
 app.FetchAll();
-
-function CloseInput() {
-  document.getElementById('spoiler').style.display = 'none';
-}
 
 // dropdown from here
 let dropdown = document.getElementById('manufacturer');
