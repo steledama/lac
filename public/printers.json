@@ -1,8 +1,14 @@
 [
   {
-    "manufactuer": "xerox",
-    "family": "phaser",
+    "manufacturer": "pippo",
+    "family": "pluto",
     "model": "6130N",
-    "ip": "192.168.1.3"
+    "ip": "192.168.1.52"
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": "78xx",
+    "ip": "192.168.1.52"
   }
 ]

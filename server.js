@@ -56,7 +56,7 @@ function listen() {
 }
 
 // A route for adding a new printer with a score
-app.get('/add/:manufacturer/:family/:model/:serial/:ip', addPrinter);
+app.get('/add/:manufacturer/:family/:model/:ip', addPrinter);
 
 // Handle that route
 function addPrinter(req, res) {
@@ -65,7 +65,6 @@ function addPrinter(req, res) {
     "manufacturer": req.params.manufacturer,
     "family": req.params.family,
     "model": req.params.model,
-    "serial": req.params.serial,
     "ip": req.params.ip,
    }
    printers.push(printerToAdd);
