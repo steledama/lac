@@ -82,29 +82,19 @@ function addPrinter(req, res) {
     "ip": req.params.ip,
    }
    printers.push(printerToAdd);
-   console.log(printers);
   // Let the request know it's all set
-  let reply = {
-    status: 'Printer added',
-  }
-  console.log(`adding: ${JSON.stringify(reply)}`);
+  console.log(`Adding printer...`);
   // Write a file each time we get a new printer
   let json = JSON.stringify(printers, null, 2);
   fs.writeFile('./public/printers.json', json, 'utf8', finished);
   function finished(err) {
-    console.log('Finished writing printers.json');
+    console.log('Updated printers.json with the new printer');
     // Don't send anything back until everything is done
-    res.send(reply);
+    res.send(printers);
   }
 }
-//Route to delete printer
-app.delete("/del/:model/:ip")
-let printer = printers.find(p => p.model == req.params.model & p.ip == req.params.ip);
-if (!printer) res.status(404).send('The printer was not found')
-let index = printers.indexOf(printer);
-printers.splice(index, 1);
 
-// A route for deleting a new printer
+// A route for deleting a printer using get instead of delete
 app.get('/del/:model/:ip', deletePrinter);
 function deletePrinter(req, res) {
   //Look up the printer
@@ -114,13 +104,13 @@ function deletePrinter(req, res) {
   //Delete
   const index = printers.indexOf(printer);
   printers.splice(index, 1);
-  console.log(`deleting...`);
+  console.log(`Deleting printer...`);
   // Update printers.json file each time we delete a printer
   let json = JSON.stringify(printers, null, 2);
   fs.writeFile('./public/printers.json', json, 'utf8', finished);
   function finished(err) {
-    console.log('Finished writing printers.json');
+    console.log('Updated printers.json with the deleted printer');
     // Don't send anything back until everything is done
-    res.send("Printer deleted");
+    res.send(printers);
   }
 }
