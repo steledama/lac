@@ -57,7 +57,6 @@ function listen() {
 
 // A route for adding a new printer with a score
 app.get('/add/:manufacturer/:family/:model/:ip', addPrinter);
-
 // Handle that route
 function addPrinter(req, res) {
   // Put printer parameters in the printer array object
@@ -85,6 +84,12 @@ function addPrinter(req, res) {
     res.send(reply);
   }
 }
+//Route to delete printer
+app.delete("/del/:model/:ip")
+let printer = printers.find(p => p.model == req.params.model & p.ip == req.params.ip);
+if (!printer) res.status(404).send('The printer was not found')
+let index = printers.indexOf(printer);
+printers.splice(index, 1);
 
 // Route for sending all the printers
 app.get('/printers', showAllPrinters);
