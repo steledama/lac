@@ -97,6 +97,12 @@ function addPrinter(req, res) {
     res.send(reply);
   }
 }
+//Route to delete printer
+app.delete("/del/:model/:ip")
+let printer = printers.find(p => p.model == req.params.model & p.ip == req.params.ip);
+if (!printer) res.status(404).send('The printer was not found')
+let index = printers.indexOf(printer);
+printers.splice(index, 1);
 
 // A route for deleting a new printer
 app.get('/del/:model/:ip', deletePrinter);
