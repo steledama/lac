@@ -1,9 +1,9 @@
 [
   {
-    "manufacturer": "pippo",
-    "family": "pluto",
+    "manufacturer": "xerox",
+    "family": "phaser",
     "model": "6130N",
-    "ip": "192.168.1.52"
+    "ip": "192.168.1.3"
   },
   {
     "manufacturer": "xerox",

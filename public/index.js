@@ -1,6 +1,7 @@
 el = document.getElementById('printers');
 
 let printers = [];
+
 fetch('printers')
   .then(response => response.json())
   .then(data => {
@@ -66,9 +67,14 @@ addPrinter = () => {
   };
 };
 
-function deletePrinter (item) {
+function deletePrinter (index) {
+  //delete printer in printer.json
+  let url = `del/${printers[index].model}/${printers[index].ip}`;
+  fetch(url)
+    .then(response => response.json())
+    .then(data => console.log(data))
   // Delete the current row
-  printers.splice(item, 1);
+  printers.splice(index, 1);
   // Display the new list
   fetchAll();
 };
