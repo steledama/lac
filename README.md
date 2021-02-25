@@ -1,10 +1,10 @@
 # LAC
 
-MultiFuncionPrinters usage and supplies monitoring with Zabbix over different networks
+MultiFunctionPrinters usage and supplies monitoring agent with Zabbix over different networks
 
 ## What the LAC does
 
-Lac is an agent that work with zabbix agent that monitors the usage and supplies of Multi Funcion Printers (MFPs) located in different networks. It is designed for office machine dealers who have to manage hundreds of MFPs installed at various final customers network. It is meant to be used for two purposes:
+Lac is an agent that work with zabbix server for monitoring the usage and supplies of Multi Function Printers (MFPs) located in different networks. It is designed for office machine dealers who have to manage hundreds of MFPs installed at various final customers network. It is meant to be used for two purposes:
 
 - Obtain the page counters of the MFPs and automatically collect them in a centralized place (zabbix server) to effectively manage the periodic billing of technical assistance contracts often linked to a page cost and therefore to the number of pages produced
 
@@ -24,15 +24,21 @@ LAC is composed of two parts:
 
 An agent installed locally in the network where the MFP to be monitored is located. For each managed MFP in the network the agent:
 
-- Get and send relevant page counts to zabbix
+- Get and send relevant page counts to zabbix server
 
-- Get consumable levels
-
-- Send it to Zabbix server
+- Get consumable levels and send it to Zabbix server
 
 ### Zabbix server
 
-Display list of printers (hosts), show current supplies status and relevant page counts. Automatically allert for low supplies. View usage history
+Zabbix has several features. We use a little part of them to:
+
+- Display list of printers (hosts)
+
+- Show current supplies status and relevant page counts
+
+- Automatically allert for low supplies
+
+- View usage history
 
 ## What has been done and what still needs to be done (in development)
 
