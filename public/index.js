@@ -60,8 +60,11 @@ addPrinter = () => {
     // Reset input value
     manufacturer.value = '';
     family.value = '';
+    document.getElementById("family").style.display = "none";
     model.value = '';
+    document.getElementById("model").style.display = "none";
     ip.value = '';
+    document.getElementById("ip").style.display = "none";
     // Dislay the new list
     fetchAll();
   };
@@ -81,41 +84,60 @@ function deletePrinter (index) {
 
 fetchAll();
 
+function showFamily() {
+  document.getElementById("family").style.display = "block";
+  dynamicDropdown("family", document.getElementById("manufacturer").value);
+}
+
+function showModel() {
+  document.getElementById("model").style.display = "block";
+  dynamicDropdown("model", document.getElementById("family").value);
+}
+
+function showIp() {
+  document.getElementById("ip").style.display = "block";
+}
+
+dynamicDropdown("manufacturer", null);
+
 // dropdown from here
-let dropdown = document.getElementById('manufacturer');
-// dropdown.length = 0;
-// let defaultOption = document.createElement('option');
-// defaultOption.text = '--select manufacturer--';
-// dropdown.add(defaultOption);
-// dropdown.selectedIndex = 0;
-const url = 'templates';
-fetch(url)  
-.then(  
-  (response) => {
-    if (response.status !== 200) {
-      console.warn(`Looks like there was a problem. Status Code: ${response.status}`);
-      return;
-    }
-    // Examine the text in the response  
-    response.json().then((data) => {
-      list = [];
-      data.forEach(element => {
-        list.push(element.manufacturer);
-      });
-      let unique = [...new Set(list)];
-      let option;
-      for (let i = 0; i < unique.length; i++) {
-        option = document.createElement('option');
-        option.text = unique[i];
-        option.value = unique[i];
-        dropdown.add(option);
+function dynamicDropdown (listName) {
+  let dropdown = document.getElementById(listName);
+  dropdown.length = 0;
+  let defaultOption = document.createElement('option');
+  defaultOption.text = '--select ' + listName + "--";
+  defaultOption.value = "";
+  dropdown.add(defaultOption);
+  dropdown.selectedIndex = 0;
+  const url = 'templates';
+  fetch(url)  
+  .then(  
+    (response) => {
+      if (response.status !== 200) {
+        console.warn(`Looks like there was a problem. Status Code: ${response.status}`);
+        return;
       }
+      // Examine the text in the response  
+      response.json().then((data) => {
+        list = [];
+        data.forEach(element => {
+          list.push(element[listName]);
+        });
+        let unique = [...new Set(list)];
+        let option;
+        for (let i = 0; i < unique.length; i++) {
+          option = document.createElement('option');
+          option.text = unique[i];
+          option.value = unique[i];
+          dropdown.add(option);
+        }
+      });
+    }  
+  )  
+  .catch((err) => {
+      console.error('Fetch Error -', err);
     });
-  }  
-)  
-.catch((err) => {
-    console.error('Fetch Error -', err);
-  });
+}
 
 //validate Ip address
 function ValidateIPaddress(ipaddress){

@@ -52,7 +52,7 @@ function listen() {
   console.log(`App listening at http://${host}:${port}`);
 }
 
-// Route for sending all the templates
+// ALL TEMPLATES route
 app.get('/templates', showAllTemplates);
 // Callback
 function showAllTemplates(req, res) {
@@ -61,7 +61,7 @@ function showAllTemplates(req, res) {
   res.send(templates);
 }
 
-// Route for sending all the printers
+// ALL PRINTERS route
 app.get('/printers', showAllPrinters);
 // Callback
 function showAllPrinters(req, res) {
@@ -70,7 +70,7 @@ function showAllPrinters(req, res) {
   res.send(printers);
 }
 
-// A route for adding a new printer (using get instead of post)
+// ADD printer route (with get)
 app.get('/add/:manufacturer/:family/:model/:ip', addPrinter);
 // Handle that route
 function addPrinter(req, res) {
@@ -94,7 +94,7 @@ function addPrinter(req, res) {
   }
 }
 
-// A route for deleting a printer using get instead of delete
+// DELETE printer route (with get)
 app.get('/del/:model/:ip', deletePrinter);
 function deletePrinter(req, res) {
   //Look up the printer

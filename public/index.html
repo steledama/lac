@@ -28,35 +28,37 @@
         <form action="javascript:void(0);" method="POST" onsubmit="addPrinter()"> 
           <td>
             <select
+              onchange="showFamily()"
               id="manufacturer"
               name="manufacturer"
               required
             ></select>
           </td>
           <td>
-            <input
-              type="text"
+            <select
+              onchange="showModel()"
+              style="display: none;"
               id="family"
               name="family"
-              placeholder="family"
               required
-            >
+            ></select>
           </td>
           <td>
-            <input
-              type="text"
+            <select
+              onchange="showIp()"
+              style="display: none;"
               id="model"
               name="model"
-              placeholder="model"
               required
-            >
+            ></select>
           </td>
           <td>
             <input
+              style="display: none;"
               type="text"
               id="ip"
               name="ip"
-              placeholder="ip address"
+              placeholder="insert ip address"
               required
             >
           </td>
