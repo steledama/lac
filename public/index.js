@@ -86,22 +86,22 @@ fetchAll();
 
 function showFamily() {
   document.getElementById("family").style.display = "block";
-  dynamicDropdown("family", document.getElementById("manufacturer").value);
+  dynamicDropdown("family", document.getElementById("manufacturer").value, null);
 }
 
 function showModel() {
   document.getElementById("model").style.display = "block";
-  dynamicDropdown("model", document.getElementById("family").value);
+  dynamicDropdown("model", document.getElementById("manufacturer").value, document.getElementById("family").value);
 }
 
 function showIp() {
   document.getElementById("ip").style.display = "block";
 }
 
-dynamicDropdown("manufacturer", null);
+dynamicDropdown("manufacturer",null,null);
 
 // dropdown from here
-function dynamicDropdown (listName) {
+function dynamicDropdown (listName, pluto, pippo) {
   let dropdown = document.getElementById(listName);
   dropdown.length = 0;
   let defaultOption = document.createElement('option');
@@ -109,7 +109,9 @@ function dynamicDropdown (listName) {
   defaultOption.value = "";
   dropdown.add(defaultOption);
   dropdown.selectedIndex = 0;
-  const url = 'templates';
+  let url = `templates/${pluto}/${pippo}`;
+  console.log(url)
+  //console.log(pluto);
   fetch(url)  
   .then(  
     (response) => {
@@ -120,6 +122,9 @@ function dynamicDropdown (listName) {
       // Examine the text in the response  
       response.json().then((data) => {
         list = [];
+        console.log(listName);
+        console.log(pluto);
+        console.log(data);
         data.forEach(element => {
           list.push(element[listName]);
         });

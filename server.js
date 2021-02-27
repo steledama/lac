@@ -52,15 +52,6 @@ function listen() {
   console.log(`App listening at http://${host}:${port}`);
 }
 
-// ALL TEMPLATES route
-app.get('/templates', showAllTemplates);
-// Callback
-function showAllTemplates(req, res) {
-  // Send the entire dataset
-  // express automatically renders objects as JSON
-  res.send(templates);
-}
-
 // ALL PRINTERS route
 app.get('/printers', showAllPrinters);
 // Callback
@@ -112,5 +103,25 @@ function deletePrinter(req, res) {
     console.log('Updated printers.json with the deleted printer');
     // Don't send anything back until everything is done
     res.send(printers);
+  }
+}
+
+// TEMPLATES ROUTE
+app.get('/templates/:manufacturer/:family', findTemplates);
+function findTemplates(req, res) {
+  console.log(req.params);
+  if (req.params.manufacturer == "null") res.send(templates);
+  if (req.params.family == "null"){
+    //Look up templates
+    let templatesByManufacturer = templates.filter(t => t.manufacturer == req.params.manufacturer);
+    //Not found, return 404
+    if(!templatesByManufacturer) res.status(404).send("No templates found");
+    res.send(templatesByManufacturer);
+  }
+  else {
+    let templatesByFamily = templates.filter(t => t.manufacturer == req.params.manufacturer & t.family == req.params.family);
+    //Not found, return 404
+    if(!templatesByFamily) res.status(404).send("No templates found");
+    res.send(templatesByFamily);
   }
 }
