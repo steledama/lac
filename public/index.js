@@ -101,7 +101,7 @@ function showIp() {
 dynamicDropdown("manufacturer",null,null);
 
 // dropdown from here
-function dynamicDropdown (listName, pluto, pippo) {
+function dynamicDropdown (listName, manufacturer, family) {
   let dropdown = document.getElementById(listName);
   dropdown.length = 0;
   let defaultOption = document.createElement('option');
@@ -109,8 +109,7 @@ function dynamicDropdown (listName, pluto, pippo) {
   defaultOption.value = "";
   dropdown.add(defaultOption);
   dropdown.selectedIndex = 0;
-  let url = `templates/${pluto}/${pippo}`;
-  console.log(url)
+  let url = `templates/${manufacturer}/${family}`;
   //console.log(pluto);
   fetch(url)  
   .then(  
@@ -120,14 +119,18 @@ function dynamicDropdown (listName, pluto, pippo) {
         return;
       }
       // Examine the text in the response  
-      response.json().then((data) => {
+      response.json()
+      .then((data) => {
         list = [];
-        console.log(listName);
-        console.log(pluto);
-        console.log(data);
-        data.forEach(element => {
-          list.push(element[listName]);
-        });
+        if (manufacturer === null && family === null){
+          data.forEach(element => list.push(element[listName]));
+        }
+        if (manufacturer !== null && family===null){
+          data.filter(element => element.manufacturer === manufacturer).forEach(element => list.push(element[listName]));
+        };
+        if (manufacturer !== null && family !== null){
+          data.filter(element => element.family === family).forEach(element => list.push(element[listName]));
+        };
         let unique = [...new Set(list)];
         let option;
         for (let i = 0; i < unique.length; i++) {

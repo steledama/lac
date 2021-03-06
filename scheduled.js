@@ -10,7 +10,7 @@ const serverZabbix = '127.0.0.1'
 //for each printer to monitor (taken from printers.json)...
 printers.forEach(printer => {
     //find in from templates.json printers and add oids, serialOid and manufacturer to printer
-    let printerTemplate = templates.find(template => template.manufacturer === printer.manufactuer && template.family === printer.family && template.model === printer.model);
+    let printerTemplate = templates.find(template => template.model === printer.model);
     printer["oids"] = printerTemplate.oids;
     printer["serialOid"] = printerTemplate.serialOid
     printer["manufacturer"]= printerTemplate.manufacturer
