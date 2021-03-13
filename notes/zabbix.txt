@@ -1,0 +1,81 @@
+zabbix 192.168.1.182 appliance zabbix
+
+sudo apt-get update
+sudo apt-get upgrade
+
+SERVER POSTA
+sudo apt-get install nano
+sudo apt-get install ssmtp
+sudo nano /etc/ssmtp/ssmtp.conf
+Adjust and add as necessary to match the following parameters
+Change MyEmailAddress and MyPassword to your own.
+
+# Config file for sSMTP sendmail
+#
+# The person who gets all mail for userids < 1000
+# Make this empty to disable rewriting.
+#root=postmaster
+root=MyEmailAddress@gmail.com
+
+# The place where the mail goes. The actual machine name is required no
+# MX records are consulted. Commonly mailhosts are named mail.domain.com
+#mailhub=mail
+mailhub=smtp.gmail.com:587
+
+AuthUser=MyEmailAddress@gmail.com
+AuthPass=MyPassword
+UseTLS=YES
+UseSTARTTLS=YES
+
+# Where will the mail seem to come from?
+#rewriteDomain=
+rewriteDomain=gmail.com
+
+# The full hostname
+#hostname=MyMediaServer.home
+hostname=MyMediaServer.home
+
+# Are users allowed to set their own From: address?
+# YES - Allow the user to specify their own From: address
+# NO - Use the system generated From: address
+FromLineOverride=YES
+
+test
+echo Test message from Linux server using ssmtp | sudo ssmtp -vvv stefano@clasrl.com
+
+espressione regolare trigger soglia
+{XEROX 3655:KIT.last()}<=10 and {XEROX 3655:KIT.last()}>5 and {XEROX 3655:INFO.nodata(3w)}=0
+{XEROX 3655:KIT.last()}<=5 and {XEROX 3655:KIT.last()}>0 and {XEROX 3655:INFO.nodata(3w)}=0
+{XEROX 3655:KIT.last()}=0 and {XEROX 3655:KIT.last()}=0 and {XEROX 3655:INFO.nodata(3w)}=0
+
+operazione
+oggetto
+{HOST.NAME1}: {EVENT.NAME}
+messaggio
+{ITEM.NAME1}: {ITEM.VALUE1}
+Email generata automaticamente da LAC
+
+DATI VISIBILI OLTRE LE 24h
+While many things in the frontend can be configured using the frontend itself, some customisations are currently only possible by editing a definitions file.
+This file is defines.inc.php located in /include of the Zabbix HTML document directory.
+OVERVIEW
+Only values that fall within the last 24 hours are displayed by default. This limit has been introduced with the aim of improving initial loading times for large pages of latest data. It is also possible to change this limitation by changing the value of ZBX_HISTORY_PERIOD varant in include/defines.inc.php
+ZBX_HISTORY_PERIOD
+The maximum period to display history data in Latest data, Web, Overview pages and Data overview screen element in seconds. By default set to 86400 seconds (24 hours). Unlimited period, if set to 0 seconds.
+sudo nano /usr/share/zabbix/include/defines.inc.php
+
+togliere k
+sudo nano /usr/share/zabbix/include/func.inc.php
+$blackList = array('%','ms','rpm');
+
+backup
+sudo nano /etc/fstab
+//192.168.1.116/Xerox/LAC_backup /mnt/LAC_backup cifs username=stefano,password=pomodoro 0 0
+
+password mysql
+sudo nano /root/.my.cnf
+IqkuQOX1Sp
+
+sudo mysqldump -u root -p zabbix > zabbix_dump.sql
+inserire doppia password
+

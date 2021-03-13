@@ -1,6 +1,0 @@
-echo CONTATORI > %2.txt
-SNMPWALK -v1 -c public %1 1.3.6.1.4.1.253.8.53.13.2.1 >> %2.txt
-echo. >> %2.txt
-
-echo COMSUMABILI >> %2.txt
-SNMPWALK -v1 -c public %1 1.3.6.1.2.1.43.11.1.1 >> %2.txt
