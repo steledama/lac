@@ -15,23 +15,20 @@ count = (data) => {
   let el = document.getElementById('counter');
   let name = 'printer';
   if (data) {
-    if (data > 1) {
-      name = 'printers';
-    }
-    el.innerHTML = data + ' monitored ' + name;
-  } else {
-    el.innerHTML = 'No monitored ' + name;
+    if (data > 1) name = 'printers';
+    el.innerHTML = `${data} monitored ${name}`;
   }
+  else el.innerHTML = `No monitored ${name}`;
 };
 
 fetchAll = () => {
   let data = '';
   if (printers.length > 0) {
     for (i = 0; i < printers.length; i++) {
-      data += '<tr>';
+      data += `<tr>`;
       data += `<td>${printers[i].manufacturer} ${printers[i].family} ${printers[i].model} ${printers[i].ip}</td>`;
-      data += '<td><button onclick="deletePrinter(' + i + ')">delete</button></td>';
-      data += '</tr>';
+      data += `<td><button onclick="deletePrinter(${i})">delete</button></td>`;
+      data += `</tr>`;
     }
   }
   count(printers.length);
@@ -155,4 +152,3 @@ if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-
 alert("You have entered an invalid IP address!")
 return (false)
 }
-  
