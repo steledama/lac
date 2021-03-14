@@ -1,11 +1,11 @@
 const snmp = require("net-snmp");
 const { exec } = require("child_process");
 
-const templates = require("./server/profiles.json");
-const printers = require('./server/printers.json');
+const templates = require("../server/profiles.json");
+const printers = require('../server/printers.json');
 const { resolve } = require("path");
 
-const serverZabbix = '127.0.0.1'
+const serverZabbix = '192.168.1.6'
 
 //for each printer to monitor (taken from printers.json)...
 printers.forEach(printer => {
@@ -62,7 +62,7 @@ function snmpGet(printer) {
 //function to send results to zabbix server
 function sendZabbix(printer) {
     for (const [key, value] of Object.entries(printer.toSend)) {
-        exec(`${__dirname}/zabbix_sender -z ${serverZabbix} -s ${printer.manufacturer}${printer.model}_${printer.serial} -k ${key} -o ${value}`, (error, stdout, stderr) => {
+        exec(`${__dirname}\\zabbix_sender.exe -z ${serverZabbix} -s ${printer.manufacturer}${printer.model}_${printer.serial} -k ${key} -o ${value}`, (error, stdout, stderr) => {
             if (error) {
                 console.log(`error: ${error.message}`);
                 return;

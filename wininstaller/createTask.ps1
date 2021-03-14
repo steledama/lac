@@ -1,7 +1,7 @@
 # Create a new task action
     $taskAction = New-ScheduledTaskAction `
         -Execute '"C:\Program Files\nodejs\node.exe"' `
-        -Argument 'C:\LAC\scheduled.js'
+        -Argument 'C:\LAC\bin\scheduled.js'
     $taskAction
 # Create a new trigger (Daily at time of installation)
     $time = Get-Date -DisplayHint time

@@ -2,21 +2,20 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "LAC"
-#define MyAppShortName "LAC"
-#define MyAppLCShortName "LAC"
+#define MyAppLCShortName "lac"
 #define MyAppVersion "1.0"
 #define MyAppPublisher "Stefano Pompa"
 #define MyAppURL "https://github.com/steledama/lac"
-;#define MyAppExeName "winstart-browser.bat"
+#define MyAppExeName "lac.bat"
 
 #define MyAppIcon "web-trifecta-badge.ico"
 
 #define NSSM "nssm.exe"
 #define NSSM32 "nssm-x86.exe"
 #define NSSM64 "nssm.exe"
-#define NODE32 "node-v0.10.4-x86.msi"
-#define NODE64 "node-v0.10.4-x64.msi"
-#define NODE "node-v0.10.4-x64.msi"
+#define NODE32 "node-v14.16.0-x86.msi"
+#define NODE64 "node-v14.16.0-x64.msi"
+#define NODE "node-v14.16.0-x64.msi"
 #define USERPROFILE "C:\Users\stefa"
 
 
@@ -32,7 +31,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName=C:\{#MyAppShortName}
+DefaultDirName=C:\{#MyAppName}
 DisableDirPage=yes
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
@@ -41,8 +40,8 @@ DisableProgramGroupPage=yes
 ;InfoAfterFile={#USERPROFILE}\Downloads\after.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir={#USERPROFILE}\Desktop
-OutputBaseFilename={#MyAppShortName}agent_install
+OutputDir={#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller
+OutputBaseFilename={#MyAppName}agent_install
 Compression=lzma
 SolidCompression=yes
 
@@ -53,56 +52,57 @@ Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 
 
 [Files]
-Source: "{#USERPROFILE}\Downloads\{#MyAppShortName}-master\winstaller\README.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Downloads\{#MyAppShortName}-master\winstaller\winstart-server.bat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Downloads\{#MyAppShortName}-master\winstaller\winstart-browser.bat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Downloads\{#MyAppShortName}-master\winstaller\msie-app.hta"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Downloads\{#MyAppShortName}-master\winstaller\msie-app-secure.hta"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Downloads\{#MyAppShortName}-master\winstaller\{#NODE32}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Downloads\{#MyAppShortName}-master\winstaller\{#NODE64}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Downloads\{#MyAppShortName}-master\winstaller\{#NSSM64}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Downloads\{#MyAppShortName}-master\winstaller\{#NSSM32}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Downloads\{#MyAppShortName}-master\winstaller\{#MyAppIcon}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Downloads\{#MyAppShortName}-master\{#MyAppShortName}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\{#MyAppIcon}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\README.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\{#NODE32}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\{#NODE64}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\{#NSSM64}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\{#NSSM32}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\createTask.ps1"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\unregisterTask.ps1"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\agent\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\node_modules\*"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 
 [Icons]
-;Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\{#MyAppIcon}"
+Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\{#MyAppIcon}"
 
 ; Here's an example of how you could use a start menu item for just Chrome, no batch file
-Name: "{group}\{#MyAppName}"; Filename: "{pf32}\Google\Chrome\Application\chrome.exe"; Parameters: "--app=http://localhost:5566 --user-data-dir=%APPDATA%\{#MyAppShortName}\"; IconFilename: "{app}\{#MyAppIcon}"
+; Name: "{group}\{#MyAppName}"; Filename: "{pf32}\Google\Chrome\Application\chrome.exe"; Parameters: "--app=http://localhost:5566 --user-data-dir=%APPDATA%\{#MyAppName}\"; IconFilename: "{app}\{#MyAppIcon}"
 
 
 [Run]
-; postinstall launch
+;Postinstall launch
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent runhidden
 
 ; These all run with 'runascurrentuser' (i.e. admin) whereas 'runasoriginaluser' would refer to the logged in user
 ; Install Node
 Filename: "{sys}\msiexec.exe"; Parameters: "/passive /i ""{app}\{#NODE}""";
 
+; Download node_modules with npm
+Filename: "{pf64}\nodejs\node.exe"; Parameters: "npm install --quiet"; Flags: runhidden;
+
 ; Add Firewall Rules
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Node In"" program=""{pf64}\nodejs\node.exe"" dir=in action=allow enable=yes"; Flags: runhidden;
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Node Out"" program=""{pf64}\nodejs\node.exe"" dir=out action=allow enable=yes"; Flags: runhidden;
 
 ; Add System Service
-Filename: "{app}\{#NSSM}"; Parameters: "install {#MyAppShortName} ""{pf64}\nodejs\node.exe"" ""{app}\bin\server.js"" ""5566"""; Flags: runhidden;
-Filename: "{sys}\net.exe"; Parameters: "start {#MyAppShortName}"; Flags: runhidden;
-;Filename: "{pf64}\nodejs\node.exe"; Parameters: "{app}\bin\windows-service-installer.js install"; Flags: runhidden;
-;Filename: "{sys}\net.exe"; Parameters: "start {#MyAppLCShortName}"; Flags: runhidden;
+Filename: "{app}\{#NSSM}"; Parameters: "install {#MyAppName} ""{pf64}\nodejs\node.exe"" ""{app}\server\server.js"" ""5566"""; Flags: runhidden;
+Filename: "{sys}\net.exe"; Parameters: "start {#MyAppName}"; Flags: runhidden;
 
 ; Powershell script to create scheduled task
 Filename: "powershell.exe"; \
-  Parameters: "-ExecutionPolicy Bypass -File ""{app}\createTask.ps1"""; \
-  WorkingDir: {app}; Flags: runhidden
+  Parameters: "-ExecutionPolicy Bypass -File ""{app}\bin\createTask.ps1"""; \
+  WorkingDir: {app}\bin; Flags: runhidden
+
+; Open web browser
+;Filename: http://localhost:5566; Description: "lac"; Flags: postinstall shellexec
 
 [UninstallRun]
 ; Removes System Service
-Filename: "{sys}\net.exe"; Parameters: "stop {#MyAppShortName}"; Flags: runhidden;
-Filename: "{app}\{#NSSM}"; Parameters: "remove {#MyAppShortName} confirm"; Flags: runhidden;
-Filename: "{sys}\net.exe"; Parameters: "stop {#MyAppLCShortName}"; Flags: runhidden;
-Filename: "{pf64}\nodejs\node.exe"; Parameters: "{app}\bin\windows-service-installer.js remove"; Flags: runhidden;
+Filename: "{sys}\net.exe"; Parameters: "stop {#MyAppName}"; Flags: runhidden;
+Filename: "{app}\{#NSSM}"; Parameters: "remove {#MyAppName} confirm"; Flags: runhidden;
 
 ; Remove Firewall Rules
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""Node In"" program=""{pf64}\nodejs\node.exe"""; Flags: runhidden;
@@ -111,7 +111,7 @@ Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=
 ; Uninstall Node
 Filename: "{sys}\msiexec.exe"; Parameters: "/passive /x ""{app}\{#NODE}""";
 
-; Powershell script to create to unregister scheduled task
+; Powershell script to unregister scheduled task
 Filename: "powershell.exe"; \
   Parameters: "-ExecutionPolicy Bypass -File ""{app}\unregisterTask.ps1"""; \
   WorkingDir: {app}; Flags: runhidden
