@@ -29,6 +29,7 @@ goto fine
 
 :: PROFILI ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+::OK
 ::phaser 3200 3320 3635
 :1c1m_xerox
 ::TOT
@@ -39,6 +40,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.1
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set BLKP=%%G
 goto 1c1m_1p
 
+::OK
 ::1c1m1 xerox workcentre 3315 3325 3550
 :1c1m1_xerox
 ::TOT
@@ -52,6 +54,7 @@ for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set BLKR=%%G
 set /A BLKP=(BLKR*100)/BLKT
 goto 1c1m_1p
 
+::OK
 ::1c2m2 xerox phaser 3330 3610 4600 worcentre 3335 3345 3615 4250
 :1c2m2_xerox
 ::TOT
@@ -71,6 +74,7 @@ for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set DRUMR=%%G
 set /A DRUMP=(DRUMR*100)/DRUMT
 goto 1c2m_2p
 
+::OK
 ::1c3m2 xerox VersaLink B400 B405
 :1c3m2_xerox
 ::TOT
@@ -93,6 +97,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.40
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set KITB=%%G
 goto 1c3m_2p1b
 
+::OK
 ::1c4m2 xerox WorkCentre 5225 5230 Versalink B600 B610 B605 B615
 :1c4m2_xerox
 ::TOT
@@ -118,6 +123,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.12
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set FUSB=%%G
 goto 1c4m_2p2b
 
+::OK
 ::1c5m1 xerox WorkCentre 3655
 :1c5m1_xerox
 ::TOT
@@ -143,6 +149,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.5
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set KITP=%%G
 goto 1c5m_5p
 
+::OK
 ::2c3m2 xerox WorkCentre 5325 5330 5335
 :2c3m2_xerox
 ::TOT
@@ -168,6 +175,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.12
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set FUSB=%%G
 goto 2c3m_2p1b
 
+::OK
 ::2c4m2 xerox VersaLink B7025 B7030 B7035
 :2c4m2_xerox
 ::TOT
@@ -197,6 +205,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.12
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set FUSB=%%G
 goto 2c4m_2p2b
 
+::OK
 ::2c4m4 xerox WorkCentre 5945 5955 Altalink B8045 B8055 B8065 B8075 B8090
 :2c4m4_xerox
 ::TOT
@@ -231,6 +240,7 @@ for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set BIASR=%%G
 set /A BIASP=(BIASR*100)/BIAST
 goto 2c4m_4p
 
+::OK
 ::3c6m xerox ColorQube 8570 8580
 :3c6m_xerox
 ::TOT
@@ -262,6 +272,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.6
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set WASB=%%G
 goto 3c6m_5p1b
 
+::OK
 ::3c8m5 xerox VERSALINK C400 C405
 :3c8m5_xerox
 ::TOT
@@ -314,6 +325,7 @@ for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set DRUMR=%%G
 set /A DRUMP=(DRUMR*100)/DRUMT
 goto 3c8m_5p3b
 
+::OK
 ::3c8m8 xerox Phaser 6600 WorkCentre 6605
 :3c8m8_xerox
 ::TOT
@@ -369,6 +381,7 @@ for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set BELTR=%%G
 set /A BELTP=(BELTR*100)/BELTT
 goto 3c8m_8p
 
+::OK
 ::3c11m4 xerox Phaser 6700
 :3c11m4_xerox
 ::TOT
@@ -427,6 +440,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.11
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set BELTT=%%G
 goto 3c11m_10p1b
 
+::OK
 ::3c11m8 xerox VersaLink C505 C500
 :3c11m8_xerox
 ::TOT
@@ -497,6 +511,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.39
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set KITB=%%G
 goto 3c11m_8p3b
 
+::OK
 ::3c12m4 xerox WorxkCentre 6655
 :3c12m4_xerox
 ::TOT
@@ -558,6 +573,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.12
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set BIASP=%%G
 goto 3c12m_12p
 
+::OK
 ::4c6m xerox ColorQube 8900
 :4c6m_xerox
 ::TOT
@@ -592,6 +608,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.6
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set KITP=%%G
 goto 4c6m_5p1b
 
+::OK
 ::5c12m4 xerox WORKCENTRE 7220 7225 7525 7530 7535 7545 7556 7830 7835 7845 7855 AltaLink C8035 8045 C8055 C8070
 :5c12m4_xerox
 ::TOT
@@ -659,6 +676,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.12
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set BIASP=%%G
 goto 5c12m_11p1b
 
+::OK
 ::5c12m8 xerox WorkCentre 7120 7125
 :5c12m8_xerox
 ::TOT
@@ -738,6 +756,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.12
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set FUSB=%%G
 goto 5c12m_8p4b
 
+::OK
 ::5c12m8_2 VersaLink C7020 C7025 C7030
 :5c12m8_2_xerox
 ::TOT
@@ -817,6 +836,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.12
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set FUSB=%%G
 goto 5c12m_8p4b
 
+::OK
 ::6c6m xerox ColorQube 9303
 :6c6m_xerox
 ::TOT
@@ -859,6 +879,7 @@ goto 6c6m_5p1b
 
 ::LEXMARK:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+::OK
 ::6c8m8 lexmark XC4240
 :6c8m8_lexmark
 ::TOT
@@ -929,6 +950,7 @@ for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set YELR=%%G
 set /A YELP=(YELR*100)/YELT
 goto 6c8m_8p
 
+::OK
 ::8c13m13 lexmark C9235 XC9235 XC9245 XC9255 XC9265
 :8c13m13_lexmark
 ::TOT

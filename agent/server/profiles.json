@@ -23,6 +23,1292 @@
   },
   {
     "manufacturer": "xerox",
+    "family": "phaser",
+    "model": 3200,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "phaser",
+    "model": 3320,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": 3315,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": 3325,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "phaser",
+    "model": 3635,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": 3550,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "phaser",
+    "model": 3330,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "phaser",
+    "model": 3610,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "phaser",
+    "model": 4600,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": 3335,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": 3345,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": 3615,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": 4250,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "versalink",
+    "model": "B40x",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.6 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.40": {
+        "name": "maintenanceKit",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "versalink",
+    "model": "B6xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.6 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.10": {
+        "name": "maintenanceKit",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "biasTransferRoll",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": "52xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.6 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.10": {
+        "name": "maintenanceKit",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "biasTransferRoll",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.44": {
+        "name": "impressionsBwWide",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "versalink",
+    "model": "B70xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.6 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.10": {
+        "name": "biasTransferRoll",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "fuser",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.44": {
+        "name": "impressionsBwWide",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "versalink",
+    "model": "B70xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.6 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.10": {
+        "name": "biasTransferRoll",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "fuser",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.44": {
+        "name": "impressionsBwWide",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": "59xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2 ": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "fuser",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "fuser",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "biasTransferRoll",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "biasTransferRoll",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "fuser",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.44": {
+        "name": "impressionsBwWide",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "colorQube",
+    "model": "85xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerCyan",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerMagenta",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerYellow",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerBlack",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "maintenanceKit",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "colorQube",
+    "model": "89xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerCyan",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerMagenta",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerYellow",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "maintenanceKit",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.80": {
+        "name": "impressionsColor1",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.81": {
+        "name": "impressionsColor2",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.82": {
+        "name": "impressionsColor3",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "colorQube",
+    "model": 9303,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerCyan",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerMagenta",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerYellow",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "maintenanceKit",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.43": {
+        "name": "impressionsColorWide",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.44": {
+        "name": "impressionsBwWide",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.80": {
+        "name": "impressionsColor1",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.81": {
+        "name": "impressionsColor2",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.82": {
+        "name": "impressionsColor3",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "versaLink",
+    "model": "C40xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "fuser",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.39": {
+        "name": "maintenanceKit",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "phaser",
+    "model": 6600,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.5": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "fuser",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.8": {
+        "name": "belt",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "belt",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "phaser",
+    "model": 6700,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "drumBlack",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drumCyan",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "drumMagenta",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "drumYellow",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.9": {
+        "name": "fuser",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.10": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.11": {
+        "name": "belt",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "versaLink",
+    "model": "C50x",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.6": {
+        "name": "drumBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drumBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.7": {
+        "name": "drumYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "drumYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.8": {
+        "name": "drumMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "drumMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.9": {
+        "name": "drumCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.9": {
+        "name": "drumCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "fuser",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.39": {
+        "name": "maintenanceKit",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workCentre",
+    "model": 6655,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "drumBlack",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drumCyan",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "drumMagento",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "drumYellow",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.9": {
+        "name": "fuser",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.10": {
+        "name": "wasteToner",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.11": {
+        "name": "belt",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "biasTransferRoll",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": 3655,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1 ": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "drum",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "fuser",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "biasTransferRoll",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "maintenanceKit",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workCentre",
+    "model": 6605,
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.5": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "fuser",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.8": {
+        "name": "belt",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "belt",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
     "family": "workcentre",
     "model": "78xx",
     "oids": {
@@ -37,13 +1323,692 @@
         "name": "tonerBlack",
         "type": "remain"
       },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "drumBlack",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drumCyan",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "drumMagenta",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "drumYellow",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.9": {
+        "name": "fuser",
+        "type": "asIs"
+      },
       "1.3.6.1.2.1.43.11.1.1.9.1.10": {
         "name": "wasteToner",
         "type": "boolean",
-        "isFalse": "pippo"
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.11": {
+        "name": "transferBeltCleaner",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "secondBiasTransferRoll",
+        "type": "asIs"
       },
       "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
         "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.43": {
+        "name": "impressionsColorWide",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.44": {
+        "name": "impressionsBwWide",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": "71xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.6": {
+        "name": "drumBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drumBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.7": {
+        "name": "drumYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "drumYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.8": {
+        "name": "drumMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "drumMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.9": {
+        "name": "drumCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.9": {
+        "name": "drumCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.10": {
+        "name": "secondBiasTransferRoll",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.11": {
+        "name": "transferBelt",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "fuser",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.43": {
+        "name": "impressionsColorWide",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.44": {
+        "name": "impressionsBwWide",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": "72xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "drumBlack",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drumCyan",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "drumMagenta",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "drumYellow",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.9": {
+        "name": "fuser",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.10": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.11": {
+        "name": "transferBeltCleaner",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "secondBiasTransferRoll",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.43": {
+        "name": "impressionsColorWide",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.44": {
+        "name": "impressionsBwWide",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "workcentre",
+    "model": "75xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "drumBlack",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drumCyan",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "drumMagenta",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "drumYellow",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.9": {
+        "name": "fuser",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.10": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.11": {
+        "name": "transferBeltCleaner",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "secondBiasTransferRoll",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.43": {
+        "name": "impressionsColorWide",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.44": {
+        "name": "impressionsBwWide",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "altalink",
+    "model": "C80xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "drumBlack",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drumCyan",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "drumMagenta",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "drumYellow",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.9": {
+        "name": "fuser",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.10": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.11": {
+        "name": "transferBeltCleaner",
+        "type": "asIs"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "secondBiasTransferRoll",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.43": {
+        "name": "impressionsColorWide",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.44": {
+        "name": "impressionsBwWide",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "xerox",
+    "family": "versaLink",
+    "model": "C70xx",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "wasteToner",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.6": {
+        "name": "drumBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drumBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.7": {
+        "name": "drumYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "drumYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.8": {
+        "name": "drumMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "drumMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.9": {
+        "name": "drumCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.9": {
+        "name": "drumCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.10": {
+        "name": "biasTransferRoll",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.11": {
+        "name": "belt",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "fuser",
+        "type": "boolean",
+        "isFalse": 100
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.43": {
+        "name": "impressionsColorWide",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.44": {
+        "name": "impressionsBwWide",
+        "type": "asIs"
+      }
+    }
+  },
+  {
+    "manufacturer": "lexmark",
+    "family": "null",
+    "model": "XC4240",
+    "oids": {
+      "1.3.6.1.2.1.43.5.1.1.17.1": {
+        "name": "serial"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.1": {
+        "name": "tonerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.1": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.2": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.2": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "belt",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "belt",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.4": {
+        "name": "drum",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.4": {
+        "name": "drum",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.5": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.6": {
+        "name": "maintenanceKit",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "maintenanceKit",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.7": {
+        "name": "wasteToner",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "wasteToner",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.8": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "tonerYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.4.1.641.6.4.2.1.1.4.1.1": {
+        "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.641.6.4.2.1.1.4.1.5": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.641.6.4.2.1.1.4.1.6": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.641.6.4.2.1.1.4.1.22": {
+        "name": "impressionsColor3",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.641.6.4.2.1.1.4.1.23": {
+        "name": "impressionsColor2",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.641.6.4.2.1.1.4.1.24": {
+        "name": "impressionsColor1",
         "type": "asIs"
       }
     }
@@ -56,12 +2021,140 @@
       "1.3.6.1.2.1.43.5.1.1.17.1": {
         "name": "serial"
       },
+      "1.3.6.1.2.1.43.11.1.1.8.1.3": {
+        "name": "maintenanceKit",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.3": {
+        "name": "maintenanceKit",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.5": {
+        "name": "developerBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.5": {
+        "name": "developerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.6": {
+        "name": "drumBlack",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.6": {
+        "name": "drumBlack",
+        "type": "remain"
+      },
       "1.3.6.1.2.1.43.11.1.1.8.1.7": {
         "name": "tonerBlack",
-        "type": "asIs"
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.7": {
+        "name": "tonerBlack",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.8": {
+        "name": "developerColor",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.8": {
+        "name": "developerColor",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.9": {
+        "name": "drumCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.9": {
+        "name": "drumCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.10": {
+        "name": "tonerCyan",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.10": {
+        "name": "tonerCyan",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.11": {
+        "name": "fuser",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.11": {
+        "name": "fuser",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.12": {
+        "name": "drumMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
+        "name": "drumMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.13": {
+        "name": "tonerMagenta",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.13": {
+        "name": "tonerMagenta",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.14": {
+        "name": "wasteToner",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.14": {
+        "name": "wasteToner",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.15": {
+        "name": "drumYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.15": {
+        "name": "drumYellow",
+        "type": "remain"
+      },
+      "1.3.6.1.2.1.43.11.1.1.8.1.16": {
+        "name": "tonerYellow",
+        "type": "total"
+      },
+      "1.3.6.1.2.1.43.11.1.1.9.1.16": {
+        "name": "tonerYellow",
+        "type": "remain"
       },
       "1.3.6.1.4.1.641.6.4.2.1.1.4.1.1": {
         "name": "impressionsTotal",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.641.6.4.2.1.1.4.1.5": {
+        "name": "impressionsBw",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.641.6.4.2.1.1.4.1.6": {
+        "name": "impressionsColor",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.641.6.4.2.1.1.4.1.22": {
+        "name": "impressionsColor3",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.641.6.4.2.1.1.4.1.23": {
+        "name": "impressionsColor2",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.641.6.4.2.1.1.4.1.24": {
+        "name": "impressionsColor1",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.641.6.4.2.2.1.4.1.1": {
+        "name": "impressionsBwWide",
+        "type": "asIs"
+      },
+      "1.3.6.1.4.1.641.6.4.2.2.1.5.1.1": {
+        "name": "impressionsColorWide",
         "type": "asIs"
       }
     }
