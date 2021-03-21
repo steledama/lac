@@ -4,15 +4,16 @@ const { exec } = require("child_process");
 const templates = require("../server/profiles.json");
 const printers = require('../server/printers.json');
 const { resolve } = require("path");
+const os = require('os');
 
-const serverZabbix = '192.168.1.6'
+const version = "1.0.0";
+const serverZabbix = 'stele.dynv6.net';
 
 //for each printer to monitor (taken from printers.json)...
 printers.forEach(printer => {
     //find in from templates.json printers and add oids, serialOid and manufacturer to printer
     let printerTemplate = templates.find(template => template.model === printer.model);
     printer["oids"] = printerTemplate.oids;
-
     //take only oid and put in array
     printer ["oidsArray"] = [];
     for (oid in printer.oids){
@@ -50,8 +51,11 @@ function snmpGet(printer) {
                 else printer.toSend[item.name] = true;
             }
         })
-        console.log (printer);
         // call the function to send data to zabbix
+        printer.toSend.hostname = os.hostname();
+        printer.toSend.date = new Date().toISOString().replace(/T.+/, '');
+        printer.toSend.version = version
+        //console.log(printer.toSend.date);
         sendZabbix(printer);
     });
     session.trap(snmp.TrapType.LinkDown, function (error) {

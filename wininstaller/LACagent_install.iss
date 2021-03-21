@@ -3,7 +3,7 @@
 
 #define MyAppName "LAC"
 #define MyAppLCShortName "lac"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.0.0"
 #define MyAppPublisher "Stefano Pompa"
 #define MyAppURL "https://github.com/steledama/lac"
 #define MyAppExeName "lac.bat"
@@ -58,11 +58,12 @@ Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\{#NODE32}"; D
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\{#NODE64}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\{#NSSM64}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\{#NSSM32}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\createTask.ps1"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\scheduledTaskAgent.ps1"; DestDir: "{app}\bin"; Flags: ignoreversion
+;Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\scheduledTaskServer.ps1"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\unregisterTask.ps1"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\lac.bat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\agent\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\node_modules\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\node_modules\*"; DestDir: "{app}\node_modules"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 
@@ -74,36 +75,41 @@ Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFi
 
 
 [Run]
-;Postinstall launch
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent runhidden
-
 ; These all run with 'runascurrentuser' (i.e. admin) whereas 'runasoriginaluser' would refer to the logged in user
 ; Install Node
 Filename: "{sys}\msiexec.exe"; Parameters: "/passive /i ""{app}\{#NODE}""";
 
 ; Download node_modules with npm
-Filename: "{pf64}\nodejs\node.exe"; Parameters: "npm install --quiet"; Flags: runhidden;
+;Filename: "{pf64}\nodejs\node.exe"; Parameters: "npm install --quiet"; Flags: runhidden;
 
 ; Add Firewall Rules
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Node In"" program=""{pf64}\nodejs\node.exe"" dir=in action=allow enable=yes"; Flags: runhidden;
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Node Out"" program=""{pf64}\nodejs\node.exe"" dir=out action=allow enable=yes"; Flags: runhidden;
 
 ; Add System Service
-Filename: "{app}\{#NSSM}"; Parameters: "install {#MyAppName} ""{pf64}\nodejs\node.exe"" ""{app}\server\server.js"" ""5566"""; Flags: runhidden;
+;Filename: "{pf64}\nodejs\node.exe"; Parameters: "{app}\bin\windows-service-installer.js"; Flags: runhidden;
+Filename: "{app}\{#NSSM}"; Parameters: "install {#MyAppName} ""{pf64}\nodejs\node.exe"" ""{app}\server\server.js"""; Flags: runhidden;
 Filename: "{sys}\net.exe"; Parameters: "start {#MyAppName}"; Flags: runhidden;
 
-; Powershell script to create scheduled task
+; Powershell scripts to create scheduled tasks: agent and server
 Filename: "powershell.exe"; \
-  Parameters: "-ExecutionPolicy Bypass -File ""{app}\bin\createTask.ps1"""; \
+  Parameters: "-ExecutionPolicy Bypass -File ""{app}\bin\scheduledTaskAgent.ps1"""; \
   WorkingDir: {app}\bin; Flags: runhidden
+;Filename: "powershell.exe"; \
+  ;Parameters: "-ExecutionPolicy Bypass -File ""{app}\bin\scheduledTaskServer.ps1"""; \
+  ;WorkingDir: {app}\bin; Flags: runhidden
+
+;Postinstall launch
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent runhidden
 
 ; Open web browser
 ;Filename: http://localhost:5566; Description: "lac"; Flags: postinstall shellexec
 
 [UninstallRun]
 ; Removes System Service
-Filename: "{sys}\net.exe"; Parameters: "stop {#MyAppName}"; Flags: runhidden;
-Filename: "{app}\{#NSSM}"; Parameters: "remove {#MyAppName} confirm"; Flags: runhidden;
+;Filename: "{sys}\net.exe"; Parameters: "stop {#MyAppName}"; Flags: runhidden;
+;Filename: "{pf64}\nodejs\node.exe"; Parameters: "{app}\bin\windows-service-uninstall.js"; Flags: runhidden;
+;Filename: "{app}\{#NSSM}"; Parameters: "remove {#MyAppName} confirm"; Flags: runhidden;
 
 ; Remove Firewall Rules
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""Node In"" program=""{pf64}\nodejs\node.exe"""; Flags: runhidden;
@@ -114,8 +120,8 @@ Filename: "{sys}\msiexec.exe"; Parameters: "/passive /x ""{app}\{#NODE}""";
 
 ; Powershell script to unregister scheduled task
 Filename: "powershell.exe"; \
-  Parameters: "-ExecutionPolicy Bypass -File ""{app}\unregisterTask.ps1"""; \
+  Parameters: "-ExecutionPolicy Bypass -File ""{app}\bin\unregisterTask.ps1"""; \
   WorkingDir: {app}; Flags: runhidden
 
 ; Remove all leftovers
-Filename: "{sys}\rmdir"; Parameters: "-r ""{app}""";
+;Filename: "{sys}\rmdir"; Parameters: "-r ""{app}""";

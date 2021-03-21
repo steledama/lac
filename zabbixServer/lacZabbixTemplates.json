@@ -1,7 +1,7 @@
 {
     "zabbix_export": {
         "version": "5.2",
-        "date": "2021-03-20T21:02:35Z",
+        "date": "2021-03-21T22:08:11Z",
         "groups": [
             {
                 "name": "LAC"
@@ -141,70 +141,6 @@
                     {
                         "macro": "{$MED}",
                         "value": "5"
-                    }
-                ]
-            },
-            {
-                "template": "date",
-                "name": "date",
-                "groups": [
-                    {
-                        "name": "LAC"
-                    }
-                ],
-                "applications": [
-                    {
-                        "name": "information"
-                    },
-                    {
-                        "name": "supplies"
-                    },
-                    {
-                        "name": "usage"
-                    }
-                ],
-                "items": [
-                    {
-                        "name": "date",
-                        "type": "TRAP",
-                        "key": "date",
-                        "delay": "0",
-                        "history": "365d",
-                        "trends": "0",
-                        "value_type": "TEXT",
-                        "applications": [
-                            {
-                                "name": "information"
-                            },
-                            {
-                                "name": "supplies"
-                            },
-                            {
-                                "name": "usage"
-                            }
-                        ],
-                        "triggers": [
-                            {
-                                "expression": "{nodata(15d)}=1",
-                                "name": "Notice: Data has not arrived for 15 days",
-                                "priority": "WARNING"
-                            },
-                            {
-                                "expression": "{nodata(20d)}=1",
-                                "name": "Notice: Data has not arrived for 20 days",
-                                "priority": "AVERAGE"
-                            },
-                            {
-                                "expression": "{nodata(25d)}=1",
-                                "name": "Notice: Data has not arrived for 25 days",
-                                "priority": "HIGH"
-                            },
-                            {
-                                "expression": "{nodata(30d)}=1",
-                                "name": "Notice: Data has not arrived for 30 days",
-                                "priority": "DISASTER"
-                            }
-                        ]
                     }
                 ]
             },
@@ -718,8 +654,8 @@
                 ]
             },
             {
-                "template": "impressionsBlack",
-                "name": "impressionsBlack",
+                "template": "impressionsBw",
+                "name": "impressionsBw",
                 "groups": [
                     {
                         "name": "LAC"
@@ -732,9 +668,9 @@
                 ],
                 "items": [
                     {
-                        "name": "impressionsBlack",
+                        "name": "impressionsBw",
                         "type": "TRAP",
-                        "key": "impressionsBlack",
+                        "key": "impressionsBw",
                         "delay": "0",
                         "history": "365d",
                         "applications": [
@@ -746,8 +682,8 @@
                 ]
             },
             {
-                "template": "impressionsBlackWide",
-                "name": "impressionsBlackWide",
+                "template": "impressionsBwWide",
+                "name": "impressionsBwWide",
                 "groups": [
                     {
                         "name": "LAC"
@@ -760,9 +696,9 @@
                 ],
                 "items": [
                     {
-                        "name": "impressionsBlackWide",
+                        "name": "impressionsBwWide",
                         "type": "TRAP",
-                        "key": "impressionsBlackWide",
+                        "key": "impressionsBwWide",
                         "delay": "0",
                         "history": "365d",
                         "applications": [
@@ -962,11 +898,31 @@
                 ],
                 "items": [
                     {
+                        "name": "date",
+                        "type": "TRAP",
+                        "key": "date",
+                        "delay": "0",
+                        "history": "10d",
+                        "trends": "0",
+                        "value_type": "TEXT",
+                        "applications": [
+                            {
+                                "name": "information"
+                            },
+                            {
+                                "name": "supplies"
+                            },
+                            {
+                                "name": "usage"
+                            }
+                        ]
+                    },
+                    {
                         "name": "hostname",
                         "type": "TRAP",
                         "key": "hostname",
                         "delay": "0",
-                        "history": "30d",
+                        "history": "10d",
                         "trends": "0",
                         "value_type": "TEXT",
                         "applications": [
@@ -977,38 +933,11 @@
                         "request_method": "POST"
                     },
                     {
-                        "name": "ip",
-                        "type": "ZABBIX_ACTIVE",
-                        "key": "ip",
-                        "delay": "24h",
-                        "history": "30d",
-                        "trends": "0",
-                        "value_type": "TEXT",
-                        "applications": [
-                            {
-                                "name": "information"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "lac",
-                        "type": "ZABBIX_ACTIVE",
-                        "key": "lac",
-                        "delay": "24h",
-                        "trends": "0",
-                        "value_type": "TEXT",
-                        "applications": [
-                            {
-                                "name": "information"
-                            }
-                        ]
-                    },
-                    {
                         "name": "version",
-                        "type": "ZABBIX_ACTIVE",
+                        "type": "TRAP",
                         "key": "version",
-                        "delay": "24h",
-                        "history": "30d",
+                        "delay": "0",
+                        "history": "10d",
                         "trends": "0",
                         "value_type": "TEXT",
                         "applications": [
@@ -1027,13 +956,10 @@
                         "name": "belt"
                     },
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drum"
                     },
                     {
-                        "name": "impressionsBlack"
+                        "name": "impressionsBw"
                     },
                     {
                         "name": "impressionsColor"
@@ -1091,9 +1017,6 @@
                 "name": "Lexmark XC9235 XC9245 XC9255 XC9265",
                 "templates": [
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "developerBlack"
                     },
                     {
@@ -1115,10 +1038,10 @@
                         "name": "fuser"
                     },
                     {
-                        "name": "impressionsBlack"
+                        "name": "impressionsBw"
                     },
                     {
-                        "name": "impressionsBlackWide"
+                        "name": "impressionsBwWide"
                     },
                     {
                         "name": "impressionsColor"
@@ -1599,10 +1522,7 @@
                 "name": "Xerox ColorQube 9303",
                 "templates": [
                     {
-                        "name": "date"
-                    },
-                    {
-                        "name": "impressionsBlackWide"
+                        "name": "impressionsBwWide"
                     },
                     {
                         "name": "impressionsColor1"
@@ -1660,9 +1580,6 @@
                 "name": "Xerox phaser 3200 3320 3635 xerox workcentre 3315 3325 3550",
                 "templates": [
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "impressionsTotal"
                     },
                     {
@@ -1688,9 +1605,6 @@
                 "name": "Xerox phaser 3330 3610 4600 worcentre 3335 3345 3615 4250",
                 "templates": [
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drum"
                     },
                     {
@@ -1715,14 +1629,118 @@
                 ]
             },
             {
+                "template": "Xerox Phaser 6130N",
+                "name": "Xerox Phaser 6130N",
+                "templates": [
+                    {
+                        "name": "drum"
+                    },
+                    {
+                        "name": "fuser"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$BLKR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.1"
+                    },
+                    {
+                        "macro": "{$BLKT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.1"
+                    },
+                    {
+                        "macro": "{$BN}",
+                        "value": "SNMPv2-SMI::enterprises.253.8.53.13.2.1.6.1.20.34"
+                    },
+                    {
+                        "macro": "{$COL}",
+                        "value": "SNMPv2-SMI::enterprises.253.8.53.13.2.1.6.1.20.33"
+                    },
+                    {
+                        "macro": "{$CYAR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.4"
+                    },
+                    {
+                        "macro": "{$CYAT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.4"
+                    },
+                    {
+                        "macro": "{$DRUMR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.41"
+                    },
+                    {
+                        "macro": "{$DRUMT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.41"
+                    },
+                    {
+                        "macro": "{$FUSB}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.12"
+                    },
+                    {
+                        "macro": "{$KITB}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.39"
+                    },
+                    {
+                        "macro": "{$MAGR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.3"
+                    },
+                    {
+                        "macro": "{$MAGT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.3"
+                    },
+                    {
+                        "macro": "{$TOT}",
+                        "value": "SNMPv2-SMI::enterprises.253.8.53.13.2.1.6.1.20.1"
+                    },
+                    {
+                        "macro": "{$WASB}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.5"
+                    },
+                    {
+                        "macro": "{$YELR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.2"
+                    },
+                    {
+                        "macro": "{$YELT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.2"
+                    }
+                ]
+            },
+            {
                 "template": "Xerox Phaser 6600 WorkCentre 6605",
                 "name": "Xerox Phaser 6600 WorkCentre 6605",
                 "templates": [
                     {
                         "name": "belt"
-                    },
-                    {
-                        "name": "date"
                     },
                     {
                         "name": "drum"
@@ -1731,7 +1749,7 @@
                         "name": "fuser"
                     },
                     {
-                        "name": "impressionsBlack"
+                        "name": "impressionsBw"
                     },
                     {
                         "name": "impressionsColor"
@@ -1783,9 +1801,6 @@
                         "name": "biasTransferRoll"
                     },
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drumBlack"
                     },
                     {
@@ -1801,7 +1816,7 @@
                         "name": "fuser"
                     },
                     {
-                        "name": "impressionsBlack"
+                        "name": "impressionsBw"
                     },
                     {
                         "name": "impressionsColor"
@@ -1853,9 +1868,6 @@
                 "name": "Xerox VersaLink B400 B405",
                 "templates": [
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drum"
                     },
                     {
@@ -1890,16 +1902,13 @@
                         "name": "biasTransferRoll"
                     },
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drum"
                     },
                     {
                         "name": "fuser"
                     },
                     {
-                        "name": "impressionsBlackWide"
+                        "name": "impressionsBwWide"
                     },
                     {
                         "name": "impressionsTotal"
@@ -1930,16 +1939,13 @@
                 "name": "Xerox VersaLink C400 C405",
                 "templates": [
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drum"
                     },
                     {
                         "name": "fuser"
                     },
                     {
-                        "name": "impressionsBlack"
+                        "name": "impressionsBw"
                     },
                     {
                         "name": "impressionsColor"
@@ -2054,9 +2060,6 @@
                 "name": "Xerox VersaLink C505 C500",
                 "templates": [
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drumBlack"
                     },
                     {
@@ -2072,7 +2075,7 @@
                         "name": "fuser"
                     },
                     {
-                        "name": "impressionsBlack"
+                        "name": "impressionsBw"
                     },
                     {
                         "name": "impressionsColor"
@@ -2120,9 +2123,6 @@
                 "template": "Xerox WorckCentre 8900",
                 "name": "Xerox WorckCentre 8900",
                 "templates": [
-                    {
-                        "name": "date"
-                    },
                     {
                         "name": "impressionsColor1"
                     },
@@ -2177,9 +2177,6 @@
                 "templates": [
                     {
                         "name": "biasTransferRoll"
-                    },
-                    {
-                        "name": "date"
                     },
                     {
                         "name": "drum"
@@ -2249,9 +2246,6 @@
                         "name": "biasTransferRoll"
                     },
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drum"
                     },
                     {
@@ -2283,16 +2277,13 @@
                 "name": "Xerox WorkCentre 5325 5330 5335",
                 "templates": [
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drum"
                     },
                     {
                         "name": "fuser"
                     },
                     {
-                        "name": "impressionsBlackWide"
+                        "name": "impressionsBwWide"
                     },
                     {
                         "name": "impressionsTotal"
@@ -2326,16 +2317,13 @@
                         "name": "biasTransferRoll"
                     },
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drum"
                     },
                     {
                         "name": "fuser"
                     },
                     {
-                        "name": "impressionsBlackWide"
+                        "name": "impressionsBwWide"
                     },
                     {
                         "name": "impressionsTotal"
@@ -2372,9 +2360,6 @@
                         "name": "biasTransferRoll"
                     },
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drumBlack"
                     },
                     {
@@ -2390,10 +2375,10 @@
                         "name": "fuser"
                     },
                     {
-                        "name": "impressionsBlack"
+                        "name": "impressionsBw"
                     },
                     {
-                        "name": "impressionsBlackWide"
+                        "name": "impressionsBwWide"
                     },
                     {
                         "name": "impressionsColor"
@@ -2448,9 +2433,6 @@
                         "name": "biasTransferRoll"
                     },
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drumBlack"
                     },
                     {
@@ -2466,10 +2448,10 @@
                         "name": "fuser"
                     },
                     {
-                        "name": "impressionsBlack"
+                        "name": "impressionsBw"
                     },
                     {
-                        "name": "impressionsBlackWide"
+                        "name": "impressionsBwWide"
                     },
                     {
                         "name": "impressionsColor"
@@ -2530,9 +2512,6 @@
                         "name": "biasTransferRoll"
                     },
                     {
-                        "name": "date"
-                    },
-                    {
                         "name": "drumBlack"
                     },
                     {
@@ -2548,7 +2527,7 @@
                         "name": "fuser"
                     },
                     {
-                        "name": "impressionsBlack"
+                        "name": "impressionsBw"
                     },
                     {
                         "name": "impressionsColor"

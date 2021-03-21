@@ -10,15 +10,15 @@ const cors = require('cors');
 app.use(cors());
 
 // This is for hosting files
-app.use(express.static('public'));
+app.use(express.static(`${__dirname}/public`));
 
 // Load printers json file
 let printers;
-let printersExists = fs.existsSync('printers.json');
+let printersExists = fs.existsSync(`${__dirname}/printers.json`);
 if (printersExists) {
   // Read the file
   console.log('loading printers');
-  let txt = fs.readFileSync('printers.json', 'utf8');
+  let txt = fs.readFileSync(`${__dirname}/printers.json`, 'utf8');
   // Parse it  back to object
   printers = JSON.parse(txt);
 } else {
@@ -29,11 +29,11 @@ if (printersExists) {
 
 // Load profiles json file
 let profiles;
-let profilesExists = fs.existsSync('profiles.json');
+let profilesExists = fs.existsSync(`${__dirname}/profiles.json`);
 if (profilesExists) {
   // Read the file
   console.log('loading profiles');
-  let txt = fs.readFileSync('profiles.json', 'utf8');
+  let txt = fs.readFileSync(`${__dirname}/profiles.json`, 'utf8');
   // Parse it  back to object
   profiles = JSON.parse(txt);
 } else {
@@ -56,7 +56,7 @@ function listen() {
 app.use(function (req, res, next) {
   res.setHeader(
     'Content-Security-Policy-Report-Only',
-    "script-src 'self' 'unsafe-inline' http://localhost:3000; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self'"
+    "script-src 'self' 'unsafe-inline' http://localhost:5566; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self'"
   );
   next();
 });
@@ -95,7 +95,7 @@ function addPrinter(req, res) {
   console.log(`Adding printer...`);
   // Write a file each time we get a new printer
   let json = JSON.stringify(printers, null, 2);
-  fs.writeFile('printers.json', json, 'utf8', finished);
+  fs.writeFile(`${__dirname}/printers.json`, json, 'utf8', finished);
   function finished(err) {
     console.log('Updated printers.json with the new printer');
     // Don't send anything back until everything is done
@@ -116,7 +116,7 @@ function deletePrinter(req, res) {
   console.log(`Deleting printer...`);
   // Update printers.json file each time we delete a printer
   let json = JSON.stringify(printers, null, 2);
-  fs.writeFile('printers.json', json, 'utf8', finished);
+  fs.writeFile(`${__dirname}/printers.json`, json, 'utf8', finished);
   function finished(err) {
     console.log('Updated printers.json with the deleted printer');
     // Don't send anything back until everything is done
