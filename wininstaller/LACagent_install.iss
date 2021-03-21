@@ -13,9 +13,9 @@
 #define NSSM "nssm.exe"
 #define NSSM32 "nssm-x86.exe"
 #define NSSM64 "nssm.exe"
-#define NODE32 "node-v14.16.0-x86.msi"
-#define NODE64 "node-v14.16.0-x64.msi"
-#define NODE "node-v14.16.0-x64.msi"
+#define NODE32 "node-v15.12.0-x86.msi"
+#define NODE64 "node-v15.12.0-x64.msi"
+#define NODE "node-v15.12.0-x64.msi"
 #define USERPROFILE "C:\Users\stefa"
 
 
@@ -60,8 +60,9 @@ Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\{#NSSM64}"; D
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\{#NSSM32}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\createTask.ps1"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\unregisterTask.ps1"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstaller\lac.bat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\agent\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\node_modules\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\node_modules\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 
