@@ -6,7 +6,7 @@ const printers = require('../server/printers.json');
 const { resolve } = require("path");
 const os = require('os');
 
-const version = "1.0.0";
+const version = "1.0.1";
 const serverZabbix = 'stele.dynv6.net';
 
 //for each printer to monitor (taken from printers.json)...
@@ -47,7 +47,7 @@ function snmpGet(printer) {
                 printer.toSend[item.name] = Math.round(itemRemain.value/item.value*100);
             }
             if (item.type === "boolean") {
-                if (item.value === item.isFalse)printer.toSend[item.name] = 271072;
+                if (item.value === item.isFalse)printer.toSend[item.name] = "OK";
                 else printer.toSend[item.name] = true;
             }
         })

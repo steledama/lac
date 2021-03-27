@@ -3,7 +3,7 @@
 
 #define MyAppName "LAC"
 #define MyAppLCShortName "lac"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.0.1"
 #define MyAppPublisher "Stefano Pompa"
 #define MyAppURL "https://github.com/steledama/lac"
 #define MyAppExeName "lac.bat"
