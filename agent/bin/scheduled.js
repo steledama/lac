@@ -44,10 +44,10 @@ function snmpGet(printer) {
             if (item.type === "asIs") printer.toSend[item.name] = item.value;
             if (item.type === "total") {
                 let itemRemain = printer.items.find(itemToFind => item.name === itemToFind.name && itemToFind.type === "remain");
-                printer.toSend[item.name] = itemRemain.value/item.value*100;
+                printer.toSend[item.name] = Math.round(itemRemain.value/item.value*100);
             }
             if (item.type === "boolean") {
-                if (item.value === item.isFalse)printer.toSend[item.name] = false;
+                if (item.value === item.isFalse)printer.toSend[item.name] = 271072;
                 else printer.toSend[item.name] = true;
             }
         })

@@ -118,7 +118,7 @@ set /A DRUMP=(DRUMR*100)/DRUMT
 ::BIASB
 set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.10
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set BIASB=%%G
-::BIASB
+::FUSB
 set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.12
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set FUSB=%%G
 goto 1c4m_2p2b
@@ -437,7 +437,7 @@ set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.10
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set WASB=%%G
 ::BELTP
 set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.11
-for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set BELTT=%%G
+for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set BELTP=%%G
 goto 3c11m_10p1b
 
 ::OK
@@ -665,7 +665,7 @@ for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set DRUMYP=%%G
 ::FUSP
 set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.9
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set FUSP=%%G
-::WASB
+::WASB 100
 set _oid=SNMPv2-SMI::mib-2.43.11.1.1.9.1.10
 for /F tokens=4 %%G in ('SNMPWALK -v1 -c public %_ip% %_oid%') do set WASB=%%G
 ::BELTP

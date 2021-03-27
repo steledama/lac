@@ -458,14 +458,14 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.10": {
-        "name": "maintenanceKit",
+        "name": "fuserBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.12": {
-        "name": "biasTransferRoll",
+        "name": "biasTransferRollBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
         "name": "impressionsTotal",
@@ -498,14 +498,14 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.10": {
-        "name": "maintenanceKit",
+        "name": "fuserBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.12": {
-        "name": "biasTransferRoll",
+        "name": "biasTransferRollBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
         "name": "impressionsTotal",
@@ -542,14 +542,14 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.10": {
-        "name": "biasTransferRoll",
+        "name": "biasTransferRollBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.12": {
-        "name": "fuser",
+        "name": "fuserBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
         "name": "impressionsTotal",
@@ -586,14 +586,14 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.10": {
-        "name": "biasTransferRoll",
+        "name": "biasTransferRollBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.12": {
-        "name": "fuser",
+        "name": "fuserBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
         "name": "impressionsTotal",
@@ -645,11 +645,6 @@
         "name": "biasTransferRoll",
         "type": "remain"
       },
-      "1.3.6.1.2.1.43.11.1.1.9.1.12": {
-        "name": "fuser",
-        "type": "boolean",
-        "isFalse": 100
-      },
       "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
         "name": "impressionsTotal",
         "type": "asIs"
@@ -689,9 +684,9 @@
         "type": "asIs"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.6": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
         "name": "impressionsTotal",
@@ -732,9 +727,9 @@
         "type": "asIs"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.5": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.6": {
         "name": "maintenanceKit",
@@ -783,9 +778,9 @@
         "type": "asIs"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.5": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.6": {
         "name": "maintenanceKit",
@@ -858,19 +853,19 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.5": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.12": {
-        "name": "fuser",
+        "name": "fuserBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.39": {
-        "name": "maintenanceKit",
+        "name": "maintenanceKitBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
         "name": "impressionsTotal",
@@ -935,14 +930,14 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.6": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.7": {
-        "name": "fuser",
+        "name": "fuserBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.8.1.8": {
         "name": "belt",
@@ -1027,14 +1022,13 @@
         "type": "asIs"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.10": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
         "isFalse": 100
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.11": {
         "name": "belt",
-        "type": "boolean",
-        "isFalse": 100
+        "type": "asIs"
       },
       "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
         "name": "impressionsTotal",
@@ -1091,9 +1085,9 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.5": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.8.1.6": {
         "name": "drumBlack",
@@ -1128,14 +1122,14 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.12": {
-        "name": "fuser",
+        "name": "fuserBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.39": {
-        "name": "maintenanceKit",
+        "name": "maintenanceKitBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
         "name": "impressionsTotal",
@@ -1324,14 +1318,14 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.6": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.7": {
-        "name": "fuser",
+        "name": "fuserBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.8.1.8": {
         "name": "belt",
@@ -1416,7 +1410,7 @@
         "type": "asIs"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.10": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
         "isFalse": 100
       },
@@ -1491,9 +1485,9 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.5": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.8.1.6": {
         "name": "drumBlack",
@@ -1528,19 +1522,19 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.10": {
-        "name": "biasTransferRoll",
+        "name": "biasTransferRollBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.11": {
-        "name": "transferBelt",
+        "name": "beltBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.12": {
-        "name": "fuser",
+        "name": "fuserBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
         "name": "impressionsTotal",
@@ -1625,7 +1619,7 @@
         "type": "asIs"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.10": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
         "isFalse": 100
       },
@@ -1720,7 +1714,7 @@
         "type": "asIs"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.10": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
         "isFalse": 100
       },
@@ -1815,7 +1809,7 @@
         "type": "asIs"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.10": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
         "isFalse": 100
       },
@@ -1890,9 +1884,9 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.5": {
-        "name": "wasteToner",
+        "name": "wasteTonerBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.8.1.6": {
         "name": "drumBlack",
@@ -1927,19 +1921,19 @@
         "type": "remain"
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.10": {
-        "name": "biasTransferRoll",
+        "name": "biasTransferRollBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.11": {
-        "name": "belt",
+        "name": "beltBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.2.1.43.11.1.1.9.1.12": {
-        "name": "fuser",
+        "name": "fuserBoolean",
         "type": "boolean",
-        "isFalse": 100
+        "isFalse": -3
       },
       "1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1": {
         "name": "impressionsTotal",
