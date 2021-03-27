@@ -1,7 +1,7 @@
 {
     "zabbix_export": {
         "version": "5.2",
-        "date": "2021-03-21T22:08:11Z",
+        "date": "2021-03-27T10:39:21Z",
         "groups": [
             {
                 "name": "LAC"
@@ -55,6 +55,74 @@
                             {
                                 "expression": "{last()} <={$MED} and {last()}>{$LOW}",
                                 "name": "Alert: very low belt",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "beltCleaner",
+                "name": "beltCleaner",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "beltCleaner",
+                        "type": "TRAP",
+                        "key": "beltCleaner",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}=\"true\"",
+                                "name": "Alert: belt cleaner",
+                                "priority": "HIGH"
+                            },
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: belt cleaner exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: low belt cleaner",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: very low belt cleaner",
                                 "priority": "AVERAGE",
                                 "manual_close": "YES"
                             }
@@ -1437,7 +1505,8 @@
                         "key": "wasteToner",
                         "delay": "0",
                         "history": "365d",
-                        "units": "%",
+                        "trends": "0",
+                        "value_type": "TEXT",
                         "applications": [
                             {
                                 "name": "supplies"
@@ -2428,6 +2497,9 @@
                 "templates": [
                     {
                         "name": "belt"
+                    },
+                    {
+                        "name": "beltCleaner"
                     },
                     {
                         "name": "biasTransferRoll"

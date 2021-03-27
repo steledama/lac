@@ -12,7 +12,7 @@ const serverZabbix = 'stele.dynv6.net';
 //for each printer to monitor (taken from printers.json)...
 printers.forEach(printer => {
     //find in from templates.json printers and add oids, serialOid and manufacturer to printer
-    let printerTemplate = templates.find(template => template.model === printer.model);
+    let printerTemplate = templates.find(template => template.model == printer.model);
     printer["oids"] = printerTemplate.oids;
     //take only oid and put in array
     printer ["oidsArray"] = [];
