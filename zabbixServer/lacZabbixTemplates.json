@@ -1,7 +1,7 @@
 {
     "zabbix_export": {
         "version": "5.2",
-        "date": "2021-03-27T19:06:04Z",
+        "date": "2021-03-29T20:02:18Z",
         "groups": [
             {
                 "name": "LAC"
@@ -86,7 +86,7 @@
                 ],
                 "items": [
                     {
-                        "name": "beltBoolean",
+                        "name": "belt",
                         "type": "TRAP",
                         "key": "beltBoolean",
                         "delay": "0",
@@ -200,7 +200,7 @@
                 ],
                 "items": [
                     {
-                        "name": "beltCleanerBoolean",
+                        "name": "beltCleaner",
                         "type": "TRAP",
                         "key": "beltCleanerBoolean",
                         "delay": "0",
@@ -314,7 +314,7 @@
                 ],
                 "items": [
                     {
-                        "name": "biasTransferRollBoolean",
+                        "name": "biasTransferRoll",
                         "type": "TRAP",
                         "key": "biasTransferRollBoolean",
                         "delay": "0",
@@ -869,7 +869,7 @@
                 ],
                 "items": [
                     {
-                        "name": "fuserBoolean",
+                        "name": "fuser",
                         "type": "TRAP",
                         "key": "fuserBoolean",
                         "delay": "0",
@@ -1427,7 +1427,7 @@
                 ],
                 "items": [
                     {
-                        "name": "maintenanceKitBoolean",
+                        "name": "maintenanceKit",
                         "type": "TRAP",
                         "key": "maintenanceKitBoolean",
                         "delay": "0",
@@ -1792,7 +1792,7 @@
                 ],
                 "items": [
                     {
-                        "name": "wasteTonerBoolean",
+                        "name": "wasteToner",
                         "type": "TRAP",
                         "key": "wasteTonerBoolean",
                         "delay": "0",
@@ -2084,9 +2084,6 @@
                 "name": "Xerox Phaser 6600 WorkCentre 6605",
                 "templates": [
                     {
-                        "name": "belt"
-                    },
-                    {
                         "name": "drum"
                     },
                     {
@@ -2117,7 +2114,7 @@
                         "name": "tonerYellow"
                     },
                     {
-                        "name": "wasteTonerBoolean"
+                        "name": "wasteToner"
                     }
                 ],
                 "groups": [
@@ -2677,6 +2674,222 @@
                     },
                     {
                         "name": "tonerBlack"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox WorkCentre 7120 7125 VersaLink C7020 C7025 C7030",
+                "name": "Xerox WorkCentre 7120 7125 VersaLink C7020 C7025 C7030",
+                "templates": [
+                    {
+                        "name": "beltBoolean"
+                    },
+                    {
+                        "name": "biasTransferRollBoolean"
+                    },
+                    {
+                        "name": "drumBlack"
+                    },
+                    {
+                        "name": "drumCyan"
+                    },
+                    {
+                        "name": "drumMagenta"
+                    },
+                    {
+                        "name": "drumYellow"
+                    },
+                    {
+                        "name": "fuserBoolean"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsBwWide"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsColorWide"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteTonerBoolean"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox WorkCentre 7220 7225 7525 7530 7535 7545 7556 7830 7835 7845 7855 AltaLink C8035 8045 C8055 C8070",
+                "name": "Xerox WorkCentre 7220 7225 7525 7530 7535 7545 7556 7830 7835 7845 7855 AltaLink C8035 8045 C8055 C8070",
+                "templates": [
+                    {
+                        "name": "belt"
+                    },
+                    {
+                        "name": "beltCleaner"
+                    },
+                    {
+                        "name": "biasTransferRoll"
+                    },
+                    {
+                        "name": "drumBlack"
+                    },
+                    {
+                        "name": "drumCyan"
+                    },
+                    {
+                        "name": "drumMagenta"
+                    },
+                    {
+                        "name": "drumYellow"
+                    },
+                    {
+                        "name": "fuser"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsBwWide"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsColorWide"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteTonerBoolean"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox WorxkCentre 6655",
+                "name": "Xerox WorxkCentre 6655",
+                "templates": [
+                    {
+                        "name": "belt"
+                    },
+                    {
+                        "name": "biasTransferRoll"
+                    },
+                    {
+                        "name": "drumBlack"
+                    },
+                    {
+                        "name": "drumCyan"
+                    },
+                    {
+                        "name": "drumMagenta"
+                    },
+                    {
+                        "name": "drumYellow"
+                    },
+                    {
+                        "name": "fuser"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteToner"
                     }
                 ],
                 "groups": [

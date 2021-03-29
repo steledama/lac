@@ -1,6 +1,6 @@
 {
   "name": "lac",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "MultiFuncionPrinters usage and supplies monitoring with Zabbix over different networks",
   "main": "lac.js",
   "scripts": {
