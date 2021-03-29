@@ -6,7 +6,7 @@ const printers = require('../server/printers.json');
 const { resolve } = require("path");
 const os = require('os');
 
-const version = "1.0.1";
+const version = "1.0.2";
 const serverZabbix = 'stele.dynv6.net';
 
 //for each printer to monitor (taken from printers.json)...
