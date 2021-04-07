@@ -1,0 +1,15 @@
+h1 {
+    text-align: center;
+}
+.subtitle {
+    text-align: center;
+}
+ul{
+    text-align: center;
+}
+li {
+    display: inline;
+}
+.step2{
+    visibility: hidden;
+}

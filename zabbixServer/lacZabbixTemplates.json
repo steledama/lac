@@ -1,0 +1,2911 @@
+{
+    "zabbix_export": {
+        "version": "5.2",
+        "date": "2021-03-29T20:02:18Z",
+        "groups": [
+            {
+                "name": "LAC"
+            }
+        ],
+        "templates": [
+            {
+                "template": "belt",
+                "name": "belt",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "belt",
+                        "type": "TRAP",
+                        "key": "belt",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: belt exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: low belt",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: very low belt",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "beltBoolean",
+                "name": "beltBoolean",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "belt",
+                        "type": "TRAP",
+                        "key": "beltBoolean",
+                        "delay": "0",
+                        "history": "365d",
+                        "trends": "0",
+                        "value_type": "TEXT",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}<>\"OK\"",
+                                "name": "Alert: belt",
+                                "priority": "HIGH"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "beltCleaner",
+                "name": "beltCleaner",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "beltCleaner",
+                        "type": "TRAP",
+                        "key": "beltCleaner",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: belt cleaner exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: low belt cleaner",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: very low belt cleaner",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "beltCleanerBoolean",
+                "name": "beltCleanerBoolean",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "beltCleaner",
+                        "type": "TRAP",
+                        "key": "beltCleanerBoolean",
+                        "delay": "0",
+                        "history": "365d",
+                        "trends": "0",
+                        "value_type": "TEXT",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}<>\"OK\"",
+                                "name": "Alert: belt cleaner",
+                                "priority": "HIGH"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "biasTransferRoll",
+                "name": "biasTransferRoll",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "biasTransferRoll",
+                        "type": "TRAP",
+                        "key": "biasTransferRoll",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: bias transfer roll exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: bias transfer roll low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: bias transfer roll very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "biasTransferRollBoolean",
+                "name": "biasTransferRollBoolean",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "biasTransferRoll",
+                        "type": "TRAP",
+                        "key": "biasTransferRollBoolean",
+                        "delay": "0",
+                        "history": "365d",
+                        "trends": "0",
+                        "value_type": "TEXT",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}<>\"OK\"",
+                                "name": "Alert: bias transfer roll",
+                                "priority": "HIGH"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "developerBlack",
+                "name": "developerBlack",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "developerBlack",
+                        "type": "TRAP",
+                        "key": "DEVK",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: developer black exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: developer black low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: developer black very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "developerColor",
+                "name": "developerColor",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "developerColor",
+                        "type": "TRAP",
+                        "key": "developerColor",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: developer color exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: developer color low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: developer color very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "drum",
+                "name": "drum",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "drum",
+                        "type": "TRAP",
+                        "key": "drum",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: drum exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: drum low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: drum very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "drumBlack",
+                "name": "drumBlack",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "drumBlack",
+                        "type": "TRAP",
+                        "key": "drumBlack",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: drum black exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: drum black low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: drum black very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "drumCyan",
+                "name": "drumCyan",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "drumCyan",
+                        "type": "TRAP",
+                        "key": "drumCyan",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: drum cyan exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: drum cyan low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: drum cyan very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "drumMagenta",
+                "name": "drumMagenta",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "drumMagenta",
+                        "type": "TRAP",
+                        "key": "drumMagenta",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: drum magenta exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: drum magenta low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: drum magenta very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "drumYellow",
+                "name": "drumYellow",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "drumYellow",
+                        "type": "TRAP",
+                        "key": "drumYellow",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: developer yellow exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: developer yellow low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: developer yellow very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "fuser",
+                "name": "fuser",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "fuser",
+                        "type": "TRAP",
+                        "key": "fuser",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: fuser exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: fuser low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: fuser very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "fuserBoolean",
+                "name": "fuserBoolean",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "fuser",
+                        "type": "TRAP",
+                        "key": "fuserBoolean",
+                        "delay": "0",
+                        "history": "365d",
+                        "trends": "0",
+                        "value_type": "TEXT",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}<>\"OK\"",
+                                "name": "Alert: fuser",
+                                "priority": "HIGH"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "impressionsBw",
+                "name": "impressionsBw",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "usage"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "impressionsBw",
+                        "type": "TRAP",
+                        "key": "impressionsBw",
+                        "delay": "0",
+                        "history": "365d",
+                        "applications": [
+                            {
+                                "name": "usage"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "template": "impressionsBwWide",
+                "name": "impressionsBwWide",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "usage"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "impressionsBwWide",
+                        "type": "TRAP",
+                        "key": "impressionsBwWide",
+                        "delay": "0",
+                        "history": "365d",
+                        "applications": [
+                            {
+                                "name": "usage"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "template": "impressionsColor",
+                "name": "impressionsColor",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "usage"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "impressionsColor",
+                        "type": "TRAP",
+                        "key": "impressionsColor",
+                        "delay": "0",
+                        "history": "365d",
+                        "applications": [
+                            {
+                                "name": "usage"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "template": "impressionsColor1",
+                "name": "impressionsColor1",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "usage"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "impressionsColor1",
+                        "type": "TRAP",
+                        "key": "impressionsColor1",
+                        "delay": "0",
+                        "history": "365d",
+                        "applications": [
+                            {
+                                "name": "usage"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "template": "impressionsColor2",
+                "name": "impressionsColor2",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "usage"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "impressionsColor2",
+                        "type": "TRAP",
+                        "key": "impressionsColor2",
+                        "delay": "0",
+                        "history": "365d",
+                        "applications": [
+                            {
+                                "name": "usage"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "template": "impressionsColor3",
+                "name": "impressionsColor3",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "usage"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "impressionsColor3",
+                        "type": "TRAP",
+                        "key": "impressionsColor3",
+                        "delay": "0",
+                        "history": "365d",
+                        "applications": [
+                            {
+                                "name": "usage"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "template": "impressionsColorWide",
+                "name": "impressionsColorWide",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "usage"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "impressionsColorWide",
+                        "type": "TRAP",
+                        "key": "impressionsColorWide",
+                        "delay": "0",
+                        "history": "365d",
+                        "applications": [
+                            {
+                                "name": "usage"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "template": "impressionsTotal",
+                "name": "impressionsTotal",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "usage"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "impressionsTotal",
+                        "type": "TRAP",
+                        "key": "impressionsTotal",
+                        "delay": "0",
+                        "history": "365d",
+                        "applications": [
+                            {
+                                "name": "usage"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "template": "info",
+                "name": "info",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "information"
+                    },
+                    {
+                        "name": "supplies"
+                    },
+                    {
+                        "name": "usage"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "date",
+                        "type": "TRAP",
+                        "key": "date",
+                        "delay": "0",
+                        "history": "10d",
+                        "trends": "0",
+                        "value_type": "TEXT",
+                        "applications": [
+                            {
+                                "name": "information"
+                            },
+                            {
+                                "name": "supplies"
+                            },
+                            {
+                                "name": "usage"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "hostname",
+                        "type": "TRAP",
+                        "key": "hostname",
+                        "delay": "0",
+                        "history": "10d",
+                        "trends": "0",
+                        "value_type": "TEXT",
+                        "applications": [
+                            {
+                                "name": "information"
+                            }
+                        ],
+                        "request_method": "POST"
+                    },
+                    {
+                        "name": "version",
+                        "type": "TRAP",
+                        "key": "version",
+                        "delay": "0",
+                        "history": "10d",
+                        "trends": "0",
+                        "value_type": "TEXT",
+                        "applications": [
+                            {
+                                "name": "information"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "template": "Lexmark XC4240",
+                "name": "Lexmark XC4240",
+                "templates": [
+                    {
+                        "name": "belt"
+                    },
+                    {
+                        "name": "drum"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsColor1"
+                    },
+                    {
+                        "name": "impressionsColor2"
+                    },
+                    {
+                        "name": "impressionsColor3"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "maintenanceKit"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteToner"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Lexmark XC9235 XC9245 XC9255 XC9265",
+                "name": "Lexmark XC9235 XC9245 XC9255 XC9265",
+                "templates": [
+                    {
+                        "name": "developerBlack"
+                    },
+                    {
+                        "name": "developerColor"
+                    },
+                    {
+                        "name": "drumBlack"
+                    },
+                    {
+                        "name": "drumCyan"
+                    },
+                    {
+                        "name": "drumMagenta"
+                    },
+                    {
+                        "name": "drumYellow"
+                    },
+                    {
+                        "name": "fuser"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsBwWide"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsColor1"
+                    },
+                    {
+                        "name": "impressionsColor2"
+                    },
+                    {
+                        "name": "impressionsColor3"
+                    },
+                    {
+                        "name": "impressionsColorWide"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "maintenanceKit"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteToner"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "maintenanceKit",
+                "name": "maintenanceKit",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "maintenanceKit",
+                        "type": "TRAP",
+                        "key": "maintenanceKit",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: maintenance kit exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: maintenance kit low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: maintenance kit very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "maintenanceKitBoolean",
+                "name": "maintenanceKitBoolean",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "maintenanceKit",
+                        "type": "TRAP",
+                        "key": "maintenanceKitBoolean",
+                        "delay": "0",
+                        "history": "365d",
+                        "trends": "0",
+                        "value_type": "TEXT",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}<>\"OK\"",
+                                "name": "Alert: maintenance kit",
+                                "priority": "HIGH"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "tonerBlack",
+                "name": "tonerBlack",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "tonerBlack",
+                        "type": "TRAP",
+                        "key": "tonerBlack",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: black toner exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: black toner low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: black toner very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "tonerCyan",
+                "name": "tonerCyan",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "tonerCyan",
+                        "type": "TRAP",
+                        "key": "tonerCyan",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: cyan toner empty",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: cyan toner low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: cyan toner very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "tonerMagenta",
+                "name": "tonerMagenta",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "tonerMagenta",
+                        "type": "TRAP",
+                        "key": "tonerMagenta",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: toner magenta exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: toner magenta low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: toner magenta very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "tonerYellow",
+                "name": "tonerYellow",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "tonerYellow",
+                        "type": "TRAP",
+                        "key": "tonerYellow",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}={$LOW}",
+                                "name": "Alert: toner yellow exhausted",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: toner yellow low",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: toner yellow very low",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "wasteToner",
+                "name": "wasteToner",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "wasteToner",
+                        "type": "TRAP",
+                        "key": "wasteToner",
+                        "delay": "0",
+                        "history": "365d",
+                        "units": "%",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}<={$LOW}",
+                                "name": "Alert: change waste toner",
+                                "priority": "HIGH"
+                            },
+                            {
+                                "expression": "{last()}<={$HIGH} and {last()}>{$MED}",
+                                "name": "Alert: waste toner almost full",
+                                "priority": "WARNING",
+                                "manual_close": "YES"
+                            },
+                            {
+                                "expression": "{last()} <={$MED} and {last()}>{$LOW}",
+                                "name": "Alert: waste toner full",
+                                "priority": "AVERAGE",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "wasteTonerBoolean",
+                "name": "wasteTonerBoolean",
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "supplies"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "wasteToner",
+                        "type": "TRAP",
+                        "key": "wasteTonerBoolean",
+                        "delay": "0",
+                        "history": "365d",
+                        "trends": "0",
+                        "value_type": "TEXT",
+                        "applications": [
+                            {
+                                "name": "supplies"
+                            }
+                        ],
+                        "triggers": [
+                            {
+                                "expression": "{last()}<>\"OK\"",
+                                "name": "Alert: waste toner",
+                                "priority": "HIGH",
+                                "manual_close": "YES"
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$HIGH}",
+                        "value": "10"
+                    },
+                    {
+                        "macro": "{$LOW}",
+                        "value": "0"
+                    },
+                    {
+                        "macro": "{$MED}",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox ColorCube 8570 8580",
+                "name": "Xerox ColorCube 8570 8580",
+                "templates": [
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "maintenanceKit"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteTonerBoolean"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox ColorQube 9303",
+                "name": "Xerox ColorQube 9303",
+                "templates": [
+                    {
+                        "name": "impressionsBwWide"
+                    },
+                    {
+                        "name": "impressionsColor1"
+                    },
+                    {
+                        "name": "impressionsColor2"
+                    },
+                    {
+                        "name": "impressionsColor3"
+                    },
+                    {
+                        "name": "impressionsColorWide"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "maintenanceKit"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteTonerBoolean"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox phaser 3200 3320 3635 xerox workcentre 3315 3325 3550",
+                "name": "Xerox phaser 3200 3320 3635 xerox workcentre 3315 3325 3550",
+                "templates": [
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox phaser 3330 3610 4600 worcentre 3335 3345 3615 4250",
+                "name": "Xerox phaser 3330 3610 4600 worcentre 3335 3345 3615 4250",
+                "templates": [
+                    {
+                        "name": "drum"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox Phaser 6130N",
+                "name": "Xerox Phaser 6130N",
+                "templates": [
+                    {
+                        "name": "drum"
+                    },
+                    {
+                        "name": "fuser"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$BLKR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.1"
+                    },
+                    {
+                        "macro": "{$BLKT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.1"
+                    },
+                    {
+                        "macro": "{$BN}",
+                        "value": "SNMPv2-SMI::enterprises.253.8.53.13.2.1.6.1.20.34"
+                    },
+                    {
+                        "macro": "{$COL}",
+                        "value": "SNMPv2-SMI::enterprises.253.8.53.13.2.1.6.1.20.33"
+                    },
+                    {
+                        "macro": "{$CYAR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.4"
+                    },
+                    {
+                        "macro": "{$CYAT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.4"
+                    },
+                    {
+                        "macro": "{$DRUMR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.41"
+                    },
+                    {
+                        "macro": "{$DRUMT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.41"
+                    },
+                    {
+                        "macro": "{$FUSB}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.12"
+                    },
+                    {
+                        "macro": "{$KITB}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.39"
+                    },
+                    {
+                        "macro": "{$MAGR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.3"
+                    },
+                    {
+                        "macro": "{$MAGT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.3"
+                    },
+                    {
+                        "macro": "{$TOT}",
+                        "value": "SNMPv2-SMI::enterprises.253.8.53.13.2.1.6.1.20.1"
+                    },
+                    {
+                        "macro": "{$WASB}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.5"
+                    },
+                    {
+                        "macro": "{$YELR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.2"
+                    },
+                    {
+                        "macro": "{$YELT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.2"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox Phaser 6600 WorkCentre 6605",
+                "name": "Xerox Phaser 6600 WorkCentre 6605",
+                "templates": [
+                    {
+                        "name": "drum"
+                    },
+                    {
+                        "name": "fuserBoolean"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteToner"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox Phaser 6700",
+                "name": "Xerox Phaser 6700",
+                "templates": [
+                    {
+                        "name": "belt"
+                    },
+                    {
+                        "name": "biasTransferRoll"
+                    },
+                    {
+                        "name": "drumBlack"
+                    },
+                    {
+                        "name": "drumCyan"
+                    },
+                    {
+                        "name": "drumMagenta"
+                    },
+                    {
+                        "name": "drumYellow"
+                    },
+                    {
+                        "name": "fuser"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteTonerBoolean"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$WASBOK}",
+                        "value": "100"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox VersaLink B400 B405",
+                "name": "Xerox VersaLink B400 B405",
+                "templates": [
+                    {
+                        "name": "drum"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "maintenanceKit"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox VersaLink B7025 B7030 B7035",
+                "name": "Xerox VersaLink B7025 B7030 B7035",
+                "templates": [
+                    {
+                        "name": "biasTransferRollBoolean"
+                    },
+                    {
+                        "name": "drum"
+                    },
+                    {
+                        "name": "fuserBoolean"
+                    },
+                    {
+                        "name": "impressionsBwWide"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox VersaLink C400 C405",
+                "name": "Xerox VersaLink C400 C405",
+                "templates": [
+                    {
+                        "name": "drum"
+                    },
+                    {
+                        "name": "fuserBoolean"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "maintenanceKitBoolean"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteTonerBoolean"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$BLKR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.1"
+                    },
+                    {
+                        "macro": "{$BLKT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.1"
+                    },
+                    {
+                        "macro": "{$BN}",
+                        "value": "SNMPv2-SMI::enterprises.253.8.53.13.2.1.6.1.20.34"
+                    },
+                    {
+                        "macro": "{$COL}",
+                        "value": "SNMPv2-SMI::enterprises.253.8.53.13.2.1.6.1.20.33"
+                    },
+                    {
+                        "macro": "{$CYAR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.4"
+                    },
+                    {
+                        "macro": "{$CYAT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.4"
+                    },
+                    {
+                        "macro": "{$DRUMR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.41"
+                    },
+                    {
+                        "macro": "{$DRUMT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.41"
+                    },
+                    {
+                        "macro": "{$FUSB}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.12"
+                    },
+                    {
+                        "macro": "{$KITB}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.39"
+                    },
+                    {
+                        "macro": "{$MAGR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.3"
+                    },
+                    {
+                        "macro": "{$MAGT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.3"
+                    },
+                    {
+                        "macro": "{$TOT}",
+                        "value": "SNMPv2-SMI::enterprises.253.8.53.13.2.1.6.1.20.1"
+                    },
+                    {
+                        "macro": "{$WASB}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.5"
+                    },
+                    {
+                        "macro": "{$YELR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.2"
+                    },
+                    {
+                        "macro": "{$YELT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.2"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox VersaLink C505 C500",
+                "name": "Xerox VersaLink C505 C500",
+                "templates": [
+                    {
+                        "name": "drumBlack"
+                    },
+                    {
+                        "name": "drumCyan"
+                    },
+                    {
+                        "name": "drumMagenta"
+                    },
+                    {
+                        "name": "drumYellow"
+                    },
+                    {
+                        "name": "fuserBoolean"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "maintenanceKitBoolean"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteTonerBoolean"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox WorckCentre 8900",
+                "name": "Xerox WorckCentre 8900",
+                "templates": [
+                    {
+                        "name": "impressionsColor1"
+                    },
+                    {
+                        "name": "impressionsColor2"
+                    },
+                    {
+                        "name": "impressionsColor3"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "maintenanceKit"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteTonerBoolean"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox WorkCentre 3655",
+                "name": "Xerox WorkCentre 3655",
+                "templates": [
+                    {
+                        "name": "biasTransferRoll"
+                    },
+                    {
+                        "name": "drum"
+                    },
+                    {
+                        "name": "fuser"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "maintenanceKit"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "contatori"
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$BIASP}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.4"
+                    },
+                    {
+                        "macro": "{$BLKR}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.1"
+                    },
+                    {
+                        "macro": "{$BLKT}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.8.1.1"
+                    },
+                    {
+                        "macro": "{$DRUMP}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.2"
+                    },
+                    {
+                        "macro": "{$FUSP}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.3"
+                    },
+                    {
+                        "macro": "{$KITP}",
+                        "value": "SNMPv2-SMI::mib-2.43.11.1.1.9.1.5"
+                    },
+                    {
+                        "macro": "{$TOT}",
+                        "value": "SNMPv2-SMI::enterprises.253.8.53.13.2.1.6.1.20.1"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox WorkCentre 5225 5230 Versalink B600 B610 B605 B615",
+                "name": "Xerox WorkCentre 5225 5230 Versalink B600 B610 B605 B615",
+                "templates": [
+                    {
+                        "name": "biasTransferRollBoolean"
+                    },
+                    {
+                        "name": "drum"
+                    },
+                    {
+                        "name": "fuserBoolean"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox WorkCentre 5325 5330 5335",
+                "name": "Xerox WorkCentre 5325 5330 5335",
+                "templates": [
+                    {
+                        "name": "drum"
+                    },
+                    {
+                        "name": "fuser"
+                    },
+                    {
+                        "name": "impressionsBwWide"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox WorkCentre 5945 5955 Altalink B8045 B8055 B8065 B8075 B8090",
+                "name": "Xerox WorkCentre 5945 5955 Altalink B8045 B8055 B8065 B8075 B8090",
+                "templates": [
+                    {
+                        "name": "biasTransferRoll"
+                    },
+                    {
+                        "name": "drum"
+                    },
+                    {
+                        "name": "fuser"
+                    },
+                    {
+                        "name": "impressionsBwWide"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox WorkCentre 7120 7125 VersaLink C7020 C7025 C7030",
+                "name": "Xerox WorkCentre 7120 7125 VersaLink C7020 C7025 C7030",
+                "templates": [
+                    {
+                        "name": "beltBoolean"
+                    },
+                    {
+                        "name": "biasTransferRollBoolean"
+                    },
+                    {
+                        "name": "drumBlack"
+                    },
+                    {
+                        "name": "drumCyan"
+                    },
+                    {
+                        "name": "drumMagenta"
+                    },
+                    {
+                        "name": "drumYellow"
+                    },
+                    {
+                        "name": "fuserBoolean"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsBwWide"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsColorWide"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteTonerBoolean"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox WorkCentre 7220 7225 7525 7530 7535 7545 7556 7830 7835 7845 7855 AltaLink C8035 8045 C8055 C8070",
+                "name": "Xerox WorkCentre 7220 7225 7525 7530 7535 7545 7556 7830 7835 7845 7855 AltaLink C8035 8045 C8055 C8070",
+                "templates": [
+                    {
+                        "name": "belt"
+                    },
+                    {
+                        "name": "beltCleaner"
+                    },
+                    {
+                        "name": "biasTransferRoll"
+                    },
+                    {
+                        "name": "drumBlack"
+                    },
+                    {
+                        "name": "drumCyan"
+                    },
+                    {
+                        "name": "drumMagenta"
+                    },
+                    {
+                        "name": "drumYellow"
+                    },
+                    {
+                        "name": "fuser"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsBwWide"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsColorWide"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteTonerBoolean"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            },
+            {
+                "template": "Xerox WorxkCentre 6655",
+                "name": "Xerox WorxkCentre 6655",
+                "templates": [
+                    {
+                        "name": "belt"
+                    },
+                    {
+                        "name": "biasTransferRoll"
+                    },
+                    {
+                        "name": "drumBlack"
+                    },
+                    {
+                        "name": "drumCyan"
+                    },
+                    {
+                        "name": "drumMagenta"
+                    },
+                    {
+                        "name": "drumYellow"
+                    },
+                    {
+                        "name": "fuser"
+                    },
+                    {
+                        "name": "impressionsBw"
+                    },
+                    {
+                        "name": "impressionsColor"
+                    },
+                    {
+                        "name": "impressionsTotal"
+                    },
+                    {
+                        "name": "info"
+                    },
+                    {
+                        "name": "tonerBlack"
+                    },
+                    {
+                        "name": "tonerCyan"
+                    },
+                    {
+                        "name": "tonerMagenta"
+                    },
+                    {
+                        "name": "tonerYellow"
+                    },
+                    {
+                        "name": "wasteToner"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "LAC"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "consumabili"
+                    },
+                    {
+                        "name": "contatori"
+                    }
+                ]
+            }
+        ]
+    }
+}
