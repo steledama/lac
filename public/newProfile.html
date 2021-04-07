@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="#">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>LAC: New snmp profile</title>
+</head>
+<body>
+  <h1>LAC</h1>
+  <div class="subtitle"><a href="https://github.com/steledama/lac">open source</a> snmp agent for <a href="https://www.zabbix.com/">zabbix</a></div>
+  <div class="navigationBar">
+    <hr>
+    <ul>
+      <li> | <a href="index.html">Monitored printers</a> | </li>
+      <li><a class="active"><b>New profile</b></a> | </li>
+      <li><a>Edit profile</a> | </li>
+    </ul>
+    <hr>
+  </div>
+
+    <h3>Step 1 of 4: Collect snmp data from printer</h3>
+    <h5>
+      <table>
+        <tr style="text-align: left;">
+          <th>Ip address</th>
+          <th>Method</th>
+          <th>OID</th>
+          <th></th>
+        </tr>
+        <tr>
+          <form action="javascript:void(0);" method="POST" onsubmit="lacSnmp()"> 
+            <td>
+              <input
+                type="text"
+                id="ip"
+                name="ip"
+                placeholder="insert ip address"
+                required
+              >
+            </td>
+            <td>
+              <select
+                id="method"
+                name="method"
+                required
+              >
+              <option value="subtree">subtree</option>
+              <option value="get">get</option>
+              </select>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="oid"
+                name="oid"
+                placeholder="1.3.6.1.2.1"
+              >
+            </td>
+            <td>
+              <input
+                type="submit"
+                value="Collect data"
+              >
+            </td>
+          </form>
+        </tr>
+      </table>
+    </h5>
+    <table>
+      <tr>
+        <th><p id="counter"></p></th>
+      </tr>
+        <tbody id="printers">
+        </tbody>
+    </table>
+
+  <div class="step2">
+  <hr>
+  <h3>Step 2 of 4: Set basic profile informations</h3>
+  <h5>
+    <table>
+      <tr style="text-align: left;">
+        <th>Manufacturer</th>
+        <th>Family</th>
+        <th>Model</th>
+        <th>Ip address</th>
+        <th></th>
+      </tr>
+      <tr>
+        <form action="javascript:void(0);" method="POST" onsubmit="addPrinter()"> 
+          <td>
+            <select
+              onchange="showFamily()"
+              id="manufacturer"
+              name="manufacturer"
+              required
+            ></select>
+          </td>
+          <td>
+            <select
+              onchange="showModel()"
+              style="display: none;"
+              id="family"
+              name="family"
+              required
+            ></select>
+          </td>
+          <td>
+            <select
+              onchange="showIp()"
+              style="display: none;"
+              id="model"
+              name="model"
+              required
+            ></select>
+          </td>
+          <td>
+            <input
+              style="display: none;"
+              type="text"
+              id="ip"
+              name="ip"
+              placeholder="insert ip address"
+              required
+            >
+          </td>
+          <td>
+            <input
+              type="submit"
+              value="Add"
+            >
+          </td>
+        </form>
+      </tr>
+    </table>
+  </h5>
+  <table>
+    <tr>
+      <th><p id="counter"></p></th>
+    </tr>
+      <tbody id="printers">
+      </tbody>
+  </table>
+</div>
+  <script src="newProfile.js"></script>
+</body>
+</html>

@@ -2,9 +2,9 @@
 
 :: Open App in Chrome or another application
 @IF EXIST "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" (
-  "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --app=http://localhost:5566 
+  "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --app=http://localhost:3000
 ) ELSE (
-  start http://localhost:5566
+  start http://localhost:3000
 )
 
 :: Note that comments can't be nested in if blocks!
