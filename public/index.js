@@ -6,7 +6,7 @@ let getGeneralSettings = ()=>{
     document.getElementById('displayGeneralSettings').innerHTML = `
     <p>Lac server: <strong>${data.lacServer}</strong> Zabbix server: <strong>${data.zabbixServer}</strong></p>
     `;
-    document.getElementById('settingsAlert').innerHTML = '<div class="alert alert-primary" role="alert" id="settingsAlert">Provide the lac and zabbix hostname or leave default settings</div>';
+    document.getElementById('settingsAlert').innerHTML = '<div class="alert alert-secondary" role="alert" id="settingsAlert">Provide lac and zabbix hostname or leave default settings</div>';
   })
   .catch((err) => {
     console.log(err);
@@ -18,10 +18,8 @@ getGeneralSettings();
 let saveSettings = (e) => {
   e.preventDefault();
   let lacServer = document.getElementById('lacServer').value;
-  console.log(lacServer);
   let zabbixServer = document.getElementById('zabbixServer').value;
-  console.log(zabbixServer);
-  fetch('localhost:3000/api/settings', {
+  fetch('http://localhost:3000/api/settings', {
     method:'POST',
     headers: {
       'Accept': 'application/json, text/plain, */*',
@@ -30,7 +28,15 @@ let saveSettings = (e) => {
     body:JSON.stringify({lacServer:lacServer, zabbixServer:zabbixServer})
   })
   .then((res) => res.json())
-  .then((data) => console.log(data))
+  .then((data) => {
+    document.getElementById('displayGeneralSettings').innerHTML = `
+    <p>Lac server: <strong>${data.lacServer}</strong> Zabbix server: <strong>${data.zabbixServer}</strong></p>
+    `;
+  })
+  .catch((err) => {
+    console.log(err);
+    document.getElementById('settingsAlert').innerHTML = '<div class="alert alert-danger" role="alert" id="settingsAlert">Cannot write settings</div>';
+  })
 }
 document.getElementById('generalSettings').addEventListener('submit', saveSettings);
 

@@ -1,4 +1,4 @@
 {
-    "lacServer": "localhost:5000",
-    "zabbixServer": "stele.dynv6.net"
+  "lacServer": "localhost:5000",
+  "zabbixServer": "stele.dynv6.net"
 }

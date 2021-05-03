@@ -15,8 +15,10 @@ const app = express();
 // configuring cors
 app.use(cors());
 // Configuring body parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 
 // This is for hosting files
 app.use(express.static(`${__dirname}/public`));
@@ -42,8 +44,13 @@ console.log ("Settings loaded")
 app.post('/api/settings', (req, res) => {
   //save settings
   const settings = req.body;
-  console.log(settings);
-  //return res.send('Received a POST HTTP method');
+  let json = JSON.stringify(settings, null, 2);
+  let finished = (err) => {
+    console.log('Updated settings.json');
+    // Don't send anything back until everything is done
+    res.send(settings);
+  }
+  fs.writeFile(`${__dirname}/public/settings.json`, json, 'utf8', finished);
 });
 
 // profiles ROUTE
