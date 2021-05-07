@@ -15,28 +15,61 @@ let getGeneralSettings = ()=>{
 }
 getGeneralSettings();
 
-let saveSettings = (e) => {
+/* // browser validation
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  let forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})() */
+
+const saveSettings = (e) => {
   e.preventDefault();
-  let lacServer = document.getElementById('lacServer').value;
-  let zabbixServer = document.getElementById('zabbixServer').value;
-  fetch('http://localhost:3000/api/settings', {
-    method:'POST',
-    headers: {
-      'Accept': 'application/json, text/plain, */*',
-      'Content-type':'application/json'
-    },
-    body:JSON.stringify({lacServer:lacServer, zabbixServer:zabbixServer})
-  })
-  .then((res) => res.json())
-  .then((data) => {
-    document.getElementById('displayGeneralSettings').innerHTML = `
-    <p>Lac server: <strong>${data.lacServer}</strong> Zabbix server: <strong>${data.zabbixServer}</strong></p>
-    `;
-  })
-  .catch((err) => {
-    console.log(err);
-    document.getElementById('settingsAlert').innerHTML = '<div class="alert alert-danger" role="alert" id="settingsAlert">Cannot write settings</div>';
-  })
+  const lacServer = document.getElementById('lacServer').value;
+  const zabbixServer = document.getElementById('zabbixServer').value
+  if (!lacServer){
+    document.getElementById('lacServer').classList.toggle('is-invalid');
+    return
+  } else {
+    document.getElementById('lacServer').classList.toggle('is-valid');
+    if (!zabbixServer){
+      document.getElementById('zabbixServer').classList.toggle('is-invalid');
+      return
+    } else {
+      document.getElementById('zabbixServer').classList.toggle('is-valid');
+      fetch('http://localhost:3000/api/settings', {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-type':'application/json'
+        },
+        body:JSON.stringify({lacServer:lacServer, zabbixServer:zabbixServer})
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        document.getElementById('displayGeneralSettings').innerHTML = `
+        <p>Lac server: <strong>${data.lacServer}</strong> Zabbix server: <strong>${data.zabbixServer}</strong></p>
+        `;
+      })
+      .catch((err) => {
+        console.log(err);
+        document.getElementById('settingsAlert').innerHTML = '<div class="alert alert-danger" role="alert" id="settingsAlert">Cannot write settings</div>';
+      })
+    }
+  }
 }
 document.getElementById('generalSettings').addEventListener('submit', saveSettings);
 

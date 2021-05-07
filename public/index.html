@@ -17,7 +17,7 @@
       <h1 class="text-center">LAC</h1>
       <h6 class="text-center">open source snmp agent</h6>
 
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">LAC</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,11 +44,15 @@
       <form class="row gx-3 gy-2 align-items-center mb-2" id="generalSettings">
         <div class="col-sm-3">
           <label for="lacserver">LAC Server</label>
-          <input type="text" class="form-control" id="lacServer" placeholder="localhost:5000" required>
+          <input type="text" class="form-control" id="lacServer" placeholder="localhost:5000">
+          <div class="invalid-feedback">Please provide a valid hostname</div>
+          <div class="valid-feedback">Looks good</div>
         </div>
         <div class="col-sm-3">
           <label for="zabbixServer">Zabbix Server</label>
-          <input type="text" class="form-control" id="zabbixServer" placeholder="stele.dynv6.net" required>
+          <input type="text" class="form-control" id="zabbixServer" placeholder="stele.dynv6.net">
+          <div class="invalid-feedback">Please provide a valid hostname</div>
+          <div class="valid-feedback">Looks good</div>
         </div>
         <div class="col-auto">
           <button type="submit" class="btn btn-secondary">Save new settings</button>
