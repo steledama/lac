@@ -1,15 +1,13 @@
 el = document.getElementById('printers');
-
 let printers = [];
-
 fetch('printers')
-  .then(response => response.json())
-  .then(data => {
-    data.forEach(element => {
-      printers.push(element);
-      fetchAll();
-    });
+.then(response => response.json())
+.then(data => {
+  data.forEach(element => {
+    printers.push(element);
+    fetchAll();
   });
+});
 
 count = (data) => {
   let el = document.getElementById('counter');
@@ -17,8 +15,11 @@ count = (data) => {
   if (data) {
     if (data > 1) name = 'printers';
     el.innerHTML = `${data} monitored ${name}`;
+    // show step 2
+    document.getElementById("indexStep2").style.display = "block";
   }
   else el.innerHTML = `No monitored ${name}`;
+  document.getElementById("indexStep2").style.display = "none";
 };
 
 fetchAll = () => {
@@ -43,6 +44,7 @@ addPrinter = () => {
   // Validate ip address
   let isValid = ValidateIPaddress(ip.value);
   if (isValid === true) {
+    document.getElementById("indexFeedback1").innerHTML = "Collecting data from printer...";
     let printer = {};
     printer["manufacturer"] = manufacturer.value;
     printer["family"] = family.value;
@@ -53,18 +55,24 @@ addPrinter = () => {
     let url = `add/${printer.manufacturer}/${printer.family}/${printer.model}/${printer.ip}`;
     fetch(url)
       .then(response => response.json())
-      .then(data => console.log(data))
-    // Reset input value
-    manufacturer.value = '';
-    family.value = '';
-    document.getElementById("family").style.display = "none";
-    model.value = '';
-    document.getElementById("model").style.display = "none";
-    ip.value = '';
-    document.getElementById("ip").style.display = "none";
-    // Dislay the new list
-    fetchAll();
-  };
+      .then(data => {
+        console.log(data)
+        if (data.status == "error") document.getElementById("indexFeedback1").innerHTML = data.error;
+        else {
+          document.getElementById("indexFeedback1").innerHTML = "OK: Printer added"
+          // Reset input value
+          manufacturer.value = '';
+          family.value = '';
+          document.getElementById("family").style.display = "none";
+          model.value = '';
+          document.getElementById("model").style.display = "none";
+          ip.value = '';
+          document.getElementById("ip").style.display = "none";
+          // Dislay the new list
+          fetchAll();
+        }
+      })
+  }
 };
 
 function deletePrinter (index) {
@@ -149,6 +157,6 @@ function ValidateIPaddress(ipaddress){
 if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress)){
   return (true)
 }
-alert("You have entered an invalid IP address!")
+document.getElementById("indexFeedback1").innerHTML = "You have entered an invalid IP address!";
 return (false)
 }
