@@ -1,59 +1,30 @@
+// requirements
+// File System for writings devices and profiles
+const fs = require('fs');
+// To comunicate with snmp devices
+const snmp = require ("net-snmp");
+// Cors for allowing "cross origin resources"
+const cors = require('cors');
+// for pasrsing body post request
+const bodyParser = require('body-parser');
 // Using express: http://expressjs.com/
 const express = require('express');
 
 // Create the app
 const app = express();
-
-// File System for loading the list of printers and writing profiles
-const fs = require('fs');
-
-const snmp = require ("net-snmp");
-
-// Cors for allowing "cross origin resources"
-// https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
-const cors = require('cors');
+// configuring cors
 app.use(cors());
-
-// printer snmp profiles
-const templates = require("./profiles.json");
+// Configuring body parser middleware
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 
 // This is for hosting files
 app.use(express.static(`${__dirname}/public`));
 
-// Load printers json file
-let printers;
-let printersExists = fs.existsSync(`${__dirname}/printers.json`);
-if (printersExists) {
-  // Read the file
-  console.log('loading printers');
-  let txt = fs.readFileSync(`${__dirname}/printers.json`, 'utf8');
-  // Parse it  back to object
-  printers = JSON.parse(txt);
-} else {
-  // Otherwise start with blank list
-  console.log('No printers');
-  printers = {};
-}
-
-// Load profiles json file
-let profiles;
-let profilesExists = fs.existsSync(`${__dirname}/profiles.json`);
-if (profilesExists) {
-  // Read the file
-  console.log('loading profiles');
-  let txt = fs.readFileSync(`${__dirname}/profiles.json`, 'utf8');
-  // Parse it  back to object
-  profiles = JSON.parse(txt);
-} else {
-  // Otherwise start with blank list
-  console.log('No profiles');
-  profiles = {};
-}
-
 // version taken from package.json
 const package = require('./package.json');
-let version = package.version;
-console.log(version);
 
 // Set up the server
 // process.env.PORT is related to deploying on heroku
@@ -62,16 +33,40 @@ const server = app.listen(process.env.PORT || 3000, listen);
 function listen() {
   const host = server.address().address;
   const port = server.address().port;
-  console.log(`App listening at http://${host}:${port}`);
+  console.log(`Lac server ${package.version} listening at http://${host}:${port}`);
 }
 
-//Content Security Policy
-app.use(function (req, res, next) {
-  res.setHeader(
-    'Content-Security-Policy-Report-Only',
-    "script-src 'self' 'unsafe-inline' http://localhost:5566; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self'"
-  );
-  next();
+// Load devices from json file
+let devices = require("./public/devices.json");
+console.log ("Devices loaded")
+
+// GET DEVICES
+let showAllDevices = (req, res) => {
+  res.send(devices);
+}
+app.get('/api/devices', showAllDevices);
+
+// Load settings json file
+let settings = require("./public/settings.json");
+console.log ("Settings loaded")
+
+// GET SETTINGS
+let showAllSettings = (req, res) => {
+  res.send(settings);
+}
+app.get('/api/settings', showAllSettings);
+
+//POST SETTINGS
+app.post('/api/settings', (req, res) => {
+  const settings = req.body;
+  let json = JSON.stringify(settings, null, 2);
+  let finished = (err) => {
+    if (!err) {
+      console.log('Updated settings.json');
+      res.send(settings);
+    } else res.send (err);
+  }
+  fs.writeFile(`${__dirname}/public/settings.json`, json, 'utf8', finished);
 });
 
 // profiles ROUTE
@@ -83,20 +78,11 @@ function showAllProfiles(req, res) {
   res.send(profiles);
 }
 
-// ALL PRINTERS route
-app.get('/printers', showAllPrinters);
-// Callback
-function showAllPrinters(req, res) {
-  // Send the entire dataset
-  // express automatically renders objects as JSON
-  res.send(printers);
-}
-
 // ADD printer route (with get)
 app.get('/add/:manufacturer/:family/:model/:ip', addPrinter);
 // Handle that route
 async function addPrinter(req, res) {
-  let printerTemplate = templates.find(template => template.model == req.params.model);
+  let printerTemplate = prodiles.find(template => template.model == req.params.model);
   // Put printer parameters in the printer array object
   let printerToAdd = {
     "manufacturer": req.params.manufacturer,

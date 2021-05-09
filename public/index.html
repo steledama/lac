@@ -14,9 +14,12 @@
   </head>
   <body>
     <div class="container-fluid">
-      <h1 class="text-center">LAC</h1>
-      <h6 class="text-center">open source snmp agent</h6>
 
+      <!-- TITLE -->
+      <h1 class="text-center">LAC</h1>
+      <h6 class="text-center"><a href="https://github.com/steledama/lac">open source</a> snmp agent for <a href="https://www.zabbix.com/">zabbix</a></h6>
+
+      <!-- NAVBAR -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">LAC</a>
@@ -39,46 +42,36 @@
         </div>
       </nav>
 
-      <!-- GENERAL SETTINGS -->
-      <div id="displayGeneralSettings"></div>
-      <form class="row gx-3 gy-2 align-items-center mb-2" id="generalSettings">
-        <div class="col-sm-3">
-          <label for="lacserver">LAC Server</label>
-          <input type="text" class="form-control" id="lacServer" placeholder="localhost:5000">
-          <div class="invalid-feedback">Please provide a valid hostname</div>
-          <div class="valid-feedback">Looks good</div>
-        </div>
-        <div class="col-sm-3">
-          <label for="zabbixServer">Zabbix Server</label>
-          <input type="text" class="form-control" id="zabbixServer" placeholder="stele.dynv6.net">
-          <div class="invalid-feedback">Please provide a valid hostname</div>
-          <div class="valid-feedback">Looks good</div>
-        </div>
-        <div class="col-auto">
-          <button type="submit" class="btn btn-secondary">Save new settings</button>
-        </div>
-      </form>
-      <!-- settings alert-->
-      <div id="settingsAlert"></div>
-
-      <hr>
       <!-- ADD DEVICE -->
-      <h6>Add device to monitor</h6>
-      <form class="row gx-3 gy-2 align-items-center mb-2" id="addDevice">
-        <div class="col-sm-3">
-            <label for="validationDefault01" class="form-label">Ip address</label>
-            <input type="text" class="form-control" id="validationDefault01" value="192.168.1.3" required>
-          </div>
-          <div class="col-sm-3">
-            <button class="btn btn-primary" type="submit">Add device</button>
-          </div>
+      <hr>
+      <p>1) Add device to monitor</p>
+      <form id="addDeviceForm">
+        <input id="ip" type="text" class="form-control mb-2" placeholder="192.168.1.3">
+        <div class="invalid-feedback mb-2">Please provide a valid ip address</div>
+        <div class="valid-feedback mb-2">Looks good</div>
+        <button id="addDeviceButton" class="btn btn-primary mb-2" type="submit">Add</button>
       </form>
-      <!-- ADD DEVICE FEEDBACK -->
-      <div class="alert alert-primary" role="alert" id="devicesAlert">
-        Provide the ip address of the device you want to monitor
-      </div>
-      <!-- MONITORED DEVICES LIST -->
+      <!-- devices allert -->
+      <div id="devicesAlert" class="alert alert-primary" role="alert">Provide the ip address of the device you want to monitor</div>
+      <!-- devices list -->
       <div id="devicesList"></div>
+
+      <!-- ZABBIX SERVER -->
+      <div id="step2" class="invisible">
+        <hr>
+        <p>2) Save zabbix server</p>
+        <form id="zabbixServerForm">
+            <input id="zabbixServer" type="text" class="form-control mb-2" placeholder="stele.dynv6.net">
+            <div class="invalid-feedback mb-2">Please provide a valid hostname for zabbix server</div>
+            <div class="valid-feedback mb-2">Looks good</div>
+            <button class="btn btn-primary mb-2" type="submit">Save</button>
+        </form>
+        <!-- zabbix server alert-->
+        <div id="zabbixServerAlert" class="alert alert-primary" role="alert">Provide the zabbix server hostname</div>
+        <!-- show zabbix server-->
+        <div id="showZabbixServer"></div>
+      </div>
+
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
