@@ -5,8 +5,6 @@ const fs = require('fs');
 const snmp = require ("net-snmp");
 // Cors for allowing "cross origin resources"
 const cors = require('cors');
-// for pasrsing body post request
-const bodyParser = require('body-parser');
 // Using express: http://expressjs.com/
 const express = require('express');
 
@@ -46,6 +44,21 @@ let showAllDevices = (req, res) => {
 }
 app.get('/api/devices', showAllDevices);
 
+//POST DEVICE
+app.post('/api/devices', (req, res) => {
+  const data = req.body;
+  console.log(data.ip);
+  //let json = JSON.stringify(data, null, 2);
+  let finished = (err) => {
+    if (!err) {
+      console.log('Updated settings.json');
+      res.send(settings);
+    } else res.send (err);
+  }
+  //console.log(json);
+  //fs.writeFile(`${__dirname}/public/settings.json`, json, 'utf8', finished);
+});
+
 // Load settings json file
 let settings = require("./public/settings.json");
 console.log ("Settings loaded")
@@ -82,7 +95,7 @@ function showAllProfiles(req, res) {
 app.get('/add/:manufacturer/:family/:model/:ip', addPrinter);
 // Handle that route
 async function addPrinter(req, res) {
-  let printerTemplate = prodiles.find(template => template.model == req.params.model);
+  let printerTemplate = profiles.find(template => template.model == req.params.model);
   // Put printer parameters in the printer array object
   let printerToAdd = {
     "manufacturer": req.params.manufacturer,

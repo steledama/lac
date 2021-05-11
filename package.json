@@ -26,6 +26,7 @@
     "child-process": "^1.0.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "is-valid-hostname": "^1.0.0",
     "net-snmp": "^3.4.3"
   }
 }
