@@ -46,6 +46,10 @@ const addDevice = (e) => {
   if (isValidIpAddress(ip)) {
     document.getElementById('ip').classList.remove('is-invalid');
     document.getElementById('ip').classList.add('is-valid');
+    document.getElementById('devicesAlert').classList.remove('alert-primary');
+    document.getElementById('devicesAlert').classList.remove('alert-danger');
+    document.getElementById('devicesAlert').classList.add('alert-info');
+    document.getElementById('devicesAlert').innerHTML = `Establishing snmp connection with ${ip}`;
     fetch('/api/devices', {
       method:'POST',
       headers: {
@@ -56,7 +60,12 @@ const addDevice = (e) => {
     })
     .then((res) => res.json())
     .then((data) => {
-      //manage date
+      console.log(data);
+      document.getElementById('devicesAlert').classList.remove('alert-primary');
+      document.getElementById('devicesAlert').classList.remove('alert-danger');
+      document.getElementById('devicesAlert').classList.remove('alert-info');
+      document.getElementById('devicesAlert').classList.add('alert-success');
+      document.getElementById('devicesAlert').innerHTML = `Snmp comunication with ${ip} established`;
     })
     .catch((err) => {
       console.log(err);
