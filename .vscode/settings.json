@@ -3,5 +3,6 @@
     "settings": {},
     "[javascript]": {
       "editor.formatOnSave": true
-    }
+    },
+    "editor.linkedEditing": true
 }
