@@ -1,6 +1,6 @@
 lacSnmp = async () => {
   ip = document.getElementById('ip');
-  method = document.getElementById('method');
+  pippo = document.getElementById('method');
   oid = document.getElementById('oid');
 
   // Validate ip address
@@ -14,12 +14,24 @@ lacSnmp = async () => {
       console.log ("Error")
       console.log (e)
     }
-      console.log(snmp);
+      //console.log(snmp);
+      showOids()
   };
 };
 
 async function loadSnmp(){
-  return (await fetch (`snmp/${ip.value}/${oid.value}`)).json();
+return (await fetch (`snmp/${ip.value}/${pippo.value}/${oid.value}`)).json();
+}
+
+/* function loadSnmp(){
+  fetch (`snmp/${ip.value}/${oid.value}`).then(response => response.json())
+  .then(oids => showOids(oids.results));
+} */
+
+function showOids() {
+  let ifrm = document.getElementById('snmp-results');
+ifrm.style.visibility = 'visible'; // set width
+//ifrm.src = 'newpage.html'; // set src to new url
 }
 
 //validate Ip address

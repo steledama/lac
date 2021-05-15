@@ -6,13 +6,13 @@ const cors = require("cors");
 // Create the app and setting up the environment
 const app = express();
 
-const indexRouter = require('./')
+const indexRouter = require("./");
 
 //app.use(cors());
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
-app.set('layout', 'layouts/layout');
-app.use(expressLayouts)
+app.set("layout", "layouts/layout");
+app.use(expressLayouts);
 // This is for hosting files
 app.use(express.static(`${__dirname}/public`));
 
@@ -30,13 +30,83 @@ app.use(function (req, res, next) {
 const listen = () => {
   const host = server.address().address;
   const port = server.address().port;
-  console.log(`App listening at http://${host}:${port}`);
-}
+  console.log(
+    `Lac server ${package.version} listening at http://${host}:${port}`
+  );
+};
+
+// Load devices from json file
+let devices = require("./devices.json");
+console.log("Devices loaded");
+// Load settings json file
+let settings = require("./public/settings.json");
+console.log("Settings loaded");
+// Load profiles from json file
+let profiles = require("./profiles.json");
+console.log("Profiles loaded");
+
+// GET DEVICES
+app.get("/api/devices", async (req, res) => {
+  try {
+    res.send(devices);
+  } catch (err) {
+    res.json({ status: "error", message: err });
+  }
+});
+
+//ADD DEVICE
+app.post("/api/devices", async (req, res) => {
+  //console.log(req.body.ip);
+  const oidSysName = "1.3.6.1.2.1.1.5.0";
+  const oidSerial = "1.3.6.1.2.1.43.5.1.1.17.1";
+  let oids = [];
+  oids.push(oidSysName);
+  oids.push(oidSerial);
+  let deviceToAdd = { ip: req.body.ip };
+  try {
+    let snmpResult = await snmp.get(deviceToAdd.ip, oids);
+    let serial = snmpResult.find((result) => result.oid == oidSerial);
+    deviceToAdd["serial"] = serial.value;
+    let name = snmpResult.find((result) => result.oid == oidSysName);
+    deviceToAdd["name"] = name.value;
+    devices.push(deviceToAdd);
+    const saveDevices = (error) => {
+      //console.log(final_result);
+      let json = JSON.stringify(devices, null, 2);
+      const finished = (err) => {
+        console.log(`Device saved in devices.json`);
+        return res.status(200).json({
+          status: "OK",
+          message: "Added device",
+        });
+        // Don't send anything back until everything is done
+        if (err) console.error(err.toString());
+      };
+      fs.writeFile(`./devices.json`, json, "utf8", finished);
+      if (error) console.error(error.toString());
+    };
+    saveDevices();
+  } catch (err) {
+    return res.json({ status: "error", message: err });
+  }
+  //snmp.get(req.body.ip,['1.3.6.1.2.1.1.5.0','1.3.6.1.2.1.43.5.1.1.17.1']);
+  //let json = JSON.stringify(data, null, 2);
+  let finished = (err) => {
+    if (!err) {
+      console.log("Updated settings.json");
+      res.send(settings);
+    } else res.send(err);
+  };
+  //console.log(json);
+  //fs.writeFile(`${__dirname}/public/settings.json`, json, 'utf8', finished);
+});
+
+// GET SETTINGS
+let showAllSettings = (req, res) => {
+  res.send(settings);
+};
 // process.env.PORT is related to deploying on heroku
 const server = app.listen(process.env.PORT || 3000, listen);
-
-
-
 
 /* 
 // profiles ROUTE
@@ -60,7 +130,8 @@ function showAllPrinters(req, res) {
 // ADD printer route (with get)
 app.get("/add/:manufacturer/:family/:model/:ip", addPrinter);
 // Handle that route
-function addPrinter(req, res) {
+async function addPrinter(req, res) {
+  let printerTemplate = profiles.find(template => template.model == req.params.model);
   // Put printer parameters in the printer array object
   let printerToAdd = {
     manufacturer: req.params.manufacturer,

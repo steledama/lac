@@ -10,6 +10,12 @@ ul{
 li {
     display: inline;
 }
-.step2{
+#indexStep2{
+    display: none;
+}
+iframe{
+    visibility: hidden;
+}
+#newProfileStep2{
     visibility: hidden;
 }
