@@ -8,7 +8,7 @@ const os = require('os');
 // printers snmp profiles form json file
 const templates = require("./profiles.json");
 // printers to be monitored list from json file
-const printers = require('./printers.json');
+const printers = require('./devices.json');
 
 const snmp = require ("net-snmp");
 

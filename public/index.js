@@ -23,8 +23,7 @@ let getDevices = ()=> {
   })
   .catch((err) => {
     console.log(err);
-    document.getElementById('devicesAlert').classList.remove('alert-primary');
-    document.getElementById('devicesAlert').classList.remove('alert-secondary');
+    document.getElementById('devicesAlert').classList.remove('alert-primary','alert-secondary');
     document.getElementById('devicesAlert').classList.add('alert-danger');
     document.getElementById('devicesAlert').innerHTML = 'Error getting devices list';
   })
@@ -40,17 +39,16 @@ const isValidIpAddress = (ipaddress) => {
   }
 
 // ADD Device
-const addDevice = (e) => {
+const addDevice = async (e) => {
   e.preventDefault();
   const ip = document.getElementById('ip').value
   if (isValidIpAddress(ip)) {
     document.getElementById('ip').classList.remove('is-invalid');
     document.getElementById('ip').classList.add('is-valid');
-    document.getElementById('devicesAlert').classList.remove('alert-primary');
-    document.getElementById('devicesAlert').classList.remove('alert-danger');
+    document.getElementById('devicesAlert').classList.remove('alert-primary','alert-danger');
     document.getElementById('devicesAlert').classList.add('alert-info');
-    document.getElementById('devicesAlert').innerHTML = `Establishing snmp connection with ${ip}`;
-    fetch('/api/devices', {
+    document.getElementById('devicesAlert').innerHTML = `Establishing snmp connection with ${ip}... please wait...`;
+    await fetch('/api/devices', {
       method:'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -60,12 +58,17 @@ const addDevice = (e) => {
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
-      document.getElementById('devicesAlert').classList.remove('alert-primary');
-      document.getElementById('devicesAlert').classList.remove('alert-danger');
-      document.getElementById('devicesAlert').classList.remove('alert-info');
-      document.getElementById('devicesAlert').classList.add('alert-success');
-      document.getElementById('devicesAlert').innerHTML = `Snmp comunication with ${ip} established`;
+      //console.log(data);
+      if (data.status == 'error'){
+        document.getElementById('devicesAlert').classList.remove('alert-primary','alert-success','alert-info');
+        document.getElementById('devicesAlert').classList.add('alert-danger');
+        document.getElementById('devicesAlert').innerHTML = `Error: device is not responding`;
+      } else {
+        document.getElementById('devicesAlert').classList.remove('alert-primary','alert-danger','alert-info');
+        document.getElementById('devicesAlert').classList.add('alert-success');
+        document.getElementById('devicesAlert').innerHTML = `${data.message}`;
+        getDevices()
+      }
     })
     .catch((err) => {
       console.log(err);

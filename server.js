@@ -36,30 +36,58 @@ function listen() {
 }
 
 // Load devices from json file
-let devices = require("./public/devices.json");
+let devices = require("./devices.json");
 console.log ("Devices loaded")
+// Load settings json file
+let settings = require("./public/settings.json");
+console.log ("Settings loaded")
+// Load profiles from json file
+let profiles = require("./profiles.json");
+console.log ("Profiles loaded")
 
 // GET DEVICES
-let showAllDevices = (req, res) => {
-  res.send(devices);
-}
-app.get('/api/devices', showAllDevices);
+app.get('/api/devices', async (req, res) => {
+  try {
+    res.send(devices);
+  } catch (err) {
+    res.json({status:'error', message:err});
+  }
+});
 
 //ADD DEVICE
 app.post('/api/devices', async (req, res) => {
-  console.log(req.body.ip);
-  let deviceToAdd = {
-    "ip": req.body.ip
-  };
+  //console.log(req.body.ip);
+  const oidSysName = '1.3.6.1.2.1.1.5.0';
+  const oidSerial = '1.3.6.1.2.1.43.5.1.1.17.1';
+  let oids =[];
+  oids.push(oidSysName);
+  oids.push(oidSerial);
+  let deviceToAdd = {"ip": req.body.ip};
   try {
-    let snmpResult = await snmp.get(deviceToAdd.ip,['1.3.6.1.2.1.1.5.0','1.3.6.1.2.1.43.5.1.1.17.1']);
-    res.send(snmpResult);
+    let snmpResult = await snmp.get(deviceToAdd.ip,oids);
+    let serial = snmpResult.find(result => result.oid == oidSerial);
+    deviceToAdd['serial'] = serial.value;
+    let name = snmpResult.find(result => result.oid == oidSysName);
+    deviceToAdd['name'] = name.value;
+    devices.push(deviceToAdd);
+    const saveDevices = (error) => {
+      //console.log(final_result);
+      let json = JSON.stringify(devices, null, 2);
+      const finished = (err) => {
+          console.log(`Device saved in devices.json`);
+          return res.status(200).json({
+            status: 'OK',
+            message: 'Added device',
+          });
+          // Don't send anything back until everything is done
+          if (err) console.error (err.toString ());
+      }
+      fs.writeFile(`./devices.json`, json, 'utf8',finished);
+      if (error) console.error (error.toString ());
+    }
+    saveDevices()
   } catch(err) {
-    console.log("The printer is not responding")
-    return res.status(500).json({
-      status: 'error',
-      error: 'The printer is not responding',
-    });
+    return res.json({status: 'error', message: err});
   }
   //snmp.get(req.body.ip,['1.3.6.1.2.1.1.5.0','1.3.6.1.2.1.43.5.1.1.17.1']);
   //let json = JSON.stringify(data, null, 2);
@@ -72,10 +100,6 @@ app.post('/api/devices', async (req, res) => {
   //console.log(json);
   //fs.writeFile(`${__dirname}/public/settings.json`, json, 'utf8', finished);
 });
-
-// Load settings json file
-let settings = require("./public/settings.json");
-console.log ("Settings loaded")
 
 // GET SETTINGS
 let showAllSettings = (req, res) => {
