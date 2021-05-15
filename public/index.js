@@ -23,13 +23,65 @@ let getDevices = ()=> {
   })
   .catch((err) => {
     console.log(err);
-    document.getElementById('devicesAlert').classList.remove('alert-primary');
-    document.getElementById('devicesAlert').classList.remove('alert-secondary');
+    document.getElementById('devicesAlert').classList.remove('alert-primary','alert-secondary');
     document.getElementById('devicesAlert').classList.add('alert-danger');
     document.getElementById('devicesAlert').innerHTML = 'Error getting devices list';
   })
 }
 getDevices();
+
+//validate Ip address
+const isValidIpAddress = (ipaddress) => {
+  if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress)){
+  return (true)
+  }
+  return (false)
+  }
+
+// ADD Device
+const addDevice = async (e) => {
+  e.preventDefault();
+  const ip = document.getElementById('ip').value
+  if (isValidIpAddress(ip)) {
+    document.getElementById('ip').classList.remove('is-invalid');
+    document.getElementById('ip').classList.add('is-valid');
+    document.getElementById('devicesAlert').classList.remove('alert-primary','alert-danger');
+    document.getElementById('devicesAlert').classList.add('alert-info');
+    document.getElementById('devicesAlert').innerHTML = `Establishing snmp connection with ${ip}... please wait...`;
+    await fetch('/api/devices', {
+      method:'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify({ip:ip})
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      //console.log(data);
+      if (data.status == 'error'){
+        document.getElementById('devicesAlert').classList.remove('alert-primary','alert-success','alert-info');
+        document.getElementById('devicesAlert').classList.add('alert-danger');
+        document.getElementById('devicesAlert').innerHTML = `Error: device is not responding`;
+      } else {
+        document.getElementById('devicesAlert').classList.remove('alert-primary','alert-danger','alert-info');
+        document.getElementById('devicesAlert').classList.add('alert-success');
+        document.getElementById('devicesAlert').innerHTML = `${data.message}`;
+        getDevices()
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      document.getElementById('devicesAlert').classList.remove('alert-primary');
+      document.getElementById('devicesAlert').classList.add('alert-danger');
+      document.getElementById('devicesAlert').innerHTML = 'Error adding device to monitor';
+    })
+  } else{
+    document.getElementById('ip').classList.remove('is-valid');
+    document.getElementById('ip').classList.add('is-invalid');
+  }
+}
+document.getElementById('addDeviceForm').addEventListener('submit', addDevice);
 
 // get zabbix server
 let getZabbixServer = ()=>{

@@ -1,14 +1,13 @@
 // requirements
 // File System for writings devices and profiles
 const fs = require('fs');
-// To comunicate with snmp devices
-const snmp = require ("net-snmp");
 // Cors for allowing "cross origin resources"
 const cors = require('cors');
-// for pasrsing body post request
-const bodyParser = require('body-parser');
 // Using express: http://expressjs.com/
 const express = require('express');
+// To comunicate with snmp devices
+//const snmp = require ("net-snmp");
+const snmp = require('./snmp');
 
 // Create the app
 const app = express();
@@ -37,18 +36,70 @@ function listen() {
 }
 
 // Load devices from json file
-let devices = require("./public/devices.json");
+let devices = require("./devices.json");
 console.log ("Devices loaded")
-
-// GET DEVICES
-let showAllDevices = (req, res) => {
-  res.send(devices);
-}
-app.get('/api/devices', showAllDevices);
-
 // Load settings json file
 let settings = require("./public/settings.json");
 console.log ("Settings loaded")
+// Load profiles from json file
+let profiles = require("./profiles.json");
+console.log ("Profiles loaded")
+
+// GET DEVICES
+app.get('/api/devices', async (req, res) => {
+  try {
+    res.send(devices);
+  } catch (err) {
+    res.json({status:'error', message:err});
+  }
+});
+
+//ADD DEVICE
+app.post('/api/devices', async (req, res) => {
+  //console.log(req.body.ip);
+  const oidSysName = '1.3.6.1.2.1.1.5.0';
+  const oidSerial = '1.3.6.1.2.1.43.5.1.1.17.1';
+  let oids =[];
+  oids.push(oidSysName);
+  oids.push(oidSerial);
+  let deviceToAdd = {"ip": req.body.ip};
+  try {
+    let snmpResult = await snmp.get(deviceToAdd.ip,oids);
+    let serial = snmpResult.find(result => result.oid == oidSerial);
+    deviceToAdd['serial'] = serial.value;
+    let name = snmpResult.find(result => result.oid == oidSysName);
+    deviceToAdd['name'] = name.value;
+    devices.push(deviceToAdd);
+    const saveDevices = (error) => {
+      //console.log(final_result);
+      let json = JSON.stringify(devices, null, 2);
+      const finished = (err) => {
+          console.log(`Device saved in devices.json`);
+          return res.status(200).json({
+            status: 'OK',
+            message: 'Added device',
+          });
+          // Don't send anything back until everything is done
+          if (err) console.error (err.toString ());
+      }
+      fs.writeFile(`./devices.json`, json, 'utf8',finished);
+      if (error) console.error (error.toString ());
+    }
+    saveDevices()
+  } catch(err) {
+    return res.json({status: 'error', message: err});
+  }
+  //snmp.get(req.body.ip,['1.3.6.1.2.1.1.5.0','1.3.6.1.2.1.43.5.1.1.17.1']);
+  //let json = JSON.stringify(data, null, 2);
+  let finished = (err) => {
+    if (!err) {
+      console.log('Updated settings.json');
+      res.send(settings);
+    } else res.send (err);
+  }
+  //console.log(json);
+  //fs.writeFile(`${__dirname}/public/settings.json`, json, 'utf8', finished);
+});
 
 // GET SETTINGS
 let showAllSettings = (req, res) => {
@@ -82,7 +133,7 @@ function showAllProfiles(req, res) {
 app.get('/add/:manufacturer/:family/:model/:ip', addPrinter);
 // Handle that route
 async function addPrinter(req, res) {
-  let printerTemplate = prodiles.find(template => template.model == req.params.model);
+  let printerTemplate = profiles.find(template => template.model == req.params.model);
   // Put printer parameters in the printer array object
   let printerToAdd = {
     "manufacturer": req.params.manufacturer,
@@ -93,7 +144,7 @@ async function addPrinter(req, res) {
   console.log(`Retriving serial number from ip: ${req.params.ip} oid: ${printerTemplate.serialOid}`);
   let serialOidArray = [printerTemplate.serialOid];
   try {
-    printerToAdd["serial"] = (await lacGet(req.params.ip,serialOidArray))[0].value;
+    printerToAdd["serial"] = (await snmp.get(req.params.ip,serialOidArray))[0].value;
   } catch(err) {
     console.log("The printer is not responding")
     return res.status(500).json({
@@ -135,95 +186,20 @@ function deletePrinter(req, res) {
   }
 }
 
-const lacGet = (ip,oidsArray) => {
-  return new Promise((resolve,reject) => {
-      final_result = [];
-      let session = snmp.createSession(ip);
-      session.get(oidsArray, function (error, varbinds) {
-          if (error) { 
-              reject(error);
-          } else {
-              for (let i = 0; i < varbinds.length; i++)
-                  if (snmp.isVarbindError(varbinds[i])) reject(snmp.varbindError(varbinds[i]));
-                  else {
-                      let snmp_rez = {
-                        oid: (varbinds[i].oid).toString(),
-                        value: (varbinds[i].value).toString()
-                      };
-                      final_result.push(snmp_rez);
-                  }
-              //console.log(final_result);
-              resolve(final_result)
-          }
-      });
-      session.trap(snmp.TrapType.LinkDown, function (error) {
-          if (error) reject(error);
-      });
-  });
-};
-
-const lacSubtree = (ip,oid) => {
-  return new Promise((resolve,reject) => {
-      let maxRepetitions = 20;
-      const options = {};
-      final_result = [];
-      let session = snmp.createSession(ip, "public", options);
-      session.subtree(oid, maxRepetitions, feedCb, (error) => {
-          doneCb(error);
-          if (error) { 
-              reject(error);
-          } else { 
-              resolve(final_result);
-          }
-      });
-  });
-};
-
-function feedCb (varbinds) {
-  for (let i = 0; i < varbinds.length; i++) {
-      if (snmp.isVarbindError (varbinds[i]))
-          console.error (snmp.letbindError (varbinds[i]));
-      else {
-          let snmp_rez = {
-            oid: (varbinds[i].oid).toString(),
-            value: (varbinds[i].value).toString()
-          };
-          final_result.push(snmp_rez);
-      }
-  }
-}
-
-function doneCb (error) {
-  //console.log(final_result);
-  let json = JSON.stringify(final_result, null, 2);
-  fs.writeFile(`./public/snmp.json`, json, 'utf8',finished);
-  function finished(err) {
-      console.log(`Results saved in snmp.json`);
-      // Don't send anything back until everything is done
-      if (err) console.error (err.toString ());
-    }
-  final_result = [];
-  if (error)
-      console.error (error.toString ());
-}
-
 // SNMP SUBTREE route
 app.get('/snmp/:ip/:pippo/:oid', snmpRequest);
 async function snmpRequest(req, res) {
   console.log(req.params.pippo, req.params.oid);
   console.log(typeof req.params.oid);
   if (req.params.pippo == "subtree") {
-    let snmpResult = await lacSubtree (req.params.ip,req.params.oid);
+    let snmpResult = await snmp.subtree (req.params.ip,req.params.oid);
     res.send(snmpResult);
   }
   if (req.params.pippo == "get") {
     let oidsArray =[];
     oidsArray.push(req.params.oid);
-    let snmpResult = await lacGet(req.params.ip,oidsArray);
+    let snmpResult = await snmp.get(req.params.ip,oidsArray);
     console.log (snmpResult);
     res.send(snmpResult);
   }
 }
-
-//lacGet("192.168.1.3", ["1.3.6.1.2.1.43.5.1.1.17.1"]);
-//lacSubtree("192.168.1.3", "1.3.6.1.2.1.43.5.1.1.17");
