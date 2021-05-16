@@ -1,12 +1,15 @@
+require('dotenv').config()
+
 const snmp = require("net-snmp");
 const fs = require("fs");
+const mongoose = require('mongoose');
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const cors = require("cors");
 // Create the app and setting up the environment
 const app = express();
 
-const indexRouter = require("./");
+const indexRouter = require("./routes/index");
 
 //app.use(cors());
 app.set("view engine", "ejs");
@@ -15,15 +18,16 @@ app.set("layout", "layouts/layout");
 app.use(expressLayouts);
 // This is for hosting files
 app.use(express.static(`${__dirname}/public`));
+app.use('/', indexRouter);
 
-/* //Content Security Policy
+//Content Security Policy
 app.use(function (req, res, next) {
   res.setHeader(
     "Content-Security-Policy-Report-Only",
     "script-src 'self' 'unsafe-inline' http://localhost:3000; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self'"
   );
   next();
-}); */
+});
 
 // Set up the server
 // This call back just tells us that the server has started
@@ -31,10 +35,19 @@ const listen = () => {
   const host = server.address().address;
   const port = server.address().port;
   console.log(
-    `Lac server ${package.version} listening at http://${host}:${port}`
+    `Lac server listening at http://${host}:${port}`
   );
 };
+// process.env.PORT is related to deploying on heroku
+const server = app.listen(process.env.PORT || 3000, listen);
 
+// MONGO DB CONNECTION
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+db.on ('error', error => console.error(error));
+db.once ('open', () => console.log('Connected to MongoDB'));
+
+/* 
 // Load devices from json file
 let devices = require("./devices.json");
 console.log("Devices loaded");
@@ -105,10 +118,6 @@ app.post("/api/devices", async (req, res) => {
 let showAllSettings = (req, res) => {
   res.send(settings);
 };
-// process.env.PORT is related to deploying on heroku
-const server = app.listen(process.env.PORT || 3000, listen);
-
-/* 
 // profiles ROUTE
 app.get("/profiles/:manufacturer/:family", showAllProfiles);
 // Callback
