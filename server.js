@@ -1,17 +1,25 @@
+// REQUIRED MODULES
+// local config
 require('dotenv').config()
-
-const snmp = require("net-snmp");
-const fs = require("fs");
+// snmp requests
+//const snmp = require("net-snmp");
+// file system to write files
+//const fs = require("fs");
+// connect to database
 const mongoose = require('mongoose');
+// web server framework...
 const express = require("express");
+// ... with template engine layout 
 const expressLayouts = require("express-ejs-layouts");
-const cors = require("cors");
+// to allow cross origin resources
+//const cors = require("cors");
+
+// LOCAL REQUIRE
+const indexRouter = require("./routes/index");
+
 // Create the app and setting up the environment
 const app = express();
 
-const indexRouter = require("./routes/index");
-
-//app.use(cors());
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 app.set("layout", "layouts/layout");
@@ -20,14 +28,15 @@ app.use(expressLayouts);
 app.use(express.static(`${__dirname}/public`));
 app.use('/', indexRouter);
 
-//Content Security Policy
+//app.use(cors());
+/* //Content Security Policy
 app.use(function (req, res, next) {
   res.setHeader(
     "Content-Security-Policy-Report-Only",
     "script-src 'self' 'unsafe-inline' http://localhost:3000; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self'"
   );
   next();
-});
+}); */
 
 // Set up the server
 // This call back just tells us that the server has started

@@ -1,0 +1,4 @@
+- controllare versione su lac.cmd
+- aggiornare changelog e documentazione pdf
+- controllare versione e compilare innosetup 32
+- controllare versione e compilare innosetup 64
