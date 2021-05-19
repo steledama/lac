@@ -1,32 +1,51 @@
 // REQUIRED MODULES
+
 // local config
 require('dotenv').config()
-// snmp requests
-//const snmp = require("net-snmp");
-// file system to write files
-//const fs = require("fs");
+
 // connect to database
 const mongoose = require('mongoose');
+
 // web server framework...
 const express = require("express");
+
 // ... with template engine layout 
 const expressLayouts = require("express-ejs-layouts");
+
 // to allow cross origin resources
 //const cors = require("cors");
 
-// LOCAL REQUIRE
+// snmp requests
+//const snmp = require("net-snmp");
+
+// file system to write files
+//const fs = require("fs");
+
+// ROUTES require
 const indexRouter = require("./routes/index");
+const descriptionRouter = require("./routes/descriptions");
 
 // Create the app and setting up the environment
 const app = express();
 
+// template engine
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 app.set("layout", "layouts/layout");
 app.use(expressLayouts);
+
+// not bodyparser anymore
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
+
 // This is for hosting files
 app.use(express.static(`${__dirname}/public`));
+
+// routes
 app.use('/', indexRouter);
+app.use('/descriptions', descriptionRouter);
 
 //app.use(cors());
 /* //Content Security Policy
