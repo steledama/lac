@@ -4,19 +4,15 @@ const { exec } = require("child_process");
 const { resolve } = require("path");
 // built in node module for os information
 const os = require('os');
-
-// printers snmp profiles form json file
-const templates = require("./profiles.json");
-// printers to be monitored list from json file
-const printers = require('./devices.json');
-
+// for snmp comunication
 const snmp = require ("net-snmp");
 
 // version taken from package.json
-const package = require('../package.json');
+const package = require('./package.json');
 let version = package.version;
 console.log(version);
 
+// zabbix server
 const serverZabbix = 'stele.dynv6.net';
 
 const lacGet = (ip,oidsArray) => {
