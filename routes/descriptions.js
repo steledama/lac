@@ -1,8 +1,12 @@
+// REQUIRE
+// express
 const express = require('express');
-const router = express.Router();
+// Description mongo schema
 const Description = require('../models/description');
 
-// all descriptions routes
+const router = express.Router();
+
+// all descriptions route
 router.get('/', async (req, res) => {
     let searchOptions = {};
     if (req.query.name !=null && req.query.name !== "") {
@@ -19,11 +23,6 @@ router.get('/', async (req, res) => {
     }
 })
 
-// new description route
-router.get('/new', (req, res) => {
-    res.render('descriptions/new', { description: new Description() });
-})
-
 // create description
 router.post('/', async (req, res) => {
     const description = new Description({
@@ -31,13 +30,19 @@ router.post('/', async (req, res) => {
     })
     try {
         const newDescription = await description.save();
-        //res.redirect(`descriptions/${newDescription.id}`)
-        res.redirect('descriptions');
+        const descriptions = await Description.find({});
+        res.render('descriptions',{
+            descriptions: descriptions,
+            searchOptions: '',
+            descriptionMessage: 'SUCCESS: escription added succesfully'
+        });
     } catch {
-        res.render('descriptions/new', {
-            description: description,
-            errorMessage: 'Error creating description'
-        })
+        const descriptions = await Description.find({});
+        res.render('descriptions', {
+            descriptions: descriptions,
+            searchOptions: '',
+            descriptionMessage: 'ERROR creating description (e.g. description name cannot be empty)'
+        });
     }
 })
 
