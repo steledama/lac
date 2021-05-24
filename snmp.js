@@ -89,7 +89,7 @@ if (process.argv[2] != undefined) {
                     let result = await subtree(ip, oid);
                     if (oid != '1.3.6.1') console.log(result);
                     else try {
-                        const data = fs.writeFileSync('snmp.txt', JSON.stringify(result, null, 4))
+                        const data = fs.writeFileSync('snmp.json', JSON.stringify(result, null, 4))
                       } catch (err) {
                         console.error(err)
                       }
