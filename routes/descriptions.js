@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     }
     try {
         const descriptions = await Description.find(searchOptions);
-        res.render('descriptions/index', {
+        res.render('descriptions', {
             descriptions: descriptions,
             searchOptions: req.query
         });
@@ -23,28 +23,103 @@ router.get('/', async (req, res) => {
     }
 })
 
-// create description
+// Add description
 router.post('/', async (req, res) => {
     const description = new Description({
         name: req.body.name
     })
     try {
-        const newDescription = await description.save();
+        await description.save();
         const descriptions = await Description.find({});
         res.render('descriptions',{
             descriptions: descriptions,
             searchOptions: '',
-            descriptionMessage: 'SUCCESS: escription added succesfully'
+            descriptionMessage: {
+                status: 'ok',
+                message: 'Description added'
+            }
         });
-    } catch {
+    } catch (error) {
         const descriptions = await Description.find({});
         res.render('descriptions', {
             descriptions: descriptions,
             searchOptions: '',
-            descriptionMessage: 'ERROR creating description (e.g. description name cannot be empty)'
+            descriptionMessage: {
+                status: 'error',
+                message: error.message
+            }
         });
     }
 })
 
+// edit descriptions route
+router.get('/edit', async (req, res) => {
+    res.send ('Edit description ' + req.params.id)
+})
+
+
+// delete description
+router.delete('/:id', async (req, res) => {
+    let description
+    let searchOptions = {};
+    try {
+        description = await Description.findById(req.params.id);
+        await description.remove();
+        descriptions = await Description.find({});
+        let searchOptions = {};
+        res.render('descriptions', {
+            descriptions: descriptions,
+            searchOptions: searchOptions,
+            descriptionMessage: {
+                stauts: 'ok',
+                message: 'Description deleted'
+            }
+        })
+    } catch {
+        descriptions = await Description.find({});
+        if (description == null) {
+            res.render('descriptions', {
+                descriptions: descriptions,
+                searchOptions: searchOptions,
+                descriptionMessage: {
+                    status: 'error',
+                    message: 'Error finding description'
+                }
+            });
+        } else {
+            res.render('descriptions', {
+                descriptions: descriptions,
+                searchOptions: serachOptions,
+                descriptionMessage: {
+                    status: 'error',
+                    message: 'Error deleting description'
+                }
+            })
+        }
+    }
+})
+
+// Update description
+router.put('/:id', async (req, res) => {
+    let description
+    try {
+        description = await Description.findById(req.params.id);
+        description.name = req.body.name;
+        await description.save();
+        res.redirect('/descriptions')
+    } catch {
+        if (description == null) {
+            res.redirect('/');
+        } else {
+            res.render('description/edit', {
+                description: description,
+                descriptionMessage: {
+                    status: 'error',
+                    message: 'Error updating description'
+                }
+            });
+        }
+    }
+})
 
 module.exports = router;

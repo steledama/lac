@@ -1,15 +1,17 @@
 const mongoose = require('mongoose');
-const itamTypeList = ["usage", "percent", "total", "remain", "boolean"];
+
+const itemTypeList = ["counter", "percent", "total", "remain", "boolean"];
 
 let profileSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
+    name: { type: String, required: true, unique: true },
+    models: [
+        { type: String, required: true }
+    ],
     oids: [
-        { oid: { type: String, required: true },
+        {
+        oid: { type: String, required: true },
         description: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Description' },
-        itemType: { type: String, enum: itemTypeList, required: true },
+        itemType: { type: String, required: true, enum: itemTypeList },
         isFalse: { type: String, required: isBoolean }
         }
     ]

@@ -7,7 +7,7 @@
     <button type="submit">Add</button> 
 </form>
 <% if (locals.descriptionMessage !=null) { %>
-    <%= descriptionMessage %>
+    <%= descriptionMessage.message %>
 <% } else {%>
     INFO: Insert a description name (tries to standardize the item's descriptions to limit the number as much as possible
 <% } %>
@@ -19,5 +19,9 @@
     <!-- <button type="submit">Filter</button> -->
 </form>
 <% descriptions.forEach(description => { %>
-    <div><%= description.name %></div>
+    <%= description.name %>
+    <form action = "/descriptions/<%= description.id %>?_method=DELETE" method = "POST">
+        <button type="submit">Delete</button> 
+    </form>
+
 <% }); %>
