@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/steledama/lac#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "child-process": "^1.0.2",
     "cors": "^2.8.5",
     "dotenv": "^9.0.2",

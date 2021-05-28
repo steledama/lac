@@ -4,8 +4,9 @@ const { exec } = require("child_process");
 const { resolve } = require("path");
 // built in node module for os information
 const os = require('os');
-// for snmp comunication
-const snmp = require ("net-snmp");
+// for snmp comunication from snmp.js
+// app.mjs
+import { lacGet } from './snmp.js';
 
 // version taken from package.json
 const package = require('./package.json');
@@ -15,7 +16,9 @@ console.log(version);
 // zabbix server
 const serverZabbix = 'stele.dynv6.net';
 
-const lacGet = (ip,oidsArray) => {
+let devices = ["192.168.1.66"]
+let deviceName = "Xerox Phaser 6130N"
+/* const lacGet = (ip,oidsArray) => {
     return new Promise((resolve,reject) => {
         final_result = [];
         let session = snmp.createSession(ip);
@@ -40,12 +43,33 @@ const lacGet = (ip,oidsArray) => {
             if (error) reject(error);
         });
     });
-  };
+  }; */
 
-//for each printer to monitor (taken from printers.json)
-printers.forEach(printer => {
-    //find the printer template from templates.json...
-    let printerTemplate = templates.find(template => template.model == printer.model);
+//for each printer to monitor (taken from lac server)
+devices.forEach(device => {
+    //find the printer template from zabbix server
+    let deviceTemplate = async (deviceName) => {
+        try {
+          const response = await axios.post(`http://${serverZabbix}/api_jsonrpc.php`, {
+            "jsonrpc": "2.0",
+            "method": "template.get",
+            "params": {
+                "output": ["host","templateid"],
+                "filter": {
+                    "host": [
+                        `${deviceName}`
+                    ]
+                }
+            },
+            "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
+            "id": 1
+          });
+          console.log(deviceTemplate);
+          //return response
+        } catch (error) {
+          console.error(error);
+        }
+      }
     // take the oids (name and oid)
     printer["oids"] = printerTemplate.oids;
     //take only oid and put in oidsArray
