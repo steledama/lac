@@ -13,7 +13,6 @@ content-type: application/json
 }
 
 ###
-
 POST http://stele.dynv6.net/api_jsonrpc.php
 content-type: application/json
 
@@ -33,7 +32,6 @@ content-type: application/json
 }
 
 ###
-
 POST http://stele.dynv6.net/api_jsonrpc.php
 content-type: application/json
 
@@ -43,9 +41,21 @@ content-type: application/json
     "params": {
         "output": ["name","key_"],
         "templateids": "10468",
-        "tags": [
-            {"tag": "false", "operator": "2"}
-            ]
+        "tags": [{"tag": "false", "operator": "2"}]
+    },
+    "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
+    "id": 1
+}
+
+###
+POST http://stele.dynv6.net/api_jsonrpc.php
+content-type: application/json
+
+{
+    "jsonrpc": "2.0",
+    "method": "host.get",
+    "params": {
+        "filter": { "host": ["000000000"] }
     },
     "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
     "id": 1
