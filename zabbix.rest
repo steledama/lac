@@ -21,11 +21,7 @@ content-type: application/json
     "method": "template.get",
     "params": {
         "output": ["host","templateid"],
-        "filter": {
-            "host": [
-                "Xerox Phaser 6130N"
-            ]
-        }
+        "filter": {"host": ["Xerox Phaser 6130N"]}
     },
     "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
     "id": 1
@@ -56,6 +52,39 @@ content-type: application/json
     "method": "host.get",
     "params": {
         "filter": { "host": ["000000000"] }
+    },
+    "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
+    "id": 1
+}
+
+###
+
+POST http://stele.dynv6.net/api_jsonrpc.php
+content-type: application/json
+
+{
+    "jsonrpc": "2.0",
+    "method": "hostgroup.get",
+    "params": {
+        "output": "extend",
+        "filter": {"name": ["LAC"]}
+    },
+    "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
+    "id": 1
+}
+
+###
+POST http://stele.dynv6.net/api_jsonrpc.php
+content-type: application/json
+
+{
+    "jsonrpc": "2.0",
+    "method": "host.create",
+    "params": {
+        "host": "000000000",
+        "name": "STEFANO Xerox Phaser 6130N casa 000000000",
+        "templates": [{"templateid": "10468"}],
+        "groups": [{"groupid": "19"}]
     },
     "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
     "id": 1

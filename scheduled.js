@@ -14,20 +14,22 @@ const package = require('./package.json');
 let version = package.version;
 //console.log(version);
 
-// zabbix server
+// oids
 const nameOid = '1.3.6.1.2.1.1.1.0';
 const serialOid = '1.3.6.1.2.1.43.5.1.1.17.1';
 
-let serverZabbix = 'stele.dynv6.net';
+// variables taken from lac server
+let zabbixServer = 'stele.dynv6.net';
+let zabbixAuth = "0eb8340a0cee7c02c24f50b4cb322d03";
+let zabbixGroupId = "19";
 let devices = [
     {
         ip: "192.168.1.3",
-        client: "STEFANO",
+        customer: "STEFANO",
         site: "",
-        location: ""
+        location: "casa"
     }
 ];
-//let deviceName = "Xerox Phaser 6130N";
 
 //for each printer to monitor (taken from lac server)
 devices.forEach(async device => {
@@ -42,16 +44,29 @@ devices.forEach(async device => {
     device.serial = (await lac.get(device.ip,[serialOid]))[0].value;
     //console.log(device);
 
-    // connect to zabbix server to check if the host exist
-    device.hostId = await getHost(device.serial);
+    //find the printer template id from zabbix server
+    device.zabbixTemplateid = await templateGet(device.name);
     //console.log(device);
 
-    //find the printer template id from zabbix server
-    device.templateId = await getDeviceTemplateId(device.name);
+    // connect to zabbix server to check if the host exist
+    device.zabbixHostid = await hostGet(device.serial);
     //console.log(device);
+
+    // if it does not exist create it
+    if (device.zabbixHostid == undefined) {
+        // connect to zabbix server to create host
+        device.zabbixHostName = `${device.customer} ${device.site} ${device.name} ${device.location} ${device.serial}`;
+        device.zabbixHostId = await hostCreate(
+            device.serial,
+            device.zabbixHostName,
+            device.zabbixTemplateid,
+            [zabbixGroupId]
+        );
+        //console.log(device);
+    }
 
     // find device items from zabbix server
-    device.items = await getDeviceItems(device.templateId);
+    device.items = await itemGet(device.zabbixTemplateid);
     //console.log(device);
 
     //take only oids and put them into oidsArray
@@ -64,24 +79,27 @@ devices.forEach(async device => {
     // connect to device and get oids values
     let snmpResults = await lac.get(device.ip,oidsArray)
     console.log(snmpResults);
+
+    //send snmpResult to zabbix
+    zabbixSend(device,snmpResults);
 });
 
 function cleanName(string) {
     let res = string.split(";", 1);
     return res;
-  }
+}
 
 // connect with zabbix server to get device template id from device name
-async function getDeviceTemplateId (deviceName) {
+async function templateGet (host) {
     try {
-        const response = await axios.post(`http://${serverZabbix}/api_jsonrpc.php`, {
+        const response = await axios.post(`http://${zabbixServer}/api_jsonrpc.php`, {
         "jsonrpc": "2.0",
         "method": "template.get",
         "params": {
             "output": ["host","templateid"],
-            "filter": {"host": [`${deviceName}`]}
+            "filter": {"host": [`${host}`]}
         },
-        "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
+        "auth": `${zabbixAuth}`,
         "id": 1
         });
         //console.log(response.data);
@@ -91,18 +109,61 @@ async function getDeviceTemplateId (deviceName) {
     }
 }
 
-// connect to zabbix server to get device items from template id
-async function getDeviceItems (templateId) {
+// connect to zabbix server to get host from device serial number
+async function hostGet (host) {
     try {
-        const response = await axios.post(`http://${serverZabbix}/api_jsonrpc.php`, {
+        const response = await axios.post(`http://${zabbixServer}/api_jsonrpc.php`, {
+            "jsonrpc": "2.0",
+            "method": "host.get",
+            "params": {
+                "filter": { "host": [`${host}`] }
+            },
+            "auth": `${zabbixAuth}`,
+            "id": 1
+        });
+        //console.log(response.data.result[0]);
+        if (response.data.result[0] !== undefined){
+            return response.data.result[0].hostid;
+        } else return undefined
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// create host to zabbix server
+async function hostCreate (host,name,templateid,groupid) {
+    try {
+        const response = await axios.post(`http://${zabbixServer}/api_jsonrpc.php`, {
+            "jsonrpc": "2.0",
+            "method": "host.create",
+            "params": {
+                "host": `${host}`,
+                "name": `${name}`,
+                "templates": [{"templateid": `${templateid}`}],
+                "groups": [{"groupid": `${groupid}`}]
+            },
+            "auth": `${zabbixAuth}`,
+            "id": 1
+        });
+        //console.log(response.data);
+        return response.data.result.hostids[0];
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// connect to zabbix server to get device items from template id
+async function itemGet (templateids) {
+    try {
+        const response = await axios.post(`http://${zabbixServer}/api_jsonrpc.php`, {
         "jsonrpc": "2.0",
         "method": "item.get",
         "params": {
             "output": ["name","key_"],
-            "templateids": `${templateId}`,
-            "tags": [{"tag": "false", "operator": "2"}]
+            "templateids": `${templateids}`,
+            "tags": [{"tag": "send", "value": "false", "operator": "2"}]
         },
-        "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
+        "auth": `${zabbixAuth}`,
         "id": 1
         });
         //console.log(response.data);
@@ -112,32 +173,15 @@ async function getDeviceItems (templateId) {
     }
 }
 
-// connect to zabbix server to get host from device serial number
-async function getHost (deviceSerial) {
-    try {
-        const response = await axios.post(`http://${serverZabbix}/api_jsonrpc.php`, {
-            "jsonrpc": "2.0",
-            "method": "host.get",
-            "params": {
-                "filter": { "host": [`${deviceSerial}`] }
-            },
-            "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
-            "id": 1
-        });
-        //console.log(response.data);
-        return response.data.result;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
 //function to send results to zabbix server
-function sendZabbix(printer) {
-    printer.toSend.hostname = os.hostname();
-    printer.toSend.date = new Date().toISOString().replace(/T.+/, '');
-    printer.toSend.version = version
-    for (const [key, value] of Object.entries(printer.toSend)) {
-        exec(`${__dirname}\\zabbix_sender.exe -z ${serverZabbix} -s ${printer.manufacturer}${printer.model}_${printer.serial} -k ${key} -o ${value}`, (error, stdout, stderr) => {
+function zabbixSend(device,snmpResults) {
+    //printer.toSend.hostname = os.hostname();
+    //printer.toSend.date = new Date().toISOString().replace(/T.+/, '');
+    //printer.toSend.version = version
+    snmpResults.forEach(item => {
+        // for windows `${__dirname}\\zabbix_sender.exe
+        console.log(`${__dirname}/zabbix_sender -z 192.168.1.8 -s ${device.serial} -k ${item.oid} -o ${item.value}`)
+        exec(`${__dirname}/zabbix_sender -z 192.168.1.8 -s ${device.serial} -k ${item.oid} -o ${item.value}`, (error, stdout, stderr) => {
             if (error) {
                 console.log(`error: ${error.message}`);
                 return;
@@ -148,5 +192,5 @@ function sendZabbix(printer) {
             }
             console.log(`stdout: ${stdout}`);
         });
-    }
+    });
 }
