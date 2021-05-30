@@ -18,12 +18,27 @@ content-type: application/json
 
 {
     "jsonrpc": "2.0",
+    "method": "hostgroup.get",
+    "params": {
+        "output": "extend",
+        "filter": {"name": ["LAC"]}
+    },
+    "auth": "9d294d4f35935212c4b9c24a67fb277c",
+    "id": 1
+}
+
+###
+POST http://stele.dynv6.net/api_jsonrpc.php
+content-type: application/json
+
+{
+    "jsonrpc": "2.0",
     "method": "template.get",
     "params": {
         "output": ["host","templateid"],
         "filter": {"host": ["Xerox Phaser 6130N"]}
     },
-    "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
+    "auth": "9d294d4f35935212c4b9c24a67fb277c",
     "id": 1
 }
 
@@ -39,7 +54,7 @@ content-type: application/json
         "templateids": "10468",
         "tags": [{"tag": "false", "operator": "2"}]
     },
-    "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
+    "auth": "9d294d4f35935212c4b9c24a67fb277c",
     "id": 1
 }
 
@@ -53,7 +68,7 @@ content-type: application/json
     "params": {
         "filter": { "host": ["000000000"] }
     },
-    "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
+    "auth": "9d294d4f35935212c4b9c24a67fb277c",
     "id": 1
 }
 
@@ -69,7 +84,7 @@ content-type: application/json
         "output": "extend",
         "filter": {"name": ["LAC"]}
     },
-    "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
+    "auth": "9d294d4f35935212c4b9c24a67fb277c",
     "id": 1
 }
 
@@ -86,6 +101,6 @@ content-type: application/json
         "templates": [{"templateid": "10468"}],
         "groups": [{"groupid": "19"}]
     },
-    "auth": "0eb8340a0cee7c02c24f50b4cb322d03",
+    "auth": "9d294d4f35935212c4b9c24a67fb277c",
     "id": 1
 }

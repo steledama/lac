@@ -19,12 +19,13 @@ const nameOid = '1.3.6.1.2.1.1.1.0';
 const serialOid = '1.3.6.1.2.1.43.5.1.1.17.1';
 
 // variables taken from lac server
+//let zabbixServer = '192.168.1.9';
 let zabbixServer = 'stele.dynv6.net';
-let zabbixAuth = "0eb8340a0cee7c02c24f50b4cb322d03";
-let zabbixGroupId = "19";
+let zabbixAuth = "9d294d4f35935212c4b9c24a67fb277c";
 let devices = [
     {
         ip: "192.168.1.3",
+        zabbixGroup: "LAC",
         customer: "STEFANO",
         site: "",
         location: "casa"
@@ -45,6 +46,10 @@ devices.forEach(async device => {
     //console.log(device);
 
     //find the printer template id from zabbix server
+    device.zabbixGroupId = await hostGroupGet(device.zabbixGroup);
+    //console.log(device);
+
+    //find the printer template id from zabbix server
     device.zabbixTemplateid = await templateGet(device.name);
     //console.log(device);
 
@@ -60,7 +65,7 @@ devices.forEach(async device => {
             device.serial,
             device.zabbixHostName,
             device.zabbixTemplateid,
-            [zabbixGroupId]
+            [device.zabbixGroupId]
         );
         //console.log(device);
     }
@@ -78,7 +83,7 @@ devices.forEach(async device => {
 
     // connect to device and get oids values
     let snmpResults = await lac.get(device.ip,oidsArray)
-    console.log(snmpResults);
+    //console.log(snmpResults);
 
     //send snmpResult to zabbix
     zabbixSend(device,snmpResults);
@@ -87,6 +92,27 @@ devices.forEach(async device => {
 function cleanName(string) {
     let res = string.split(";", 1);
     return res;
+}
+
+async function hostGroupGet (name) {
+    try {
+        const response = await axios.post(`http://${zabbixServer}/api_jsonrpc.php`, {
+        "jsonrpc": "2.0",
+        "method": "hostgroup.get",
+        "params": {
+            "output": "extend",
+            "filter": {
+                "name": [name]
+            }
+        },
+        "auth": `${zabbixAuth}`,
+        "id": 1
+        });
+        //console.log(response.data);
+        return response.data.result[0].groupid;
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 // connect with zabbix server to get device template id from device name
@@ -180,8 +206,8 @@ function zabbixSend(device,snmpResults) {
     //printer.toSend.version = version
     snmpResults.forEach(item => {
         // for windows `${__dirname}\\zabbix_sender.exe
-        console.log(`${__dirname}/zabbix_sender -z 192.168.1.8 -s ${device.serial} -k ${item.oid} -o ${item.value}`)
-        exec(`${__dirname}/zabbix_sender -z 192.168.1.8 -s ${device.serial} -k ${item.oid} -o ${item.value}`, (error, stdout, stderr) => {
+        //console.log(`${__dirname}/zabbix_sender -z ${zabbixServer} -s ${device.serial} -k ${item.oid} -o ${item.value}`)
+        exec(`${__dirname}/zabbix_sender -z ${zabbixServer} -s ${device.serial} -k ${item.oid} -o ${item.value}`, (error, stdout, stderr) => {
             if (error) {
                 console.log(`error: ${error.message}`);
                 return;
