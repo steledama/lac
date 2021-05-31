@@ -21,7 +21,7 @@ const serialOid = '1.3.6.1.2.1.43.5.1.1.17.1';
 // variables taken from lac server
 //let zabbixServer = '192.168.1.9';
 let zabbixServer = 'stele.dynv6.net';
-let zabbixAuth = "9d294d4f35935212c4b9c24a67fb277c";
+let zabbixAuth = "5afa12a771a58f58912e147c54c017dd00f62574d17e8d4ccdecef83aa22e4d6";
 let devices = [
     {
         ip: "192.168.1.3",
