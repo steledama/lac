@@ -28,6 +28,43 @@ const devices = [
   },
 ];
 
+function getNetInfo() {
+  let ifaces = os.networkInterfaces();
+  // console.log(ifaces);
+  let info = {};
+  Object.keys(ifaces).forEach((ifname) => {
+      let alias = 0;
+      ifaces[ifname].forEach((iface) => {
+          if ('IPv4' !== iface.family || iface.internal !== false) {
+              return;
+          } else {
+              // console.log(ifname, iface.address);
+              info.ipAdress = iface.address;
+              info.macAddress = iface.mac;
+          }
+          ++alias;
+      });
+  });
+  return info;
+}
+
+console.log(os.hostname());
+console.log(os.type() + " " + os.arch() + " " + os.release());
+console.log(getNetInfo());
+
+// variables taken from lac server
+//let zabbixServer = '192.168.1.9';
+let zabbixServer = 'stele.dynv6.net';
+let zabbixAuth = "5afa12a771a58f58912e147c54c017dd00f62574d17e8d4ccdecef83aa22e4d6";
+let zabbixGroup = "LAC";
+let agentLocation = "stefano";
+let devices = [
+  {
+      ip: "192.168.1.3",
+      location: "casa"
+  }
+];
+
 const cleanName = (string) => {
   const res = string.split(';', 1);
   return res;
