@@ -35,11 +35,16 @@ let devices = [
 //for each printer to monitor (taken from lac server)
 devices.forEach(async device => {
 
-    // connect to device to get sys name
-    let deviceNameUncleaned = (await lac.get(device.ip,[nameOid]))[0].value;
-    // clean device name
-    device.name = (cleanName(deviceNameUncleaned))[0];
-    //console.log(device);
+    // try to connect to device to get sys name
+    try {
+        let deviceNameUncleaned = (await lac.get(device.ip,[nameOid]))[0].value;
+        // clean device name
+        device.name = (cleanName(deviceNameUncleaned))[0];
+        //console.log(device);
+    } catch (error) {
+        // send error to lac server
+        console.log(error);
+    }
 
     // connect to device to get serial number
     device.serial = (await lac.get(device.ip,[serialOid]))[0].value;
