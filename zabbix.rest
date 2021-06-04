@@ -3,27 +3,12 @@ content-type: application/json
 
 {
     "jsonrpc": "2.0",
-    "method": "user.login",
-    "params": {
-        "user": "Admin",
-        "password": "zabbix"
-    },
-    "id": 1,
-    "auth": null
-}
-
-###
-POST http://stele.dynv6.net/api_jsonrpc.php
-content-type: application/json
-
-{
-    "jsonrpc": "2.0",
     "method": "hostgroup.get",
     "params": {
         "output": "extend",
-        "filter": {"name": ["LAC"]}
+        "filter": {"name": ["LAC/Stefano"]}
     },
-    "auth": "9d294d4f35935212c4b9c24a67fb277c",
+    "auth": "5afa12a771a58f58912e147c54c017dd00f62574d17e8d4ccdecef83aa22e4d6",
     "id": 1
 }
 
@@ -38,7 +23,7 @@ content-type: application/json
         "output": ["host","templateid"],
         "filter": {"host": ["Xerox Phaser 6130N"]}
     },
-    "auth": "9d294d4f35935212c4b9c24a67fb277c",
+    "auth": "5afa12a771a58f58912e147c54c017dd00f62574d17e8d4ccdecef83aa22e4d6",
     "id": 1
 }
 
@@ -54,7 +39,7 @@ content-type: application/json
         "templateids": "10468",
         "tags": [{"tag": "false", "operator": "2"}]
     },
-    "auth": "9d294d4f35935212c4b9c24a67fb277c",
+    "auth": "5afa12a771a58f58912e147c54c017dd00f62574d17e8d4ccdecef83aa22e4d6",
     "id": 1
 }
 
@@ -68,7 +53,7 @@ content-type: application/json
     "params": {
         "filter": { "host": ["000000000"] }
     },
-    "auth": "9d294d4f35935212c4b9c24a67fb277c",
+    "auth": "5afa12a771a58f58912e147c54c017dd00f62574d17e8d4ccdecef83aa22e4d6",
     "id": 1
 }
 
@@ -84,7 +69,7 @@ content-type: application/json
         "output": "extend",
         "filter": {"name": ["LAC"]}
     },
-    "auth": "9d294d4f35935212c4b9c24a67fb277c",
+    "auth": "5afa12a771a58f58912e147c54c017dd00f62574d17e8d4ccdecef83aa22e4d6",
     "id": 1
 }
 
@@ -101,6 +86,6 @@ content-type: application/json
         "templates": [{"templateid": "10468"}],
         "groups": [{"groupid": "19"}]
     },
-    "auth": "9d294d4f35935212c4b9c24a67fb277c",
+    "auth": "5afa12a771a58f58912e147c54c017dd00f62574d17e8d4ccdecef83aa22e4d6",
     "id": 1
 }
