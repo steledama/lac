@@ -4,12 +4,13 @@ const { exec } = require('child_process');
 // built in node module for absolute path ?
 // const path = require('path');
 // built in node module for os information
-// const os = require('os');
+const os = require('os');
 // to make http request
 const axios = require('axios').default;
 // for snmp comunication from snmp.js
 const lac = require('./snmp');
 
+// version
 // const version = '1.0';
 // console.log(version);
 
@@ -17,53 +18,46 @@ const lac = require('./snmp');
 const nameOid = '1.3.6.1.2.1.1.1.0';
 const serialOid = '1.3.6.1.2.1.43.5.1.1.17.1';
 
-// variables taken from lac server
-const zabbixServer = '192.168.1.9';
-// const zabbixServer = 'stele.dynv6.net';
-const zabbixAuth = '5afa12a771a58f58912e147c54c017dd00f62574d17e8d4ccdecef83aa22e4d6';
-const devices = [
-  {
-    ip: '192.168.1.3',
-    group: 'lac/stefano/casa/ragazzi',
-  },
-];
+// zabbix
+const zabbix = {
+  hostname: '192.168.1.9', // 'stele.dynv6.net',
+  // ste
+  authToken: 'e09c252880dd84cf4bb50de99eabe727d87f86e880a1e58aa5bb4907856a6522',
+  // admin
+  // authToken: '5afa12a771a58f58912e147c54c017dd00f62574d17e8d4ccdecef83aa22e4d6',
+};
 
-function getNetInfo() {
-  let ifaces = os.networkInterfaces();
+// agent
+const agent = {
+  group: 'STE',
+  location: 'stefano',
+  devices: [
+    {
+      ip: '192.168.1.3',
+      location: 'casa',
+    },
+  ],
+};
+
+const getNetInfo = () => {
+  const ifaces = os.networkInterfaces();
   // console.log(ifaces);
-  let info = {};
+  const info = {};
   Object.keys(ifaces).forEach((ifname) => {
-      let alias = 0;
-      ifaces[ifname].forEach((iface) => {
-          if ('IPv4' !== iface.family || iface.internal !== false) {
-              return;
-          } else {
-              // console.log(ifname, iface.address);
-              info.ipAdress = iface.address;
-              info.macAddress = iface.mac;
-          }
-          ++alias;
-      });
+    ifaces[ifname].forEach((iface) => {
+      if (iface.family !== 'IPv4' || iface.internal !== false) return;
+      info.ipAdress = iface.address;
+      info.macAddress = iface.mac;
+    });
   });
   return info;
-}
+};
 
-console.log(os.hostname());
-console.log(os.type() + " " + os.arch() + " " + os.release());
-console.log(getNetInfo());
-
-// variables taken from lac server
-//let zabbixServer = '192.168.1.9';
-let zabbixServer = 'stele.dynv6.net';
-let zabbixAuth = "5afa12a771a58f58912e147c54c017dd00f62574d17e8d4ccdecef83aa22e4d6";
-let zabbixGroup = "LAC";
-let agentLocation = "stefano";
-let devices = [
-  {
-      ip: "192.168.1.3",
-      location: "casa"
-  }
-];
+agent.hostname = os.hostname();
+agent.os = `${os.type()} ${os.arch()} ${os.release()}`;
+agent.ip = (getNetInfo()).ipAdress;
+agent.mac = (getNetInfo()).macAddress;
+// console.log(agent);
 
 const cleanName = (string) => {
   const res = string.split(';', 1);
@@ -71,23 +65,21 @@ const cleanName = (string) => {
 };
 
 const hostGroupGet = async (groupName) => {
-  const names = groupName.split('/');
-  // console.log(names);
   try {
-    const response = await axios.post(`http://${zabbixServer}/api_jsonrpc.php`, {
+    const response = await axios.post(`http://${zabbix.hostname}/api_jsonrpc.php`, {
       jsonrpc: '2.0',
       method: 'hostgroup.get',
       params: {
         output: 'extend',
         filter: {
-          name: names,
+          name: [groupName],
         },
       },
-      auth: `${zabbixAuth}`,
+      auth: `${zabbix.authToken}`,
       id: 1,
     });
     console.log(response.data);
-    const { groupid } = response.data.result;
+    const { groupid } = response.data.result[0];
     return groupid;
   } catch (error) {
     console.log(error);
@@ -98,15 +90,15 @@ const hostGroupGet = async (groupName) => {
 // connect with zabbix server to get device template id from device name
 const templateGet = async (host) => {
   try {
-    const response = await axios.post(`http://${zabbixServer}/api_jsonrpc.php`, {
+    const response = await axios.post(`http://${zabbix.hostname}/api_jsonrpc.php`, {
       jsonrpc: '2.0',
       method: 'template.get',
       params: {
         output: ['host', 'templateid'],
         filter: { host: [`${host}`] },
       },
-      auth: `${zabbixAuth}`,
-      id: 1,
+      auth: `${zabbix.authToken}`,
+      id: 2,
     });
     // console.log(response.data);
     const { templateid } = response.data.result[0];
@@ -120,14 +112,14 @@ const templateGet = async (host) => {
 // connect to zabbix server to get host from device serial number
 const hostGet = async (host) => {
   try {
-    const response = await axios.post(`http://${zabbixServer}/api_jsonrpc.php`, {
+    const response = await axios.post(`http://${zabbix.hostname}/api_jsonrpc.php`, {
       jsonrpc: '2.0',
       method: 'host.get',
       params: {
         filter: { host: [`${host}`] },
       },
-      auth: `${zabbixAuth}`,
-      id: 1,
+      auth: `${zabbix.authToken}`,
+      id: 3,
     });
     // console.log(response.data.result[0]);
     if (response.data.result[0] !== undefined) {
@@ -143,7 +135,7 @@ const hostGet = async (host) => {
 // create host to zabbix server
 const hostCreate = async (host, name, templateid, groupid) => {
   try {
-    const response = await axios.post(`http://${zabbixServer}/api_jsonrpc.php`, {
+    const response = await axios.post(`http://${zabbix.hostname}/api_jsonrpc.php`, {
       jsonrpc: '2.0',
       method: 'host.create',
       params: {
@@ -152,8 +144,8 @@ const hostCreate = async (host, name, templateid, groupid) => {
         templates: [{ templateid: `${templateid}` }],
         groups: [{ groupid: `${groupid}` }],
       },
-      auth: `${zabbixAuth}`,
-      id: 1,
+      auth: `${zabbix.authToken}`,
+      id: 4,
     });
     console.log(response.data);
     const { hostid } = response.data.result.hostids;
@@ -167,7 +159,7 @@ const hostCreate = async (host, name, templateid, groupid) => {
 // connect to zabbix server to get device items from template id
 const itemGet = async (templateids) => {
   try {
-    const response = await axios.post(`http://${zabbixServer}/api_jsonrpc.php`, {
+    const response = await axios.post(`http://${zabbix.hostname}/api_jsonrpc.php`, {
       jsonrpc: '2.0',
       method: 'item.get',
       params: {
@@ -175,8 +167,8 @@ const itemGet = async (templateids) => {
         templateids: `${templateids}`,
         tags: [{ tag: 'send', value: 'false', operator: '2' }],
       },
-      auth: `${zabbixAuth}`,
-      id: 1,
+      auth: `${zabbix.authToken}`,
+      id: 5,
     });
     // console.log(response.data);
     const { result } = response.data;
@@ -194,7 +186,7 @@ const zabbixSend = (serial, snmpResults) => {
   // printer.toSend.version = version
   snmpResults.forEach((item) => {
     // for windows `${__dirname}\\zabbix_sender.exe
-    exec(`${__dirname}/zabbix_sender -z ${zabbixServer} -s ${serial} -k ${item.oid} -o ${item.value}`, (error, stdout, stderr) => {
+    exec(`${__dirname}/zabbix_sender -z ${zabbix.hostname} -s ${serial} -k ${item.oid} -o ${item.value}`, (error, stdout, stderr) => {
       if (error) {
         console.log(error);
         return error;
@@ -209,12 +201,12 @@ const zabbixSend = (serial, snmpResults) => {
   });
 };
 
-// for each printer to monitor (taken from lac server)
-devices.forEach(async (device) => {
+// for each printer to monitor...
+agent.devices.forEach(async (device) => {
   // connect to device to get sys name
-  const deviceNameUncleaned = (await lac.get(device.ip, [nameOid]))[0].value;
+  const nameUncleaned = (await lac.get(device.ip, [nameOid]))[0].value;
   // clean device name
-  const name = (cleanName(deviceNameUncleaned))[0];
+  const name = (cleanName(nameUncleaned))[0];
   // console.log(name);
 
   // connect to device to get serial number
@@ -222,32 +214,32 @@ devices.forEach(async (device) => {
   // console.log(serial);
 
   // find the printer template id from zabbix server
-  const zabbixGroupId = await hostGroupGet(device.group);
-  // console.log(zabbixGroupId);
+  const templateId = await templateGet(name);
+  // console.log(templateId);
 
   // find the printer template id from zabbix server
-  const zabbixTemplateid = await templateGet(name);
-  // console.log(zabbixTemplateid);
+  const groupId = await hostGroupGet(agent.group);
+  // console.log(groupId);
 
   // connect to zabbix server to check if the host exist
-  let zabbixHostId = await hostGet(serial);
-  // console.log(zabbixHostId);
+  let hostId = await hostGet(serial);
+  // console.log(hostId);
 
-  /* // if it does not exist create it
-  if (zabbixHostId === undefined) {
+  // if it does not exist create it
+  if (hostId === undefined) {
     // connect to zabbix server to create host
-    const zabbixHostName = `${device.customer} ${device.site} ${name} ${device.location} ${serial}`;
-    zabbixHostId = await hostCreate(
+    const hostName = `${agent.group} ${agent.location} ${name} ${device.location} ${serial}`;
+    hostId = await hostCreate(
       serial,
-      zabbixHostName,
-      zabbixTemplateid,
-      zabbixGroupId,
+      hostName,
+      templateId,
+      groupId,
     );
     // console.log(device);
   }
 
   // find device items from zabbix server
-  const items = await itemGet(zabbixTemplateid);
+  const items = await itemGet(templateId);
   // console.log(items);
 
   // take only oids and put them into oidsArray
@@ -260,5 +252,5 @@ devices.forEach(async (device) => {
   // console.log(snmpResults);
 
   // send snmpResult to zabbix
-  zabbixSend(serial, snmpResults); */
+  zabbixSend(serial, snmpResults);
 });
