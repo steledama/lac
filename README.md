@@ -15,10 +15,18 @@ It is ment to be a scalable, modern tool that can be managed remotely with [lac 
 
 ## How it works
 
-The solution is composed of two parts:
+The solution is composed of some key components:
 
-- The lac agent: this project
-- [Zabbix server](https://www.zabbix.com/)
+- The [Zabbix server](https://www.zabbix.com/). Basicaly the solution provide a set of templates the contains the device oids to be monitored
+- The App agent. It is a gui to:
+  - Store the zabbix server setting in a json file from [secure-electron-store](https://github.com/reZach/secure-electron-store)
+  - Create host to zabbix server with zabbix api
+  - Support the creation of new templates
+- The schdeuled script. It is a javscript script that has to be scheduled at regular intervals. All it does is:
+  - Take from the app store the settings to connect to zabbix server
+  - Connect to zabbix server to take the host list with the devices ip and oids to be monitored
+  - Connect to the device and collect the data
+  - Send the result with [zabbix sender](https://www.zabbix.com/documentation/current/manual/concepts/sender)
 
 ### The agent
 
@@ -42,12 +50,92 @@ The intentions are to translate the project into an electron app and share the s
 
 ## Lac agent requirements
 
-A working zabbix server (see [Zabbix server readme](https://github.com/steledama/lac-agent/blob/main/zabbixServer/READMEzabbix.md) to start a zabbix server from skratch in few commands).
+A working zabbix server with version 5.4
 The agent is developed with electron and will run on Windows, Mac and Linux systems
 
 ## Getting started with Lac agent
 
-(To be done)
+In order to have a working solution we have to complete the following steps:
+
+l. Zabbix setup and configuration
+l. (...)
+
+### Install zabbix
+
+- Install docker and docker compose (The instructios can vary from platform, hera are some notes from manjaro linux)
+- Once installation is completed, start the Docker service and, optionally, enable it to run whenever the system is rebooted:
+
+```
+$ sudo systemctl start docker.service
+$ sudo systemctl enable docker.service
+```
+
+You can verify that Docker is installed and gather some information about the current version by entering this command:
+
+```
+$ sudo docker version
+```
+
+- Run docker with normal user: by default, you'll have to use sudo or login to root anytime you want to run a Docker command. This next step is optional, but if you'd prefer the ability to run Docker as your current user, add your account to the docker group with this command:
+
+```
+$ sudo usermod -aG docker $USER
+```
+
+You'll need to reboot your system for those changes to take effect.
+
+- Clone the [official zabbix repository with dockerfiles on github] (https://github.com/zabbix/zabbix-docker)
+- Go to the directory and start containers with the docker compose command:
+
+```
+# sudo docker-compose -f ./docker-compose_v3_alpine_mysql_latest.yaml up -d
+```
+
+and stop with:
+
+```
+# sudo docker-compose -f ./docker-compose_v3_alpine_mysql_latest.yaml down
+```
+
+### Configuration
+
+Open a browser and enter as administrator (id: Admin and password: zabbix is the default account)
+
+#### Import templates
+
+Import templates from this project in zabbixServer folder: configuration > templates > import > browse and select the file lacZabbixTemplates.json in the zabbixServer folder of the [lac-agent project] (https://github.com/steledama/lac-agent)
+
+##### More info about lac templates (optional)
+
+Templates are in the Templates/lac group and are tagged in three groups:
+
+- LAC-ITEMS: These are the individual units we want to monitor (es. Total Counter, Bias Transfer Roll, Toner Cyan ecc...). We can divide them into 3 types:
+  - Usage counters: they are ok as they are. They do not need any allert
+  - Supplies: They can in turn be divided into three types:
+    - Percentage: they are ok as they are but we need an allert. In templates there are three thresholds (macro in template): 10%, 5% and 0% (HIGH, MED and LOW)
+    - To be calculated: We have the total absolute value and the remaining value. In templates they are calulated in percentage. The trigger is set as above.
+    - Boolean: They can be true (to replace) or false (they are ok)
+  - Info: general info about monitoring (eg. agent version, date ecc..)
+- LAC-MODELS (based on lac-items): These are the printers models. Templates consist of a set of items and general information (es. last pooling date, pc hostname where the agent is installed ecc...).
+- LAC-FAMILY (based on lac-models): They group models to form a general family that share the same template
+  Applications/tags are usefull in monitoring view
+
+#### Create host groups
+
+Each user must have his own group of monitored hosts-printers so start creating an host group from configuration > host groups
+The name of the group is important and has to be defined correctly in the agent .env file
+
+#### Create user group and user
+
+Create a user group from administration > user groups (i usually give the user group the same name of host group) and give him read-write access only to his host group and subgroups and read privileges on Templates/lac group. Now we are ready to create the user from administration > user with admin role permission. Add email.
+
+#### Create a user API token
+
+I prefer to create a token for each user in administration > general > api tokens > Create API token with Admin privileges.
+
+#### Allerts and notifications
+
+Allerts and notifications...
 
 ## Who maintains and contributes to LAC
 
