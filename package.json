@@ -1,7 +1,7 @@
 {
-  "name": "secure-electron-template",
-  "version": "12.2.1",
-  "description": "The best way to build Electron apps with security in mind.",
+  "name": "lac",
+  "version": "0.0.1",
+  "description": "MultiFuncionPrinters usage and supplies monitoring with Zabbix over different networks.",
   "private": true,
   "main": "app/electron/main.js",
   "scripts": {
@@ -21,8 +21,8 @@
     "test": "mocha"
   },
   "build": {
-    "productName": "YourProductName",
-    "appId": "com.yourcompany|electron.yourproductname",
+    "productName": "lac",
+    "appId": "stefanopompa.blogspot.com/|electron.lac",
     "directories": {
       "buildResources": "resources"
     },
@@ -54,7 +54,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reZach/secure-electron-template.git"
+    "url": "git+https://github.com/steledama/lac.git"
   },
   "keywords": [
     "electron",
