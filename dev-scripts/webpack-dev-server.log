@@ -27,5 +27,5 @@ modules by path [1m./app/[39m[22m 33.6 KiB (javascript) 585 bytes (css/mini-e
 optional modules 120 bytes [1m[33m[optional][39m[22m 8 modules
 [1mutil (ignored)[39m[22m 15 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
 [1mutil (ignored)[39m[22m 15 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
-webpack 5.46.0 compiled [1m[32msuccessfully[39m[22m in 5997 ms
+webpack 5.46.0 compiled [1m[32msuccessfully[39m[22m in 6055 ms
 [34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
