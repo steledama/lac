@@ -22,7 +22,7 @@
   },
   "build": {
     "productName": "lac",
-    "appId": "stefanopompa.blogspot.com/|electron.lac",
+    "appId": "stefanopompa.blogspot.com|electron.lac",
     "directories": {
       "buildResources": "resources"
     },
