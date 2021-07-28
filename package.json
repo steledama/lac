@@ -57,23 +57,19 @@
     "url": "git+https://github.com/steledama/lac.git"
   },
   "keywords": [
-    "electron",
-    "security",
-    "secure",
-    "template",
-    "javascript",
-    "react",
-    "redux",
-    "webpack",
-    "i18n",
-    "boilerplate"
+    "snmp",
+    "zabbix",
+    "agent",
+    "printer",
+    "oids",
+    "monitor"
   ],
-  "author": "reZach",
+  "author": "steledama",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/reZach/secure-electron-template/issues"
+    "url": "https://github.com/steledama/lac/issues"
   },
-  "homepage": "https://github.com/reZach/secure-electron-template#readme",
+  "homepage": "https://github.com/steledama/lac#readme",
   "browserslist": [
     "last 2 Chrome versions"
   ],
