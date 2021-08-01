@@ -1,6 +1,6 @@
 # lac
 
-ATTENTION: the application is under development and recentily reworked based on the [secure-electron-template](https://github.com/reZach/secure-electron-template). At the moment this document is a mission statement. As soon as there is a working version I will update this document by removing this note
+ATTENTION: the application is under development and recentily reworked based on [nextjs](https://nextjs.org/). At the moment this document is a mission statement. As soon as there is a working version I will update this document by removing this note
 
 SNMP device agent for Zabbix over different networks mainly designed for monitoring MultiFunctionPrinters usage and supplies
 
@@ -19,7 +19,7 @@ The solution is composed of some key components:
 
 - The [Zabbix server](https://www.zabbix.com/). Basicaly the solution provide a set of templates the contains the device oids to be monitored
 - The App agent. It is a gui to:
-  - Store the zabbix server setting in a json file from [secure-electron-store](https://github.com/reZach/secure-electron-store)
+  - Store the zabbix server setting in env file
   - Create host to zabbix server with zabbix api
   - Support the creation of new templates
 - The schdeuled script. It is a javscript script that has to be scheduled at regular intervals. All it does is:
@@ -27,6 +27,7 @@ The solution is composed of some key components:
   - Connect to zabbix server to take the host list with the devices ip and oids to be monitored
   - Connect to the device and collect the data
   - Send the result with [zabbix sender](https://www.zabbix.com/documentation/current/manual/concepts/sender)
+- An installer to facilitate the agent installation in windows and mac
 
 ### The agent
 
