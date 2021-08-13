@@ -1,20 +1,15 @@
 {
-  "name": "lac",
-  "version": "0.1.0",
-  "private": false,
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
-    "next": "11.0.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
-  },
-  "devDependencies": {
-    "eslint": "7.32.0",
-    "eslint-config-next": "11.0.1"
+    "bootstrap": "^4.4.1",
+    "next": "latest",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.0.1",
+    "react-dom": "^17.0.2"
   }
 }
