@@ -1,6 +1,1 @@
-{
-  "zabbixServer": "stele.dynv6.net",
-  "zabbixToken": "slòdkjhsòoldgfj",
-  "zabbixGroup": "STE",
-  "agentLocation": "casa Stefano e letizia"
-}
+{"server":"stele.dynv6.netwifi","token":"slòdkjhsòoldgfj","group":"STE","location":"casa Stefano e Letizia5"}

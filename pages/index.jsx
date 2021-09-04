@@ -3,7 +3,7 @@ import React from 'react';
 import Config from './components/Config';
 import { useState } from 'react';
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = () => {
   try {
     const data = fs.readFileSync('config.json', 'utf8');
     const configFromFile = JSON.parse(data);
@@ -18,16 +18,24 @@ export const getServerSideProps = async () => {
 };
 
 export default function Home({ configFromFile }) {
-  const [config, setConfig] = useState(configFromFile);
+  const [configLac, setConfigLac] = useState(configFromFile);
 
   // save config
-  const onSave = (config) => {
-    console.log(config);
+  const onSave = async (configLac) => {
+    const response = await fetch('/api/configLac', {
+      method: 'POST',
+      body: JSON.stringify({ configLac }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    console.log(data);
   };
 
   return (
     <>
-      <Config onSave={onSave} config={config} />
+      <Config onSave={onSave} configLac={configLac} />
     </>
   );
 }

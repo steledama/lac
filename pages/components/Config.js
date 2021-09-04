@@ -1,11 +1,11 @@
 import { Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
 
-const Config = ({ config, onSave }) => {
-  const [server, setServer] = useState(config.zabbixServer);
-  const [token, setToken] = useState(config.zabbixToken);
-  const [group, setGroup] = useState(config.zabbixGroup);
-  const [location, setLocation] = useState(config.agentLocation);
+const Config = ({ configLac, onSave }) => {
+  const [server, setServer] = useState(configLac.server);
+  const [token, setToken] = useState(configLac.token);
+  const [group, setGroup] = useState(configLac.group);
+  const [location, setLocation] = useState(configLac.location);
 
   const onSubmit = (e) => {
     e.preventDefault();
