@@ -1,15 +1,28 @@
 import fs from 'fs';
 
 export default function handler(req, res) {
-  if (req.method === 'POST') {
-    const conf = req.body.conf;
-    try {
-      fs.writeFileSync('conf.json', JSON.stringify(conf), 'utf8');
-      res.status(201).json(conf);
-    } catch (err) {
-      console.error(err);
-    }
-  } else {
-    console.log('not post method');
+  switch (req.method) {
+    case 'GET':
+      try {
+        const data = fs.readFileSync('conf.json', 'utf8');
+        const conFromFile = JSON.parse(data);
+        res.status(200).json(conFromFile);
+      } catch (err) {
+        res.status(500).json(err);
+        console.error(err);
+      }
+      break;
+    case 'POST':
+      const conFromForm = req.body.conf;
+      try {
+        fs.writeFileSync('conf.json', JSON.stringify(conFromForm), 'utf8');
+        res.status(201).json(conFromForm);
+      } catch (err) {
+        res.status(500).json(err);
+        console.error(err);
+      }
+      break;
+    default:
+      console.log(`No crud method`);
   }
 }

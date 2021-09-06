@@ -2,24 +2,48 @@ import fs from 'fs';
 import React from 'react';
 import Conf from './components/Conf';
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-// get initial conf
+// get initial conf from conf.json file
 export const getServerSideProps = () => {
-  try {
-    const data = fs.readFileSync('conf.json', 'utf8');
-    const conFromFile = JSON.parse(data);
-    return {
-      props: {
-        conFromFile,
-      },
+  // check if the conf file exist...
+  if (fs.existsSync('conf.json')) {
+    // read it
+    try {
+      const data = fs.readFileSync('conf.json', 'utf8');
+      const confProp = JSON.parse(data);
+      return {
+        props: {
+          confProp,
+        },
+      };
+    } catch (err) {
+      console.error(err);
+    }
+    // if the file does not exist create it empty with e uuid
+  } else {
+    const confProp = {
+      server: '',
+      token: '',
+      group: '',
+      id: uuidv4(),
+      location: '',
     };
-  } catch (err) {
-    console.error(err);
+    try {
+      fs.writeFileSync('conf.json', JSON.stringify(confProp), 'utf8');
+      return {
+        props: {
+          confProp,
+        },
+      };
+    } catch (err) {
+      console.error(err);
+    }
   }
 };
 
-export default function Home({ conFromFile }) {
-  const [conf, setConf] = useState(conFromFile);
+export default function Home({ confProp }) {
+  const [conf, setConf] = useState(confProp);
 
   // save conf
   const onSave = async (conf) => {
@@ -31,7 +55,7 @@ export default function Home({ conFromFile }) {
       },
     });
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
   };
 
   return (

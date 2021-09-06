@@ -6,6 +6,7 @@ const Conf = ({ conf, onSave }) => {
   const [token, setToken] = useState(conf.token);
   const [group, setGroup] = useState(conf.group);
   const [location, setLocation] = useState(conf.location);
+  const [id] = useState(conf.id);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -13,7 +14,7 @@ const Conf = ({ conf, onSave }) => {
       alert('Please add a server');
       return;
     }
-    onSave({ server, token, group, location });
+    onSave({ server, token, group, id, location });
   };
 
   return (
@@ -40,6 +41,8 @@ const Conf = ({ conf, onSave }) => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formAgent">
+        <Form.Label>Agent id</Form.Label>
+        <Form.Control type="text" value={id} readOnly />
         <Form.Label>Agent location</Form.Label>
         <Form.Control
           type="text"
