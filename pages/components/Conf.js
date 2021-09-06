@@ -1,11 +1,11 @@
 import { Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
 
-const Config = ({ configLac, onSave }) => {
-  const [server, setServer] = useState(configLac.server);
-  const [token, setToken] = useState(configLac.token);
-  const [group, setGroup] = useState(configLac.group);
-  const [location, setLocation] = useState(configLac.location);
+const Conf = ({ conf, onSave }) => {
+  const [server, setServer] = useState(conf.server);
+  const [token, setToken] = useState(conf.token);
+  const [group, setGroup] = useState(conf.group);
+  const [location, setLocation] = useState(conf.location);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -55,4 +55,4 @@ const Config = ({ configLac, onSave }) => {
   );
 };
 
-export default Config;
+export default Conf;

@@ -2,10 +2,10 @@ import fs from 'fs';
 
 export default function handler(req, res) {
   if (req.method === 'POST') {
-    const configLac = req.body.configLac;
+    const conf = req.body.conf;
     try {
-      fs.writeFileSync('config.json', JSON.stringify(configLac), 'utf8');
-      res.status(201).json(configLac);
+      fs.writeFileSync('conf.json', JSON.stringify(conf), 'utf8');
+      res.status(201).json(conf);
     } catch (err) {
       console.error(err);
     }

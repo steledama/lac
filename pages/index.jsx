@@ -1,15 +1,16 @@
 import fs from 'fs';
 import React from 'react';
-import Config from './components/Config';
+import Conf from './components/Conf';
 import { useState } from 'react';
 
+// get initial conf
 export const getServerSideProps = () => {
   try {
-    const data = fs.readFileSync('config.json', 'utf8');
-    const configFromFile = JSON.parse(data);
+    const data = fs.readFileSync('conf.json', 'utf8');
+    const conFromFile = JSON.parse(data);
     return {
       props: {
-        configFromFile,
+        conFromFile,
       },
     };
   } catch (err) {
@@ -17,14 +18,14 @@ export const getServerSideProps = () => {
   }
 };
 
-export default function Home({ configFromFile }) {
-  const [configLac, setConfigLac] = useState(configFromFile);
+export default function Home({ conFromFile }) {
+  const [conf, setConf] = useState(conFromFile);
 
-  // save config
-  const onSave = async (configLac) => {
-    const response = await fetch('/api/configLac', {
+  // save conf
+  const onSave = async (conf) => {
+    const response = await fetch('/api/conf', {
       method: 'POST',
-      body: JSON.stringify({ configLac }),
+      body: JSON.stringify({ conf }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -35,7 +36,7 @@ export default function Home({ configFromFile }) {
 
   return (
     <>
-      <Config onSave={onSave} configLac={configLac} />
+      <Conf onSave={onSave} conf={conf} />
     </>
   );
 }
