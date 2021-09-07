@@ -1,0 +1,91 @@
+POST http://stele.dynv6.net/api_jsonrpc.php
+content-type: application/json
+
+{
+    "jsonrpc": "2.0",
+    "method": "hostgroup.get",
+    "params": {
+        "output": "extend",
+        "filter": {"name": ["LAC/Stefano"]}
+    },
+    "auth": "dc3f01e687b91f9209018d63f6547c066839be65596c1547bfad5a0bf891ae07",
+    "id": 1
+}
+
+###
+POST http://stele.dynv6.net/api_jsonrpc.php
+content-type: application/json
+
+{
+    "jsonrpc": "2.0",
+    "method": "template.get",
+    "params": {
+        "output": ["host","templateid"],
+        "filter": {"host": ["Xerox Phaser 6130N"]}
+    },
+    "auth": "dc3f01e687b91f9209018d63f6547c066839be65596c1547bfad5a0bf891ae07",
+    "id": 1
+}
+
+###
+POST http://stele.dynv6.net/api_jsonrpc.php
+content-type: application/json
+
+{
+    "jsonrpc": "2.0",
+    "method": "item.get",
+    "params": {
+        "output": ["name","key_"],
+        "templateids": "10468",
+        "tags": [{"tag": "false", "operator": "2"}]
+    },
+    "auth": "dc3f01e687b91f9209018d63f6547c066839be65596c1547bfad5a0bf891ae07",
+    "id": 1
+}
+
+###
+POST http://stele.dynv6.net/api_jsonrpc.php
+content-type: application/json
+
+{
+    "jsonrpc": "2.0",
+    "method": "host.get",
+    "params": {
+        "filter": { "host": ["000000000"] }
+    },
+    "auth": "dc3f01e687b91f9209018d63f6547c066839be65596c1547bfad5a0bf891ae07",
+    "id": 1
+}
+
+###
+
+POST http://stele.dynv6.net/api_jsonrpc.php
+content-type: application/json
+
+{
+    "jsonrpc": "2.0",
+    "method": "hostgroup.get",
+    "params": {
+        "output": "extend",
+        "filter": {"name": ["LAC"]}
+    },
+    "auth": "dc3f01e687b91f9209018d63f6547c066839be65596c1547bfad5a0bf891ae07",
+    "id": 1
+}
+
+###
+POST http://stele.dynv6.net/api_jsonrpc.php
+content-type: application/json
+
+{
+    "jsonrpc": "2.0",
+    "method": "host.create",
+    "params": {
+        "host": "000000000",
+        "name": "STEFANO Xerox Phaser 6130N casa 000000000",
+        "templates": [{"templateid": "10468"}],
+        "groups": [{"groupid": "19"}]
+    },
+    "auth": "dc3f01e687b91f9209018d63f6547c066839be65596c1547bfad5a0bf891ae07",
+    "id": 1
+}
