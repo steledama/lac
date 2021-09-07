@@ -11,7 +11,7 @@ Lac is an agent that work with [zabbix server](https://www.zabbix.com/) for moni
 - Obtain the page counters of the MFPs and automatically collect them in a centralized place (zabbix server) to effectively manage the periodic billing of technical assistance contracts often linked to a page cost and therefore to the number of pages produced
 - Manage the supply of consumables efficiently so that the end customer is never left without but at the same time not to waste unnecessary resources.
 
-It is ment to be a scalable, modern tool that can be managed remotely with [lac server](https://github.com/steledama/lac). It can also be used by a manager of a small fleet consisting of a few MFPs in a single or multiple locations of the same company.
+It is ment to be a scalable, modern tool that can be managed remotely. It can also be used by a manager of a small fleet consisting of a few MFPs in a single or multiple locations of the same company.
 
 ## How it works
 
@@ -19,19 +19,19 @@ The solution is composed of some key components:
 
 - The [Zabbix server](https://www.zabbix.com/). Basicaly the solution provide a set of templates the contains the device oids to be monitored
 - The App agent. It is a gui to:
-  - Store the zabbix server setting in env file
+  - Store the zabbix server setting in a json file (conf.json).
   - Create host to zabbix server with zabbix api
-  - Support the creation of new templates
-- The schdeuled script. It is a javscript script that has to be scheduled at regular intervals. All it does is:
-  - Take from the app store the settings to connect to zabbix server
+  - Support the creation of new devices zabbix templates
+- The schdeuled script (scheduled.js). It is a script that has to be scheduled at regular intervals. All it does is:
+  - Take from conf.json the settings to connect to zabbix server
   - Connect to zabbix server to take the host list with the devices ip and oids to be monitored
   - Connect to the device and collect the data
-  - Send the result with [zabbix sender](https://www.zabbix.com/documentation/current/manual/concepts/sender)
-- An installer to facilitate the agent installation in windows and mac
+  - Send the result back to abbix server with [zabbix sender](https://www.zabbix.com/documentation/current/manual/concepts/sender)
+- An installer to facilitate the agent installation and the script schedule in the pc
 
 ### The agent
 
-This agent is an electron app installed locally in the network where the MFP to be monitored is located. For each managed MFP in the network the agent get and send relevant usage counts and supplies levels to zabbix server. The agent is also a tool to help the administrator create new custom snmp profiles to monitor all snmp devices
+This agent is installed locally in the network where the MFP to be monitored is located. For each managed MFP in the network the agent get and send relevant usage counts and supplies levels to zabbix server. The agent is also a tool to help the administrator create new custom snmp profiles to monitor all snmp devices
 
 ### Zabbix server
 
@@ -39,7 +39,7 @@ Zabbix has several features and is a very powerfull tool form monitoring in gene
 
 - Display list of monitord devices (hosts)
 - Show current data: for printers show supplies status and relevant page counts
-- Automatically allert for low supplies
+- Automatically allert (e.g. with email) for low supplies
 - View usage history
 - Send periodic usage report in pdf
 - ...
@@ -47,12 +47,12 @@ Zabbix has several features and is a very powerfull tool form monitoring in gene
 ## What has been done and what still needs to be done (in development)
 
 There is currently a working system based on windows batch.
-The intentions are to translate the project into an electron app and share the solution in order to be available for anyone who intends to use it and improve with the open source model.
+The intentions are to translate the project into a web app and share the solution in order to be available for anyone who intends to use it and improve with the open source model.
 
 ## Lac agent requirements
 
-A working zabbix server with version 5.4
-The agent is developed with electron and will run on Windows, Mac and Linux systems
+A working zabbix server with version 5.4 or higher
+The agent is developed as a web app but the installer is ment to be used with a windows operating system
 
 ## Getting started with Lac agent
 
@@ -61,10 +61,17 @@ In order to have a working solution we have to complete the following steps:
 l. Zabbix setup and configuration
 l. (...)
 
-### Install zabbix
+### Install zabbix (if you do not have a working zabbix server)
 
-- Install docker and docker compose (The instructios can vary from platform, hera are some notes from manjaro linux)
-- Once installation is completed, start the Docker service and, optionally, enable it to run whenever the system is rebooted:
+If you do not have a working zabbix server with version 5.4 or higher upgrade it or install a new server. The instructios can vary from platform, here are some notes to install docker and docker compose from manjaro linux distro. Once installed from the package manager docker
+
+```
+$ sudo pacman -Syu
+$ sudo pacman -S docker
+
+```
+
+start the Docker service and, optionally, enable it to run whenever the system is rebooted:
 
 ```
 $ sudo systemctl start docker.service
@@ -77,7 +84,7 @@ You can verify that Docker is installed and gather some information about the cu
 $ sudo docker version
 ```
 
-- Run docker with normal user: by default, you'll have to use sudo or login to root anytime you want to run a Docker command. This next step is optional, but if you'd prefer the ability to run Docker as your current user, add your account to the docker group with this command:
+Run docker with normal user: by default, you'll have to use sudo or login to root anytime you want to run a Docker command. This next step is optional, but if you'd prefer the ability to run Docker as your current user, add your account to the docker group with this command:
 
 ```
 $ sudo usermod -aG docker $USER
@@ -85,8 +92,13 @@ $ sudo usermod -aG docker $USER
 
 You'll need to reboot your system for those changes to take effect.
 
-- Clone the [official zabbix repository with dockerfiles on github] (https://github.com/zabbix/zabbix-docker)
-- Go to the directory and start containers with the docker compose command:
+Clone the [official zabbix repository with dockerfiles on github](https://github.com/zabbix/zabbix-docker)
+
+```
+$ git clone https://github.com/zabbix/zabbix-docker
+```
+
+Go to the directory and start containers with the docker compose command:
 
 ```
 # sudo docker-compose -f ./docker-compose_v3_alpine_mysql_latest.yaml up -d
@@ -104,7 +116,7 @@ Open a browser and enter as administrator (id: Admin and password: zabbix is the
 
 #### Import templates
 
-Import templates from this project in zabbixServer folder: configuration > templates > import > browse and select the file lacZabbixTemplates.json in the zabbixServer folder of the [lac-agent project] (https://github.com/steledama/lac-agent)
+Import templates from this project in zabbixServer folder: configuration > templates > import > browse and select the file lacZabbixTemplates.json in the zabbixServer folder of the [lac project](https://github.com/steledama/lac)
 
 ##### More info about lac templates (optional)
 
@@ -124,7 +136,7 @@ Templates are in the Templates/lac group and are tagged in three groups:
 #### Create host groups
 
 Each user must have his own group of monitored hosts-printers so start creating an host group from configuration > host groups
-The name of the group is important and has to be defined correctly in the agent .env file
+The name of the group is important and has to be defined correctly in the agent conf.json file
 
 #### Create user group and user
 
