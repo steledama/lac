@@ -29,7 +29,14 @@ export const getServerSideProps = async () => {
         },
       };
     } catch (err) {
-      console.error(err);
+      const confProp = err;
+      const statusProp = err;
+      return {
+        props: {
+          confProp,
+          statusProp,
+        },
+      };
     }
     // if the file does not exist create it empty with e uuid
   } else {
@@ -40,10 +47,7 @@ export const getServerSideProps = async () => {
       id: uuidv4(),
       location: '',
     };
-    const statusProp = {
-      data: 'undefined',
-      message: 'Please fill the configuration form and save configuration',
-    };
+    const statusProp = 'getaddrinfo ENOTFOUND';
     try {
       fs.writeFileSync('conf.json', JSON.stringify(confProp), 'utf8');
       return {
@@ -64,6 +68,7 @@ export default function Home({ confProp, statusProp }) {
 
   // save conf
   const onSave = async (conf) => {
+    setConf(conf);
     await fetch('/api/conf', {
       method: 'POST',
       body: JSON.stringify({ conf }),
@@ -72,13 +77,14 @@ export default function Home({ confProp, statusProp }) {
       },
     });
     const zabbixConnection = await checkZabbix(conf);
+    console.log(zabbixConnection);
     setStatus(zabbixConnection);
   };
 
   return (
     <>
-      <Conf onSave={onSave} conf={conf} />
-      <Confeedback status={status} />
+      <Conf conf={conf} onSave={onSave} />
+      <Confeedback conf={conf} status={status} />
     </>
   );
 }
