@@ -2,9 +2,11 @@ import { Alert } from 'react-bootstrap';
 
 const Confeedback = ({ status }) => {
   return (
-    <Alert variant="success">
-      {status.data} {status.message}
-    </Alert>
+    <div className="mt-3">
+      <Alert variant={status.data ? 'success' : 'danger'}>
+        {status.data ? 'SUCCESS:' : 'ERROR:'} {status.message}
+      </Alert>
+    </div>
   );
 };
 

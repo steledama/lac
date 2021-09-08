@@ -35,3 +35,4 @@ yarn-error.log*
 
 # LAC
 conf.json
+/lib/zabbix.rest

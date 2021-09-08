@@ -72,7 +72,6 @@ export default function Home({ confProp, statusProp }) {
       },
     });
     const zabbixConnection = await checkZabbix(conf);
-    console.log(zabbixConnection);
     setStatus(zabbixConnection);
   };
 

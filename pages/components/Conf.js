@@ -14,6 +14,18 @@ const Conf = ({ conf, onSave }) => {
       alert('Please add a server');
       return;
     }
+    if (!token) {
+      alert('Please add zabbix token api');
+      return;
+    }
+    if (!group) {
+      alert('Please add a group name');
+      return;
+    }
+    if (!location) {
+      alert('Please add the agent location');
+      return;
+    }
     onSave({ server, token, group, id, location });
   };
 
