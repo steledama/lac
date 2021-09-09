@@ -1,20 +1,20 @@
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-const ConfHeader = ({ showConf, onShowConf }) => {
+const AddHeader = ({ showAdd, onShowAdd }) => {
   return (
     <>
       <Container>
         <Row>
           <Col>
-            <h1>Configuration</h1>
+            <h1>Add device</h1>
           </Col>
           <Col>
             <Button
               className="mt-1"
-              variant={showConf ? 'secondary' : 'success'}
-              onClick={onShowConf}
+              variant={showAdd ? 'secondary' : 'success'}
+              onClick={onShowAdd}
             >
-              {showConf ? 'Hide' : 'Show'}
+              {showAdd ? 'Hide' : 'Show'}
             </Button>
           </Col>
         </Row>
@@ -23,4 +23,4 @@ const ConfHeader = ({ showConf, onShowConf }) => {
   );
 };
 
-export default ConfHeader;
+export default AddHeader;

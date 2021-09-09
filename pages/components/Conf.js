@@ -1,7 +1,7 @@
 import { Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
 
-const Conf = ({ conf, onSave }) => {
+const Conf = ({ conf, onSaveConf }) => {
   const [server, setServer] = useState(conf.server);
   const [token, setToken] = useState(conf.token);
   const [group, setGroup] = useState(conf.group);
@@ -26,7 +26,7 @@ const Conf = ({ conf, onSave }) => {
       alert('Please add the agent location');
       return;
     }
-    onSave({ server, token, group, id, location });
+    onSaveConf({ server, token, group, id, location });
   };
 
   return (

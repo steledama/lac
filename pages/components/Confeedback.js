@@ -1,9 +1,9 @@
 import { Alert } from 'react-bootstrap';
 
-const Confeedback = ({ conf, status }) => {
-  // console.log(status);
+const Confeedback = ({ conf, statusConf }) => {
+  // console.log(statusConf);
   let alerts;
-  switch (status) {
+  switch (statusConf) {
     case 'Network Error':
       alerts = (
         <Alert variant="danger">
@@ -33,7 +33,7 @@ const Confeedback = ({ conf, status }) => {
       );
       break;
     default:
-      if (status.error) {
+      if (statusConf.error) {
         alerts = (
           <Alert variant="danger">
             ERROR: Incorrect token please check if it is correct and if it is{' '}
@@ -43,8 +43,8 @@ const Confeedback = ({ conf, status }) => {
           </Alert>
         );
       }
-      if (status.result) {
-        if (status.result.length === 0) {
+      if (statusConf.result) {
+        if (statusConf.result.length === 0) {
           alerts = (
             <Alert variant="danger">
               ERROR: Connection established (hostname and token are correct) but
@@ -55,7 +55,7 @@ const Confeedback = ({ conf, status }) => {
             </Alert>
           );
         }
-        if (status.result[0]) {
+        if (statusConf.result[0]) {
           if (conf.location) {
             alerts = (
               <Alert variant="success">

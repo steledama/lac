@@ -3,6 +3,8 @@ import React from 'react';
 import Conf from './components/Conf';
 import Confeedback from './components/Confeedback';
 import ConfHeader from './components/ConfHeader';
+import AddHeader from './components/AddHeader';
+import Add from './components/Add';
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // for zabbix comunication
@@ -65,11 +67,13 @@ export const getServerSideProps = async () => {
 
 export default function Home({ confProp, statusProp }) {
   const [conf, setConf] = useState(confProp);
-  const [status, setStatus] = useState(statusProp);
+  const [statusConf, setStatusConf] = useState(statusProp);
   const [showConf, setShowConf] = useState(true);
+  const [showAdd, setShowAdd] = useState(true);
+  const [dev, setDev] = useState();
 
   // save conf
-  const onSave = async (conf) => {
+  const onSaveConf = async (conf) => {
     setConf(conf);
     await fetch('/api/conf', {
       method: 'POST',
@@ -80,14 +84,25 @@ export default function Home({ confProp, statusProp }) {
     });
     const zabbixConnection = await checkZabbix(conf);
     // console.log(zabbixConnection);
-    setStatus(zabbixConnection);
+    setStatusConf(zabbixConnection);
+  };
+
+  // add device
+  const onAdd = async (dev) => {
+    setDev(dev);
+    console.log(dev);
   };
 
   return (
     <>
-      <ConfHeader onShow={() => setShowConf(!showConf)} showConf={showConf} />
-      {showConf && <Conf conf={conf} onSave={onSave} />}
-      <Confeedback conf={conf} status={status} />
+      <ConfHeader
+        onShowConf={() => setShowConf(!showConf)}
+        showConf={showConf}
+      />
+      {showConf && <Conf conf={conf} onSaveConf={onSaveConf} />}
+      <Confeedback conf={conf} statusConf={statusConf} />
+      <AddHeader onShowAdd={() => setShowAdd(!showAdd)} showAdd={showAdd} />
+      {showAdd && <Add conf={conf} onAdd={onAdd} />}
     </>
   );
 }
