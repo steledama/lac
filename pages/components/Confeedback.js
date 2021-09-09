@@ -1,7 +1,7 @@
 import { Alert } from 'react-bootstrap';
 
 const Confeedback = ({ conf, status }) => {
-  console.log(status);
+  // console.log(status);
   let alerts;
   switch (status) {
     case 'Network Error':

@@ -2,6 +2,7 @@ import fs from 'fs';
 import React from 'react';
 import Conf from './components/Conf';
 import Confeedback from './components/Confeedback';
+import ConfHeader from './components/ConfHeader';
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // for zabbix comunication
@@ -21,7 +22,7 @@ export const getServerSideProps = async () => {
       const data = fs.readFileSync('conf.json', 'utf8');
       const confProp = JSON.parse(data);
       const statusProp = await checkZabbix(confProp);
-      console.log(statusProp);
+      // console.log(statusProp);
       return {
         props: {
           confProp,
@@ -65,6 +66,7 @@ export const getServerSideProps = async () => {
 export default function Home({ confProp, statusProp }) {
   const [conf, setConf] = useState(confProp);
   const [status, setStatus] = useState(statusProp);
+  const [showConf, setShowConf] = useState(true);
 
   // save conf
   const onSave = async (conf) => {
@@ -77,13 +79,14 @@ export default function Home({ confProp, statusProp }) {
       },
     });
     const zabbixConnection = await checkZabbix(conf);
-    console.log(zabbixConnection);
+    // console.log(zabbixConnection);
     setStatus(zabbixConnection);
   };
 
   return (
     <>
-      <Conf conf={conf} onSave={onSave} />
+      <ConfHeader onShow={() => setShowConf(!showConf)} showConf={showConf} />
+      {showConf && <Conf conf={conf} onSave={onSave} />}
       <Confeedback conf={conf} status={status} />
     </>
   );
