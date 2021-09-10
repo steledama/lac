@@ -1,6 +1,6 @@
 import { Alert } from 'react-bootstrap';
 
-const Confeedback = ({ conf, statusConf }) => {
+const ConfStatus = ({ conf, statusConf }) => {
   // console.log(statusConf);
   let alerts;
   switch (statusConf) {
@@ -82,4 +82,4 @@ const Confeedback = ({ conf, statusConf }) => {
   return <div className="mt-3">{alerts}</div>;
 };
 
-export default Confeedback;
+export default ConfStatus;

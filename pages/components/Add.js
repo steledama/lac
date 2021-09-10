@@ -1,7 +1,7 @@
 import { Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
 
-const Add = ({ conf, onAdd }) => {
+const Add = ({ add, onAdd }) => {
   const [ip, setIp] = useState('');
   const [deviceLocation, setDeviceLocation] = useState('');
 
@@ -22,15 +22,10 @@ const Add = ({ conf, onAdd }) => {
     <Form onSubmit={onSubmit}>
       <Form.Group className="mb-3" controlId="formAddDevice">
         <Form.Label>Device ip address</Form.Label>
-        <Form.Control
-          type="text"
-          value={ip}
-          onChange={(e) => setIp(e.target.value)}
-        />
+        <Form.Control type="text" onChange={(e) => setIp(e.target.value)} />
         <Form.Label>Device location</Form.Label>
         <Form.Control
           type="text"
-          value={deviceLocation}
           onChange={(e) => setDeviceLocation(e.target.value)}
         />
       </Form.Group>

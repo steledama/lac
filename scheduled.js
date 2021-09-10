@@ -12,6 +12,67 @@ const zabbix = require('./lib/zabbix');
 
 console.log(conf);
 
+// FOR EACH DEVICE TO MONITOR...
+function monitorDevices(devices) {
+  devices.forEach(async (device) => {
+    try {
+      // che every devices
+      checkDevice(device);
+
+      // get device items defined in zabbix template
+      const items = await zabbix.getItems(
+        config.server,
+        config.token,
+        templateId.result
+      );
+
+      // take only oids and put them into oidsArray
+      // eslint-disable-next-line no-underscore-dangle
+      const oidsArray = items.map((item) => item.key_);
+
+      // connect to device and get oids values
+      const snmpResults = await snmp.get(device.ip, oidsArray);
+
+      // send snmpResult to zabbix
+      snmpResults.forEach((item) => {
+        sendItemToZabbix(
+          config.server,
+          deviceInfo.serial,
+          item.oid,
+          item.value
+        );
+      });
+      return 'ok';
+    } catch (error) {
+      // console.log(error);
+      return error;
+    }
+  });
+}
+
+// function to send items to zabbix server
+const sendItemToZabbix = (server, host, key, value) => {
+  exec(
+    `./zabbix_sender -z ${server} -s ${host} -k ${key} -o ${value}`,
+    (error, stdout, stderr) => {
+      if (error) {
+        const result = { data: undefined, message: error };
+        return result;
+      }
+      if (stderr) {
+        const result = { data: undefined, message: stderr };
+        return result;
+      }
+      // console.log(stdout);
+      const result = {
+        data: stdout,
+        message: `${value} successfully sent to Zabbix server`,
+      };
+      return result;
+    }
+  );
+};
+
 // TODO: load device to be monitored
 
 // // get pc info

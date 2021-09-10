@@ -23,6 +23,6 @@ export default function handler(req, res) {
       }
       break;
     default:
-      console.log(`No crud method`);
+      console.log(`No GET or POST method on conf`);
   }
 }

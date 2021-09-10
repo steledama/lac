@@ -1,12 +1,17 @@
-import fs from 'fs';
 import React from 'react';
-import Conf from './components/Conf';
-import Confeedback from './components/Confeedback';
+import { useState } from 'react';
+
 import ConfHeader from './components/ConfHeader';
+import Conf from './components/Conf';
+import ConfStatus from './components/ConfStatus';
+
 import AddHeader from './components/AddHeader';
 import Add from './components/Add';
-import { useState, useEffect } from 'react';
+import AddStatus from './components/AddStatus';
+
+import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
+
 // for zabbix comunication
 const zabbix = require('../lib/zabbix');
 
@@ -69,8 +74,10 @@ export default function Home({ confProp, statusProp }) {
   const [conf, setConf] = useState(confProp);
   const [statusConf, setStatusConf] = useState(statusProp);
   const [showConf, setShowConf] = useState(true);
+
+  const [add, setAdd] = useState({ ip: '', deviceLocation: '' });
+  const [statusAdd, setStatusAdd] = useState({ ip: '' });
   const [showAdd, setShowAdd] = useState(true);
-  const [dev, setDev] = useState();
 
   // save conf
   const onSaveConf = async (conf) => {
@@ -88,9 +95,22 @@ export default function Home({ confProp, statusProp }) {
   };
 
   // add device
-  const onAdd = async (dev) => {
-    setDev(dev);
-    console.log(dev);
+  const onAdd = async (addFromForm) => {
+    await fetch('/api/devices', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(addFromForm),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setStatusAdd(data);
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   return (
@@ -100,9 +120,11 @@ export default function Home({ confProp, statusProp }) {
         showConf={showConf}
       />
       {showConf && <Conf conf={conf} onSaveConf={onSaveConf} />}
-      <Confeedback conf={conf} statusConf={statusConf} />
+      <ConfStatus conf={conf} statusConf={statusConf} />
+
       <AddHeader onShowAdd={() => setShowAdd(!showAdd)} showAdd={showAdd} />
-      {showAdd && <Add conf={conf} onAdd={onAdd} />}
+      {showAdd && <Add add={add} onAdd={onAdd} />}
+      <AddStatus statusAdd={statusAdd} />
     </>
   );
 }
