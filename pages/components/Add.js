@@ -16,16 +16,23 @@ const Add = ({ add, onAdd }) => {
       return;
     }
     onAdd({ ip, deviceLocation });
+    setIp('');
+    setDeviceLocation('');
   };
 
   return (
     <Form onSubmit={onSubmit}>
       <Form.Group className="mb-3" controlId="formAddDevice">
         <Form.Label>Device ip address</Form.Label>
-        <Form.Control type="text" onChange={(e) => setIp(e.target.value)} />
+        <Form.Control
+          type="text"
+          value={ip}
+          onChange={(e) => setIp(e.target.value)}
+        />
         <Form.Label>Device location</Form.Label>
         <Form.Control
           type="text"
+          value={deviceLocation}
           onChange={(e) => setDeviceLocation(e.target.value)}
         />
       </Form.Group>

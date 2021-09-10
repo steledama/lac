@@ -73,7 +73,7 @@ export const getServerSideProps = async () => {
 export default function Home({ confProp, statusProp }) {
   const [conf, setConf] = useState(confProp);
   const [statusConf, setStatusConf] = useState(statusProp);
-  const [showConf, setShowConf] = useState(true);
+  const [showConf, setShowConf] = useState(false);
 
   const [add, setAdd] = useState({ ip: '', deviceLocation: '' });
   const [statusAdd, setStatusAdd] = useState({ ip: '' });
@@ -106,7 +106,7 @@ export default function Home({ confProp, statusProp }) {
       .then((response) => response.json())
       .then((data) => {
         setStatusAdd(data);
-        console.log('Success:', data);
+        setAdd({ ip: '', deviceLocation: '' });
       })
       .catch((error) => {
         console.error('Error:', error);
