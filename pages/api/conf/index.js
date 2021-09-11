@@ -9,7 +9,6 @@ export default function handler(req, res) {
         res.status(200).json(conFromFile);
       } catch (err) {
         res.status(500).json(err);
-        console.error(err);
       }
       break;
     case 'POST':
@@ -19,10 +18,9 @@ export default function handler(req, res) {
         res.status(201).json(conFromForm);
       } catch (err) {
         res.status(500).json(err);
-        console.error(err);
       }
       break;
     default:
-      console.log(`No GET or POST method on conf`);
+      res.status(200).send(`CONF No GET or POST method`);
   }
 }

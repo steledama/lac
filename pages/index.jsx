@@ -76,7 +76,7 @@ export default function Home({ confProp, statusProp }) {
   const [showConf, setShowConf] = useState(false);
 
   const [add, setAdd] = useState({ ip: '', deviceLocation: '' });
-  const [statusAdd, setStatusAdd] = useState({ ip: '' });
+  const [statusAdd, setStatusAdd] = useState({});
   const [showAdd, setShowAdd] = useState(true);
 
   // save conf
@@ -89,15 +89,21 @@ export default function Home({ confProp, statusProp }) {
         'Content-Type': 'application/json',
       },
     });
-    const zabbixConnection = await checkZabbix(conf);
-    // console.log(zabbixConnection);
-    setStatusConf(zabbixConnection);
+    const zabbixResponse = await checkZabbix(conf);
+    console.log(zabbixResponse);
+    setStatusConf(zabbixResponse);
   };
 
   // add device
   const onAdd = async (addFromForm) => {
-    await fetch('/api/devices', {
-      method: 'POST', // or 'PUT'
+    // send info message to wait
+    setStatusAdd({
+      type: 'info',
+      message: 'INFO: Adding device please wait...',
+    });
+    // snmp connection to get device name and serial
+    const device = await fetch('/api/devices', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -105,14 +111,73 @@ export default function Home({ confProp, statusProp }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        setStatusAdd(data);
-        setAdd({ ip: '', deviceLocation: '' });
+        // console.log(data);
+        if (data.code) {
+          setStatusAdd({
+            type: 'danger',
+            message: `ERROR: The ip address was not found. Please chck it`,
+          });
+        }
+        if (data.name) {
+          setStatusAdd({
+            type: 'danger',
+            message: `ERROR: not responding. Check if device is up with snmp protocol enabled`,
+          });
+        }
+        return data;
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.log(error);
+        return error;
       });
-  };
 
+    // check if the host is present
+    device.hostId = await zabbix.getHostId(
+      conf.server,
+      conf.token,
+      device.serial
+    );
+
+    // if the host is present...
+    if (device.hostId) {
+      // TODO: Find the other agent location
+
+      // send feeback
+      setStatusAdd({
+        type: 'success',
+        message:
+          'SUCCESS: Device is monitored by the agent in (agent location)',
+      });
+      // ... if host is not present...
+    } else {
+      // get template id from zabbix
+      device.templateid = await zabbix.getTemplateId(
+        conf.server,
+        conf.token,
+        device.deviceName
+      );
+
+      // create host
+      console.log(device, conf, addFromForm);
+      device.hostId = zabbix.createHost(
+        conf.server,
+        conf.token,
+        conf.location,
+        device.deviceName,
+        addFromForm.deviceLocation,
+        device.serial,
+        conf.groupId,
+        device.templateId
+      );
+      console.log(device);
+
+      // send feedback
+      setStatusAdd({
+        type: 'success',
+        message: 'SUCCESS: Device added to server and monitored by the agent',
+      });
+    }
+  };
   return (
     <>
       <ConfHeader
