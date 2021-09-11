@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import ConfHeader from './components/ConfHeader';
 import Conf from './components/Conf';
-import ConfStatus from './components/ConfStatus';
+import ConfAlert from './components/ConfAlert';
 
 import AddHeader from './components/AddHeader';
 import Add from './components/Add';
@@ -15,9 +15,67 @@ import { v4 as uuidv4 } from 'uuid';
 // for zabbix comunication
 const zabbix = require('../lib/zabbix');
 
-const checkZabbix = async (conf) => {
-  const response = await zabbix.getGroupId(conf.server, conf.token, conf.group);
-  return response;
+const checkZabbix = async (zabbixConf) => {
+  const zabbixResponse = await zabbix.getGroupId(
+    zabbixConf.server,
+    zabbixConf.token,
+    zabbixConf.group
+  );
+  let builtConfMessage = {};
+  // console.log(response);
+  switch (zabbixResponse) {
+    case 'Network Error':
+      builtConfMessage = {
+        variant: 'danger',
+        text: `ERROR: incorrect zabbix hostname or server in not responding. Check if
+        the server is up and running or behind a firewall`,
+      };
+      break;
+    case 'getaddrinfo ENOTFOUND':
+      builtConfMessage = {
+        variant: 'danger',
+        text: `ERROR: incorrect zabbix hostname`,
+      };
+      break;
+    case 'connect ETIMEDOUT':
+    case 'connect ECONNREFUSED':
+      builtConfMessage = {
+        variant: 'danger',
+        text: `ERROR: Zabbix server is not responding. Check if the server is up and
+        running`,
+      };
+      break;
+    case 'connect EHOSTUNREACH':
+      builtConfMessage = {
+        variant: 'danger',
+        text: `ERROR: Zabbix server is not reachable. Check if it is behind a
+        firewall or if there is a port forward rule`,
+      };
+      break;
+    default:
+      if (zabbixResponse.error) {
+        builtConfMessage = {
+          variant: 'danger',
+          text: `ERROR: Incorrect token please check if it is correct and if it is configured in zabbix server`,
+        };
+      }
+      if (zabbixResponse.result) {
+        if (zabbixResponse.result.length === 0) {
+          builtConfMessage = {
+            variant: 'danger',
+            text: `ERROR: Incorrect token please check if it is correct and if it is configured in zabbix server`,
+          };
+        }
+        if (zabbixResponse.result[0]) {
+          builtConfMessage = {
+            variant: 'success',
+            text: `SUCCESS: Connection with zabbix server established and group
+              found`,
+          };
+        }
+      }
+  }
+  return builtConfMessage;
 };
 
 // get initial conf from conf.json file
@@ -28,23 +86,23 @@ export const getServerSideProps = async () => {
     try {
       const data = fs.readFileSync('conf.json', 'utf8');
       const confProp = JSON.parse(data);
-      const statusProp = await checkZabbix(confProp);
-      // console.log(statusProp);
+      const confMessageProp = await checkZabbix(confProp);
       return {
         props: {
           confProp,
-          statusProp,
+          confMessageProp,
         },
       };
     } catch (err) {
-      const confProp = err;
-      const statusProp = err;
-      return {
-        props: {
-          confProp,
-          statusProp,
-        },
-      };
+      console.log(err);
+      //const confProp = err;
+      //const confMessageProp = err;
+      // return {
+      //   props: {
+      //     confProp,
+      //     confMessageProp,
+      //   },
+      // };
     }
     // if the file does not exist create it empty with e uuid
   } else {
@@ -55,13 +113,13 @@ export const getServerSideProps = async () => {
       id: uuidv4(),
       location: '',
     };
-    const statusProp = 'getaddrinfo ENOTFOUND';
+    const confMessageProp = 'getaddrinfo ENOTFOUND';
     try {
       fs.writeFileSync('conf.json', JSON.stringify(confProp), 'utf8');
       return {
         props: {
           confProp,
-          statusProp,
+          confMessageProp,
         },
       };
     } catch (err) {
@@ -70,9 +128,9 @@ export const getServerSideProps = async () => {
   }
 };
 
-export default function Home({ confProp, statusProp }) {
+export default function Home({ confProp, confMessageProp }) {
   const [conf, setConf] = useState(confProp);
-  const [confMessage, setConfMessage] = useState(statusProp);
+  const [confMessage, setConfMessage] = useState(confMessageProp);
   const [confShow, setConfSwhow] = useState(false);
 
   const [add, setAdd] = useState({ ip: '', deviceLocation: '' });
@@ -89,9 +147,8 @@ export default function Home({ confProp, statusProp }) {
         'Content-Type': 'application/json',
       },
     });
-    const zabbixResponse = await checkZabbix(conf);
-    // console.log(zabbixResponse);
-    setConfMessage(zabbixResponse);
+    const zabbixCheck = await checkZabbix(conf);
+    setConfMessage(zabbixCheck);
   };
 
   // add device
@@ -184,7 +241,7 @@ export default function Home({ confProp, statusProp }) {
         confShow={confShow}
       />
       {confShow && <Conf conf={conf} onSaveConf={onSaveConf} />}
-      <ConfStatus conf={conf} confMessage={confMessage} />
+      <ConfAlert conf={conf} confMessage={confMessage} />
 
       <AddHeader onAddShow={() => setAddShow(!addShow)} addShow={addShow} />
       {addShow && <Add add={add} onAdd={onAdd} />}
