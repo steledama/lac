@@ -1,9 +1,9 @@
 import { Alert } from 'react-bootstrap';
 
-const ConfStatus = ({ conf, statusConf }) => {
-  // console.log(statusConf);
+const ConfStatus = ({ conf, confMessage }) => {
+  // console.log(confMessage);
   let alerts;
-  switch (statusConf) {
+  switch (confMessage) {
     case 'Network Error':
       alerts = (
         <Alert variant="danger">
@@ -33,7 +33,7 @@ const ConfStatus = ({ conf, statusConf }) => {
       );
       break;
     default:
-      if (statusConf.error) {
+      if (confMessage.error) {
         alerts = (
           <Alert variant="danger">
             ERROR: Incorrect token please check if it is correct and if it is{' '}
@@ -43,8 +43,8 @@ const ConfStatus = ({ conf, statusConf }) => {
           </Alert>
         );
       }
-      if (statusConf.result) {
-        if (statusConf.result.length === 0) {
+      if (confMessage.result) {
+        if (confMessage.result.length === 0) {
           alerts = (
             <Alert variant="danger">
               ERROR: Connection established (hostname and token are correct) but
@@ -55,7 +55,7 @@ const ConfStatus = ({ conf, statusConf }) => {
             </Alert>
           );
         }
-        if (statusConf.result[0]) {
+        if (confMessage.result[0]) {
           if (conf.location) {
             alerts = (
               <Alert variant="success">

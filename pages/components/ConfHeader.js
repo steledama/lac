@@ -1,6 +1,6 @@
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-const ConfHeader = ({ showConf, onShowConf }) => {
+const ConfHeader = ({ confShow, onConfShow }) => {
   return (
     <>
       <Container>
@@ -11,10 +11,10 @@ const ConfHeader = ({ showConf, onShowConf }) => {
           <Col>
             <Button
               className="mt-1"
-              variant={showConf ? 'secondary' : 'success'}
-              onClick={onShowConf}
+              variant={confShow ? 'secondary' : 'success'}
+              onClick={onConfShow}
             >
-              {showConf ? 'Hide' : 'Show'}
+              {confShow ? 'Hide' : 'Show'}
             </Button>
           </Col>
         </Row>

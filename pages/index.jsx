@@ -72,12 +72,12 @@ export const getServerSideProps = async () => {
 
 export default function Home({ confProp, statusProp }) {
   const [conf, setConf] = useState(confProp);
-  const [statusConf, setStatusConf] = useState(statusProp);
-  const [showConf, setShowConf] = useState(false);
+  const [confMessage, setConfMessage] = useState(statusProp);
+  const [confShow, setConfSwhow] = useState(false);
 
   const [add, setAdd] = useState({ ip: '', deviceLocation: '' });
-  const [statusAdd, setStatusAdd] = useState({});
-  const [showAdd, setShowAdd] = useState(true);
+  const [addMessage, setAddMessage] = useState({});
+  const [addShow, setAddShow] = useState(true);
 
   // save conf
   const onSaveConf = async (conf) => {
@@ -90,16 +90,16 @@ export default function Home({ confProp, statusProp }) {
       },
     });
     const zabbixResponse = await checkZabbix(conf);
-    console.log(zabbixResponse);
-    setStatusConf(zabbixResponse);
+    // console.log(zabbixResponse);
+    setConfMessage(zabbixResponse);
   };
 
   // add device
   const onAdd = async (addFromForm) => {
     // send info message to wait
-    setStatusAdd({
-      type: 'info',
-      message: 'INFO: Adding device please wait...',
+    setAddMessage({
+      variant: 'info',
+      text: 'INFO: Adding device please wait...',
     });
     // snmp connection to get device name and serial
     const device = await fetch('/api/devices', {
@@ -113,15 +113,15 @@ export default function Home({ confProp, statusProp }) {
       .then((data) => {
         // console.log(data);
         if (data.code) {
-          setStatusAdd({
-            type: 'danger',
-            message: `ERROR: The ip address was not found. Please chck it`,
+          setAddMessage({
+            variant: 'danger',
+            text: `ERROR: The ip address was not found. Please chck it`,
           });
         }
         if (data.name) {
-          setStatusAdd({
-            type: 'danger',
-            message: `ERROR: not responding. Check if device is up with snmp protocol enabled`,
+          setAddMessage({
+            variant: 'danger',
+            text: `ERROR: not responding. Check if device is up with snmp protocol enabled`,
           });
         }
         return data;
@@ -143,10 +143,9 @@ export default function Home({ confProp, statusProp }) {
       // TODO: Find the other agent location
 
       // send feeback
-      setStatusAdd({
-        type: 'success',
-        message:
-          'SUCCESS: Device is monitored by the agent in (agent location)',
+      setAddMessage({
+        variant: 'success',
+        text: 'SUCCESS: Device is monitored by the agent in (agent location)',
       });
       // ... if host is not present...
     } else {
@@ -158,7 +157,7 @@ export default function Home({ confProp, statusProp }) {
       );
 
       // create host
-      console.log(device, conf, addFromForm);
+      // console.log(device, conf, addFromForm);
       device.hostId = zabbix.createHost(
         conf.server,
         conf.token,
@@ -172,24 +171,24 @@ export default function Home({ confProp, statusProp }) {
       console.log(device);
 
       // send feedback
-      setStatusAdd({
-        type: 'success',
-        message: 'SUCCESS: Device added to server and monitored by the agent',
+      setAddMessage({
+        variant: 'success',
+        text: 'SUCCESS: Device added to server and monitored by the agent',
       });
     }
   };
   return (
     <>
       <ConfHeader
-        onShowConf={() => setShowConf(!showConf)}
-        showConf={showConf}
+        onConfShow={() => setConfSwhow(!confShow)}
+        confShow={confShow}
       />
-      {showConf && <Conf conf={conf} onSaveConf={onSaveConf} />}
-      <ConfStatus conf={conf} statusConf={statusConf} />
+      {confShow && <Conf conf={conf} onSaveConf={onSaveConf} />}
+      <ConfStatus conf={conf} confMessage={confMessage} />
 
-      <AddHeader onShowAdd={() => setShowAdd(!showAdd)} showAdd={showAdd} />
-      {showAdd && <Add add={add} onAdd={onAdd} />}
-      <AddStatus statusAdd={statusAdd} />
+      <AddHeader onAddShow={() => setAddShow(!addShow)} addShow={addShow} />
+      {addShow && <Add add={add} onAdd={onAdd} />}
+      <AddStatus addMessage={addMessage} />
     </>
   );
 }

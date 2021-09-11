@@ -1,6 +1,6 @@
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-const AddHeader = ({ showAdd, onShowAdd }) => {
+const AddHeader = ({ addShow, onAddShow }) => {
   return (
     <>
       <Container>
@@ -11,10 +11,10 @@ const AddHeader = ({ showAdd, onShowAdd }) => {
           <Col>
             <Button
               className="mt-1"
-              variant={showAdd ? 'secondary' : 'success'}
-              onClick={onShowAdd}
+              variant={addShow ? 'secondary' : 'success'}
+              onClick={onAddShow}
             >
-              {showAdd ? 'Hide' : 'Show'}
+              {addShow ? 'Hide' : 'Show'}
             </Button>
           </Col>
         </Row>
