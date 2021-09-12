@@ -11,9 +11,10 @@ import AddStatus from './components/AddStatus';
 
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 // for zabbix comunication
-const zabbix = require('../lib/zabbix');
+const zabbix = require('../lib/zabbix').default;
 
 const checkZabbix = async (zabbixConf) => {
   const zabbixResponse = await zabbix.getGroupId(
@@ -21,32 +22,31 @@ const checkZabbix = async (zabbixConf) => {
     zabbixConf.token,
     zabbixConf.group
   );
-  let builtConfMessage = {};
-  // console.log(response);
+  let result = {};
   switch (zabbixResponse) {
     case 'Network Error':
-      builtConfMessage = {
+      result = {
         variant: 'danger',
         text: `ERROR: incorrect zabbix hostname or server in not responding. Check if
         the server is up and running or behind a firewall`,
       };
       break;
     case 'getaddrinfo ENOTFOUND':
-      builtConfMessage = {
+      result = {
         variant: 'danger',
         text: `ERROR: incorrect zabbix hostname`,
       };
       break;
     case 'connect ETIMEDOUT':
     case 'connect ECONNREFUSED':
-      builtConfMessage = {
+      result = {
         variant: 'danger',
         text: `ERROR: Zabbix server is not responding. Check if the server is up and
         running`,
       };
       break;
     case 'connect EHOSTUNREACH':
-      builtConfMessage = {
+      result = {
         variant: 'danger',
         text: `ERROR: Zabbix server is not reachable. Check if it is behind a
         firewall or if there is a port forward rule`,
@@ -54,28 +54,30 @@ const checkZabbix = async (zabbixConf) => {
       break;
     default:
       if (zabbixResponse.error) {
-        builtConfMessage = {
+        result = {
           variant: 'danger',
           text: `ERROR: Incorrect token please check if it is correct and if it is configured in zabbix server`,
         };
       }
       if (zabbixResponse.result) {
         if (zabbixResponse.result.length === 0) {
-          builtConfMessage = {
+          result = {
             variant: 'danger',
             text: `ERROR: Incorrect token please check if it is correct and if it is configured in zabbix server`,
           };
         }
         if (zabbixResponse.result[0]) {
-          builtConfMessage = {
+          result = {
             variant: 'success',
             text: `SUCCESS: Connection with zabbix server established and group
               found`,
           };
+          result.groupId = zabbixResponse.result[0].groupid;
+          return result;
         }
       }
   }
-  return builtConfMessage;
+  return result;
 };
 
 // get initial conf from conf.json file
@@ -86,7 +88,12 @@ export const getServerSideProps = async () => {
     try {
       const data = fs.readFileSync('conf.json', 'utf8');
       const confProp = JSON.parse(data);
-      const confMessageProp = await checkZabbix(confProp);
+      const zabbixCheck = await checkZabbix(confProp);
+      //console.log(zabbixResponse);
+      if (zabbixCheck.groupId) {
+        confProp.groupId = zabbixCheck.groupId;
+      }
+      const confMessageProp = zabbixCheck;
       return {
         props: {
           confProp,
@@ -139,15 +146,17 @@ export default function Home({ confProp, confMessageProp }) {
 
   // save conf
   const onSaveConf = async (conf) => {
-    setConf(conf);
-    await fetch('/api/conf', {
-      method: 'POST',
-      body: JSON.stringify({ conf }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    try {
+      const response = await axios.post('/api/conf', { conf });
+    } catch (error) {
+      console.error(error);
+    }
     const zabbixCheck = await checkZabbix(conf);
+    console.log(zabbixCheck);
+    if (zabbixCheck.groupId) {
+      conf.groupId = zabbixCheck.groupId;
+    }
+    setConf(conf);
     setConfMessage(zabbixCheck);
   };
 
@@ -158,80 +167,72 @@ export default function Home({ confProp, confMessageProp }) {
       variant: 'info',
       text: 'INFO: Adding device please wait...',
     });
+
     // snmp connection to get device name and serial
-    const device = await fetch('/api/devices', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(addFromForm),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-        if (data.code) {
-          setAddMessage({
-            variant: 'danger',
-            text: `ERROR: The ip address was not found. Please chck it`,
-          });
-        }
-        if (data.name) {
-          setAddMessage({
-            variant: 'danger',
-            text: `ERROR: not responding. Check if device is up with snmp protocol enabled`,
-          });
-        }
-        return data;
-      })
-      .catch((error) => {
-        console.log(error);
-        return error;
-      });
+    try {
+      const snmpResponse = await axios.post('/api/devices', { addFromForm });
+      if (snmpResponse.data.code) {
+        setAddMessage({
+          variant: 'danger',
+          text: `ERROR: The ip address was not found. Please check it`,
+        });
+      }
+      if (snmpResponse.data.name) {
+        setAddMessage({
+          variant: 'danger',
+          text: `ERROR: device is not responding. Check if it is up with snmp protocol enabled`,
+        });
+      }
+      const device = snmpResponse.data;
 
-    // check if the host is present
-    device.hostId = await zabbix.getHostId(
-      conf.server,
-      conf.token,
-      device.serial
-    );
-
-    // if the host is present...
-    if (device.hostId) {
-      // TODO: Find the other agent location
-
-      // send feeback
-      setAddMessage({
-        variant: 'success',
-        text: 'SUCCESS: Device is monitored by the agent in (agent location)',
-      });
-      // ... if host is not present...
-    } else {
-      // get template id from zabbix
-      device.templateid = await zabbix.getTemplateId(
+      // check if the host is present
+      device.hostId = await zabbix.getHostId(
         conf.server,
         conf.token,
-        device.deviceName
+        device.serial
       );
 
-      // create host
-      // console.log(device, conf, addFromForm);
-      device.hostId = zabbix.createHost(
-        conf.server,
-        conf.token,
-        conf.location,
-        device.deviceName,
-        addFromForm.deviceLocation,
-        device.serial,
-        conf.groupId,
-        device.templateId
-      );
-      console.log(device);
+      // if the host is present...
+      if (device.hostId) {
+        // TODO: Find the other agent location
 
-      // send feedback
-      setAddMessage({
-        variant: 'success',
-        text: 'SUCCESS: Device added to server and monitored by the agent',
-      });
+        // send feeback
+        setAddMessage({
+          variant: 'success',
+          text: 'SUCCESS: Device is monitored by the agent in (agent location)',
+        });
+        // ... if host is not present...
+      } else {
+        // get template id from zabbix
+        const zabbixTemplateResponse = await zabbix.getTemplateId(
+          conf.server,
+          conf.token,
+          device.deviceName
+        );
+
+        device.templateId = zabbixTemplateResponse;
+
+        // create host
+        const zabbixCreateResult = await zabbix.createHost(
+          conf.server,
+          conf.token,
+          conf.location,
+          device.deviceName,
+          addFromForm.deviceLocation,
+          device.serial,
+          conf.groupId,
+          device.templateId
+        );
+        if (zabbixCreateResult.result.hostids[0]) {
+          // send feedback
+          setAddMessage({
+            variant: 'success',
+            text: 'SUCCESS: Device added to server and monitored by the agent',
+          });
+        }
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
   return (
