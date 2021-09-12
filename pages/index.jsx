@@ -7,17 +7,23 @@ import ConfAlert from './components/ConfAlert';
 
 import AddHeader from './components/AddHeader';
 import Add from './components/Add';
-import AddStatus from './components/AddStatus';
+import AddAlert from './components/AddAlert';
 
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 // for zabbix comunication
-const zabbix = require('../lib/zabbix').default;
+//const zabbix = require('../lib/zabbix').default;
+import {
+  getGroupId,
+  getHostId,
+  getTemplateId,
+  createHost,
+} from '../lib/zabbix';
 
 const checkZabbix = async (zabbixConf) => {
-  const zabbixResponse = await zabbix.getGroupId(
+  const zabbixResponse = await getGroupId(
     zabbixConf.server,
     zabbixConf.token,
     zabbixConf.group
@@ -186,11 +192,7 @@ export default function Home({ confProp, confMessageProp }) {
       const device = snmpResponse.data;
 
       // check if the host is present
-      device.hostId = await zabbix.getHostId(
-        conf.server,
-        conf.token,
-        device.serial
-      );
+      device.hostId = await getHostId(conf.server, conf.token, device.serial);
 
       // if the host is present...
       if (device.hostId) {
@@ -204,7 +206,7 @@ export default function Home({ confProp, confMessageProp }) {
         // ... if host is not present...
       } else {
         // get template id from zabbix
-        const zabbixTemplateResponse = await zabbix.getTemplateId(
+        const zabbixTemplateResponse = await getTemplateId(
           conf.server,
           conf.token,
           device.deviceName
@@ -213,7 +215,7 @@ export default function Home({ confProp, confMessageProp }) {
         device.templateId = zabbixTemplateResponse;
 
         // create host
-        const zabbixCreateResult = await zabbix.createHost(
+        const zabbixCreateResult = await createHost(
           conf.server,
           conf.token,
           conf.location,
@@ -223,7 +225,7 @@ export default function Home({ confProp, confMessageProp }) {
           conf.groupId,
           device.templateId
         );
-        if (zabbixCreateResult.result.hostids[0]) {
+        if (zabbixCreateResult.result) {
           // send feedback
           setAddMessage({
             variant: 'success',
@@ -246,7 +248,7 @@ export default function Home({ confProp, confMessageProp }) {
 
       <AddHeader onAddShow={() => setAddShow(!addShow)} addShow={addShow} />
       {addShow && <Add add={add} onAdd={onAdd} />}
-      <AddStatus addMessage={addMessage} />
+      <AddAlert addMessage={addMessage} />
     </>
   );
 }

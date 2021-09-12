@@ -1,6 +1,6 @@
 import { Alert } from 'react-bootstrap';
 
-const AddStatus = ({ addMessage }) => {
+const AddAlert = ({ addMessage }) => {
   return (
     <div className="mt-3">
       <Alert variant={addMessage.variant}>{addMessage.text}</Alert>
@@ -8,4 +8,4 @@ const AddStatus = ({ addMessage }) => {
   );
 };
 
-export default AddStatus;
+export default AddAlert;
