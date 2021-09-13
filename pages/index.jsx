@@ -14,77 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 // for zabbix comunication
-//const zabbix = require('../lib/zabbix').default;
-import {
-  getGroupId,
-  getHostId,
-  getTemplateId,
-  createHost,
-} from '../lib/zabbix';
-
-const checkZabbix = async (zabbixConf) => {
-  const zabbixResponse = await getGroupId(
-    zabbixConf.server,
-    zabbixConf.token,
-    zabbixConf.group
-  );
-  let result = {};
-  switch (zabbixResponse) {
-    case 'Network Error':
-      result = {
-        variant: 'danger',
-        text: `ERROR: incorrect zabbix hostname or server in not responding. Check if
-        the server is up and running or behind a firewall`,
-      };
-      break;
-    case 'getaddrinfo ENOTFOUND':
-      result = {
-        variant: 'danger',
-        text: `ERROR: incorrect zabbix hostname`,
-      };
-      break;
-    case 'connect ETIMEDOUT':
-    case 'connect ECONNREFUSED':
-      result = {
-        variant: 'danger',
-        text: `ERROR: Zabbix server is not responding. Check if the server is up and
-        running`,
-      };
-      break;
-    case 'connect EHOSTUNREACH':
-      result = {
-        variant: 'danger',
-        text: `ERROR: Zabbix server is not reachable. Check if it is behind a
-        firewall or if there is a port forward rule`,
-      };
-      break;
-    default:
-      if (zabbixResponse.error) {
-        result = {
-          variant: 'danger',
-          text: `ERROR: Incorrect token please check if it is correct and if it is configured in zabbix server`,
-        };
-      }
-      if (zabbixResponse.result) {
-        if (zabbixResponse.result.length === 0) {
-          result = {
-            variant: 'danger',
-            text: `ERROR: Incorrect token please check if it is correct and if it is configured in zabbix server`,
-          };
-        }
-        if (zabbixResponse.result[0]) {
-          result = {
-            variant: 'success',
-            text: `SUCCESS: Connection with zabbix server established and group
-              found`,
-          };
-          result.groupId = zabbixResponse.result[0].groupid;
-          return result;
-        }
-      }
-  }
-  return result;
-};
+import { getHostId, getTemplateId, createHost } from '../lib/zabbix';
 
 // get initial conf from conf.json file
 export const getServerSideProps = async () => {
@@ -92,32 +22,18 @@ export const getServerSideProps = async () => {
   if (fs.existsSync('conf.json')) {
     // read it
     try {
-      const data = fs.readFileSync('conf.json', 'utf8');
-      const confProp = JSON.parse(data);
-      const zabbixCheck = await checkZabbix(confProp);
-      //console.log(zabbixResponse);
-      if (zabbixCheck.groupId) {
-        confProp.groupId = zabbixCheck.groupId;
-      }
-      const confMessageProp = zabbixCheck;
+      const response = await axios.get(`http://localhost:3000/api/conf`);
+      const confProp = response.data.conf;
+      const confMessageProp = response.data.message;
       return {
         props: {
           confProp,
           confMessageProp,
         },
       };
-    } catch (err) {
-      console.log(err);
-      //const confProp = err;
-      //const confMessageProp = err;
-      // return {
-      //   props: {
-      //     confProp,
-      //     confMessageProp,
-      //   },
-      // };
+    } catch (errors) {
+      console.error(errors);
     }
-    // if the file does not exist create it empty with e uuid
   } else {
     const confProp = {
       server: '',
@@ -126,7 +42,10 @@ export const getServerSideProps = async () => {
       id: uuidv4(),
       location: '',
     };
-    const confMessageProp = 'getaddrinfo ENOTFOUND';
+    const confMessageProp = {
+      variant: 'warning',
+      text: 'Please fille the form and save the configuration',
+    };
     try {
       fs.writeFileSync('conf.json', JSON.stringify(confProp), 'utf8');
       return {
