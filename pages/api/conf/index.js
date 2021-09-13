@@ -1,14 +1,16 @@
 import fs from 'fs';
-import { getGroupId } from '../lib/zabbix';
+import { getGroupId } from '../../../lib/zabbix';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
+      const data = fs.readFileSync('conf.json', 'utf8');
+      const conf = JSON.parse(data);
       try {
         const zabbixResponse = await getGroupId(
-          req.body.server,
-          req.body.token,
-          req.body.group
+          conf.server,
+          conf.token,
+          conf.group
         );
         let result = {};
         switch (zabbixResponse) {
@@ -65,15 +67,14 @@ export default function handler(req, res) {
             }
         }
         if (result.groupId) {
-          const data = fs.readFileSync('conf.json', 'utf8');
-          const conFromFile = JSON.parse(data);
-          conFromFile.groupId = result.groupId;
-          fs.writeFileSync('conf.json', JSON.stringify(conFromFile), 'utf8');
-          res.status(200).json(conFromFile);
+          conf.groupId = result.groupId;
+          fs.writeFileSync('conf.json', JSON.stringify(conf), 'utf8');
+          res.status(200).json(conf);
         } else {
-          res.status(200).json(conFromFile);
+          res.status(200).json(conf);
         }
       } catch (err) {
+        console.log(err);
         res.status(500).json(err);
       }
       break;
@@ -83,6 +84,7 @@ export default function handler(req, res) {
         fs.writeFileSync('conf.json', JSON.stringify(conFromForm), 'utf8');
         res.status(201).json(conFromForm);
       } catch (err) {
+        console.log(err);
         res.status(500).json(err);
       }
       break;
