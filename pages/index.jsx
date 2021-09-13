@@ -20,7 +20,6 @@ import { getHostId, getTemplateId, createHost } from '../lib/zabbix';
 export const getServerSideProps = async () => {
   // check if the conf file exist...
   if (fs.existsSync('conf.json')) {
-    // read it
     try {
       const response = await axios.get(`http://localhost:3000/api/conf`);
       const confProp = response.data.conf;
@@ -31,8 +30,8 @@ export const getServerSideProps = async () => {
           confMessageProp,
         },
       };
-    } catch (errors) {
-      console.error(errors);
+    } catch (error) {
+      console.error(error);
     }
   } else {
     const confProp = {
@@ -44,7 +43,7 @@ export const getServerSideProps = async () => {
     };
     const confMessageProp = {
       variant: 'warning',
-      text: 'Please fille the form and save the configuration',
+      text: 'Please fill the form and save the configuration',
     };
     try {
       fs.writeFileSync('conf.json', JSON.stringify(confProp), 'utf8');
@@ -54,8 +53,8 @@ export const getServerSideProps = async () => {
           confMessageProp,
         },
       };
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.log(error);
     }
   }
 };
@@ -70,19 +69,14 @@ export default function Home({ confProp, confMessageProp }) {
   const [addShow, setAddShow] = useState(true);
 
   // save conf
-  const onSaveConf = async (conf) => {
+  const onSaveConf = async (confFromForm) => {
     try {
-      const response = await axios.post('/api/conf', { conf });
+      const completeConf = await axios.post('/api/conf', { confFromForm });
+      setConf(completeConf.data.conf);
+      setConfMessage(completeConf.data.message);
     } catch (error) {
       console.error(error);
     }
-    const zabbixCheck = await checkZabbix(conf);
-    console.log(zabbixCheck);
-    if (zabbixCheck.groupId) {
-      conf.groupId = zabbixCheck.groupId;
-    }
-    setConf(conf);
-    setConfMessage(zabbixCheck);
   };
 
   // add device
@@ -92,7 +86,6 @@ export default function Home({ confProp, confMessageProp }) {
       variant: 'info',
       text: 'INFO: Adding device please wait...',
     });
-
     // snmp connection to get device name and serial
     try {
       const snmpResponse = await axios.post('/api/devices', { addFromForm });
@@ -108,13 +101,17 @@ export default function Home({ confProp, confMessageProp }) {
           text: `ERROR: device is not responding. Check if it is up with snmp protocol enabled`,
         });
       }
-      const device = snmpResponse.data;
+      const deviceToAdd = snmpResponse.data;
 
       // check if the host is present
-      device.hostId = await getHostId(conf.server, conf.token, device.serial);
+      deviceToAdd.hostId = await getHostId(
+        conf.server,
+        conf.token,
+        deviceToAdd.serial
+      );
 
       // if the host is present...
-      if (device.hostId) {
+      if (deviceToAdd.hostId) {
         // TODO: Find the other agent location
 
         // send feeback
@@ -128,21 +125,21 @@ export default function Home({ confProp, confMessageProp }) {
         const zabbixTemplateResponse = await getTemplateId(
           conf.server,
           conf.token,
-          device.deviceName
+          deviceToAdd.deviceName
         );
 
-        device.templateId = zabbixTemplateResponse;
+        deviceToAdd.templateId = zabbixTemplateResponse;
 
         // create host
         const zabbixCreateResult = await createHost(
           conf.server,
           conf.token,
           conf.location,
-          device.deviceName,
+          deviceToAdd.deviceName,
           addFromForm.deviceLocation,
-          device.serial,
+          deviceToAdd.serial,
           conf.groupId,
-          device.templateId
+          deviceToAdd.templateId
         );
         if (zabbixCreateResult.result) {
           // send feedback
