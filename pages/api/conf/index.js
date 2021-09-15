@@ -19,7 +19,6 @@ export default async function handler(req, res) {
 
 async function checkZabbix(conf) {
   const zabbixResponse = await getGroupId(conf.server, conf.token, conf.group);
-  console.log(zabbixResponse);
   let message = {};
   switch (zabbixResponse.code) {
     case 'Network Error':

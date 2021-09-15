@@ -139,7 +139,9 @@ export default function Home({ confProp, confMessageProp }) {
           addFromForm.deviceLocation,
           deviceToAdd.serial,
           conf.groupId,
-          deviceToAdd.templateId
+          deviceToAdd.templateId,
+          conf.id,
+          conf.location
         );
         if (zabbixCreateResult.result) {
           // send feedback

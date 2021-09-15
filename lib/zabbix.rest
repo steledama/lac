@@ -23,7 +23,7 @@ content-type: application/json
         "output": ["host","templateid"],
         "filter": {"host": ["Xerox Phaser 6130N"]}
     },
-    "auth": "dc3f01e687b91f9209018d63f6547c066839be65596c1547bfad5a0bf891ae07",
+    "auth": "f966696902a5a33273847d647d1d479c26e330325ba7ba421c350bf837c08ca9",
     "id": 1
 }
 
@@ -39,7 +39,7 @@ content-type: application/json
         "templateids": "10468",
         "tags": [{"tag": "false", "operator": "2"}]
     },
-    "auth": "dc3f01e687b91f9209018d63f6547c066839be65596c1547bfad5a0bf891ae07",
+    "auth": "f966696902a5a33273847d647d1d479c26e330325ba7ba421c350bf837c08ca9",
     "id": 1
 }
 
@@ -53,7 +53,7 @@ content-type: application/json
     "params": {
         "filter": { "host": ["000000000"] }
     },
-    "auth": "dc3f01e687b91f9209018d63f6547c066839be65596c1547bfad5a0bf891ae07",
+    "auth": "f966696902a5a33273847d647d1d479c26e330325ba7ba421c350bf837c08ca9",
     "id": 1
 }
 
@@ -67,9 +67,9 @@ content-type: application/json
     "method": "hostgroup.get",
     "params": {
         "output": "extend",
-        "filter": {"name": ["LAC"]}
+        "filter": {"name": ["STE"]}
     },
-    "auth": "dc3f01e687b91f9209018d63f6547c066839be65596c1547bfad5a0bf891ae07",
+    "auth": "f966696902a5a33273847d647d1d479c26e330325ba7ba421c350bf837c08ca9",
     "id": 1
 }
 
