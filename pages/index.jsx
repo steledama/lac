@@ -14,7 +14,13 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 // for zabbix comunication
-import { getHostId, getTemplateId, createHost } from '../lib/zabbix';
+import {
+  getHostId,
+  getHostByTag,
+  updateHost,
+  getTemplateId,
+  createHost,
+} from '../lib/zabbix';
 
 // get initial conf from conf.json file
 export const getServerSideProps = async () => {
@@ -86,9 +92,10 @@ export default function Home({ confProp, confMessageProp }) {
       variant: 'info',
       text: 'INFO: Adding device please wait...',
     });
-    // snmp connection to get device name and serial
     try {
+      // snmp connection to get device name and serial
       const snmpResponse = await axios.post('/api/devices', { addFromForm });
+      // send error messages if device is not responding
       if (snmpResponse.data.code) {
         setAddMessage({
           variant: 'danger',
@@ -101,6 +108,7 @@ export default function Home({ confProp, confMessageProp }) {
           text: `ERROR: device is not responding. Check if it is up with snmp protocol enabled`,
         });
       }
+      // name and serial
       const deviceToAdd = snmpResponse.data;
 
       // check if the host is present
@@ -110,26 +118,74 @@ export default function Home({ confProp, confMessageProp }) {
         deviceToAdd.serial
       );
 
-      // if the host is present...
+      // if the host is present
       if (deviceToAdd.hostId) {
-        // TODO: Find the other agent location
-
-        // send feeback
-        setAddMessage({
-          variant: 'success',
-          text: 'SUCCESS: Device is monitored by the agent in (agent location)',
-        });
-        // ... if host is not present...
+        // find the angentId's that are monitoring the device
+        const existingHost = await getHostByTag(
+          conf.server,
+          conf.token,
+          deviceToAdd.serial
+        );
+        // if there are other agents that are monitoring the device
+        if (existingHost.result.length !== 0) {
+          // take old tags with agentis and ip
+          const newHostTagsArray = existingHost.result[0].tags;
+          // find if device is allready monitored by this agent
+          const allreadyMonitored = newHostTagsArray.find(
+            (tag) => tag.value === conf.id
+          );
+          // if the device is already monitored by this agent
+          if (allreadyMonitored) {
+            // send an error message
+            setAddMessage({
+              variant: 'danger',
+              text: 'ERROR: Device is allready monitored by this agent',
+            });
+          } else {
+            // else (device is NOT monitored by this agent) add this agentId
+            newHostTagsArray.push({ tag: 'agentId', value: conf.id });
+            // update the host with the new agent
+            const response = await updateHost(
+              conf.server,
+              conf.token,
+              deviceToAdd.hostId,
+              newHostTagsArray
+            );
+            // send feeback
+            setAddMessage({
+              variant: 'success',
+              text: 'SUCCESS: Device was present on zabbix server and now it is monitored by this agent',
+            });
+          }
+        } else {
+          // else (there are not other agent monitoring) the device
+          // add ip andthis agentId to tags
+          const newHostTagsArray = [
+            { tag: 'ip', value: addFromForm.ip },
+            { tag: 'agentId', value: conf.id },
+          ];
+          // update the host with the new agent
+          const response = await updateHost(
+            conf.server,
+            conf.token,
+            deviceToAdd.hostId,
+            newHostTagsArray
+          );
+          // send feeback
+          setAddMessage({
+            variant: 'success',
+            text: 'SUCCESS: Device was present on zabbix server and now it is monitored by this agent',
+          });
+        }
       } else {
-        // get template id from zabbix
+        // else (the host is not present)
+        // search template id from the device name
         const zabbixTemplateResponse = await getTemplateId(
           conf.server,
           conf.token,
           deviceToAdd.deviceName
         );
-
         deviceToAdd.templateId = zabbixTemplateResponse;
-
         // create host
         const zabbixCreateResult = await createHost(
           conf.server,
@@ -141,10 +197,11 @@ export default function Home({ confProp, confMessageProp }) {
           conf.groupId,
           deviceToAdd.templateId,
           conf.id,
-          conf.location
+          addFromForm.ip
         );
+        // if there are not errors creating the new host
         if (zabbixCreateResult.result) {
-          // send feedback
+          // send success message
           setAddMessage({
             variant: 'success',
             text: 'SUCCESS: Device added to server and monitored by the agent',

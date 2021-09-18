@@ -58,7 +58,28 @@ content-type: application/json
 }
 
 ###
+POST http://stele.dynv6.net/api_jsonrpc.php
+content-type: application/json
 
+{
+    "jsonrpc": "2.0",
+    "method": "host.get",
+    "params": {
+        "output": ["hostid"],
+        "selectTags": "extend",
+        "evaltype": 0,
+        "tags": [
+            {
+                "tag": "agentId",
+                "operator": 0
+            }
+        ]
+    },
+    "auth": "f966696902a5a33273847d647d1d479c26e330325ba7ba421c350bf837c08ca9",
+    "id": 1
+}
+
+###
 POST http://stele.dynv6.net/api_jsonrpc.php
 content-type: application/json
 
