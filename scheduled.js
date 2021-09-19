@@ -43,7 +43,7 @@ const monitorDevices = async () => {
   const devices = await getHostsByAgentId(conf.server, conf.token, conf.id);
   // FOR EACH DEVICE TO MONITOR
   devices.forEach(async (device) => {
-    console.log(device.tags);
+    console.log(device);
     try {
       // get device items defined in zabbix template
       const items = await getItems(conf.server, conf.token, templateId.result);
