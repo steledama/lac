@@ -20,6 +20,7 @@ export default async function handler(req, res) {
 async function checkZabbix(conf) {
   const zabbixResponse = await getGroupId(conf.server, conf.token, conf.group);
   let message = {};
+  console.log(zabbixResponse);
   switch (zabbixResponse.code) {
     case 'Network Error':
       message = {
@@ -47,6 +48,12 @@ async function checkZabbix(conf) {
       };
       break;
     default:
+      if (zabbixResponse.errors) {
+        message = {
+          variant: 'danger',
+          text: `ERROR: Incorrect zabbix ip or hostname please check if it is correct`,
+        };
+      }
       if (zabbixResponse.error) {
         message = {
           variant: 'danger',
@@ -66,7 +73,7 @@ async function checkZabbix(conf) {
             text: `SUCCESS: Connection with zabbix server established and group found`,
           };
           conf.groupId = zabbixResponse.result[0].groupid;
-          fs.writeFileSync('conf.json', JSON.stringify(conf), 'utf8');
+          fs.writeFileSync('conf.json', JSON.stringify(conf, null, 2), 'utf8');
         }
       }
   }

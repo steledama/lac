@@ -1,12 +1,7 @@
-// conf
-// import conf from './conf.json';
 const conf = require('./conf.json');
-// lac snmp module
-// import { get } from './lib/snmp.js';
-const get = require('./lib/snmp.js');
-// for zabbix comunication
+const { get } = require('./lib/snmp.js');
 const { getHostsByAgentId, getItems } = require('./lib/zabbix.js');
-// import { getItems } from './lib/zabbix.js';
+const { exec } = require('child_process');
 
 // // built in node module for os information
 // const os = require('os');
@@ -40,30 +35,30 @@ const { getHostsByAgentId, getItems } = require('./lib/zabbix.js');
 // }
 
 const monitorDevices = async () => {
-  const devices = await getHostsByAgentId(conf.server, conf.token, conf.id);
-  // FOR EACH DEVICE TO MONITOR
-  devices.forEach(async (device) => {
-    console.log(device);
-    try {
-      // get device items defined in zabbix template
-      const items = await getItems(conf.server, conf.token, templateId.result);
-
+  try {
+    // find devices to monitor based on agentId
+    const devices = await getHostsByAgentId(conf.server, conf.token, conf.id);
+    // for each device to monitor
+    devices.forEach(async (device) => {
+      // get device items defined in host
+      const items = await getItems(conf.server, conf.token, device.host);
       // take only oids and put them into oidsArray
       const oidsArray = items.map((item) => item.key_);
-
+      // take device ip from tags
+      const tagDeviceIp = device.tags.find(
+        (element) => element.tag === 'deviceIp'
+      );
       // connect to device and get oids values
-      const snmpResults = await get(device.ip, oidsArray);
-
+      const snmpResults = await get(tagDeviceIp.value, oidsArray);
+      console.log(snmpResults);
       // send snmpResult to zabbix
       snmpResults.forEach((item) => {
-        sendItemToZabbix(conf.server, deviceInfo.serial, item.oid, item.value);
+        sendItemToZabbix(conf.server, device.host, item.oid, item.value);
       });
-      return 'ok';
-    } catch (error) {
-      // console.log(error);
-      return error;
-    }
-  });
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 monitorDevices();
@@ -74,14 +69,16 @@ const sendItemToZabbix = (server, host, key, value) => {
     `./zabbix_sender -z ${server} -s ${host} -k ${key} -o ${value}`,
     (error, stdout, stderr) => {
       if (error) {
+        console.log(error);
         const result = { data: undefined, message: error };
         return result;
       }
       if (stderr) {
+        console.log(stderr);
         const result = { data: undefined, message: stderr };
         return result;
       }
-      // console.log(stdout);
+      console.log(stdout);
       const result = {
         data: stdout,
         message: `${value} successfully sent to Zabbix server`,
