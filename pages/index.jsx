@@ -1,13 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 
-import ConfHeader from './components/ConfHeader';
+import Header from './components/Header';
+import Feedback from './components/Feedback';
 import Conf from './components/Conf';
-import ConfAlert from './components/ConfAlert';
-
-import AddHeader from './components/AddHeader';
 import Add from './components/Add';
-import AddAlert from './components/AddAlert';
 
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
@@ -70,6 +67,10 @@ export default function Home({ confProp, confMessageProp }) {
 
   // save conf
   const onSaveConf = async (confFromForm) => {
+    setConfMessage({
+      variant: 'info',
+      text: 'INFO: Connecting to zabbix server. Please wait...',
+    });
     try {
       const completeConf = await axios.post('/api/conf', { confFromForm });
       setConf(completeConf.data.conf);
@@ -99,7 +100,7 @@ export default function Home({ confProp, confMessageProp }) {
       if (snmpResponse.data.name) {
         setAddMessage({
           variant: 'danger',
-          text: `ERROR: device is not responding. Check if it is up with snmp protocol enabled`,
+          text: `ERROR: Device is not responding. Check if it is up with snmp protocol enabled`,
         });
       }
       // deviceName and serial if it is ok
@@ -178,16 +179,21 @@ export default function Home({ confProp, confMessageProp }) {
   };
   return (
     <>
-      <ConfHeader
-        onConfShow={() => setConfSwhow(!confShow)}
-        confShow={confShow}
+      <Header
+        title="Configuration"
+        onShow={() => setConfSwhow(!confShow)}
+        show={confShow}
       />
       {confShow && <Conf conf={conf} onSaveConf={onSaveConf} />}
-      <ConfAlert conf={conf} confMessage={confMessage} />
+      <Feedback conf={conf} message={confMessage} />
 
-      <AddHeader onAddShow={() => setAddShow(!addShow)} addShow={addShow} />
+      <Header
+        title="Add device"
+        onShow={() => setAddShow(!addShow)}
+        show={addShow}
+      />
       {addShow && <Add add={add} onAdd={onAdd} />}
-      <AddAlert addMessage={addMessage} />
+      <Feedback message={addMessage} />
     </>
   );
 }

@@ -1,4 +1,25 @@
 {
+  "name": "lac",
+  "version": "0.0.1",
+  "description": "snmp zabbix remote agent for monitoring MultiFuncionPrinters usage and supplies over different networks",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steledama/lac.git"
+  },
+  "keywords": [
+    "snmp",
+    "zabbix",
+    "agent",
+    "printer",
+    "oids",
+    "monitor"
+  ],
+  "author": "steledama",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/steledama/lac/issues"
+  },
+  "homepage": "https://github.com/steledama/lac#readme",
   "private": true,
   "scripts": {
     "dev": "next dev",
