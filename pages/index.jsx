@@ -1,17 +1,24 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Header from './components/Header';
 import Feedback from './components/Feedback';
 import Conf from './components/Conf';
 import Add from './components/Add';
+import Devices from './components/Devices';
 
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 // for zabbix comunication
-import { getHost, updateHost, getTemplate, createHost } from '../lib/zabbix';
+import {
+  getHost,
+  updateHost,
+  getTemplate,
+  createHost,
+  getHostsByAgentId,
+} from '../lib/zabbix';
 
 // get initial conf from conf.json file
 export const getServerSideProps = async () => {
@@ -61,9 +68,27 @@ export default function Home({ confProp, confMessageProp }) {
   const [confMessage, setConfMessage] = useState(confMessageProp);
   const [confShow, setConfSwhow] = useState(false);
 
-  const [add, setAdd] = useState({ ip: '', deviceLocation: '' });
+  const [add] = useState({ ip: '', deviceLocation: '' });
   const [addMessage, setAddMessage] = useState({});
   const [addShow, setAddShow] = useState(true);
+
+  const [devices, setDevices] = useState([]);
+  const [devicesNumber, setDevicesNumber] = useState();
+  const [devicesShow, setDevicesShow] = useState(true);
+
+  useEffect(() => {
+    const getDevices = async () => {
+      const monitoredDevices = await getHostsByAgentId(
+        conf.server,
+        conf.token,
+        conf.id
+      );
+      console.log(monitoredDevices);
+      setDevices(monitoredDevices);
+      setDevicesNumber(monitoredDevices.length);
+    };
+    getDevices();
+  }, []);
 
   // save conf
   const onSaveConf = async (confFromForm) => {
@@ -194,6 +219,13 @@ export default function Home({ confProp, confMessageProp }) {
       />
       {addShow && <Add add={add} onAdd={onAdd} />}
       <Feedback message={addMessage} />
+
+      <Header
+        title={`${devicesNumber} Monitored devices`}
+        onShow={() => setDevicesShow(!devicesShow)}
+        show={devicesShow}
+      />
+      {devicesShow && <Devices devices={devices} />}
     </>
   );
 }

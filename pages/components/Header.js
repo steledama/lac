@@ -6,7 +6,7 @@ const Header = ({ title, show, onShow }) => {
       <Container>
         <Row>
           <Col>
-            <h1>{title}</h1>
+            <h3>{title}</h3>
           </Col>
           <Col>
             <Button
