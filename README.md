@@ -150,6 +150,10 @@ I prefer to create a token for each user in administration > general > api token
 
 Allerts and notifications...
 
+#### General settings
+
+Go to Administration - General - GUI and change the Max history display period to 1w (one week)
+
 ## Who maintains and contributes to LAC
 
 I am Stefano Pompa, i live and work in Florence (Italy). I have been a MFP technician for several years and now i am working with a dealer with several reseller and customers end users. My email address is stefano.pompa@gmail.com.
