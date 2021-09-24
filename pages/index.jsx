@@ -18,6 +18,7 @@ import {
   getTemplate,
   createHost,
   getHostsByAgentId,
+  deleteHost,
 } from '../lib/zabbix';
 
 // get initial conf from conf.json file
@@ -76,17 +77,19 @@ export default function Home({ confProp, confMessageProp }) {
   const [devicesNumber, setDevicesNumber] = useState();
   const [devicesShow, setDevicesShow] = useState(true);
 
+  // get devices monitored by this agent
+  const getDevices = async () => {
+    const monitoredDevices = await getHostsByAgentId(
+      conf.server,
+      conf.token,
+      conf.id
+    );
+    setDevices(monitoredDevices);
+    setDevicesNumber(monitoredDevices.length);
+  };
+
+  // get devices at start
   useEffect(() => {
-    const getDevices = async () => {
-      const monitoredDevices = await getHostsByAgentId(
-        conf.server,
-        conf.token,
-        conf.id
-      );
-      console.log(monitoredDevices);
-      setDevices(monitoredDevices);
-      setDevicesNumber(monitoredDevices.length);
-    };
     getDevices();
   }, []);
 
@@ -100,6 +103,17 @@ export default function Home({ confProp, confMessageProp }) {
       const completeConf = await axios.post('/api/conf', { confFromForm });
       setConf(completeConf.data.conf);
       setConfMessage(completeConf.data.message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // delete device
+  const deleteDevice = async (hostId) => {
+    // console.log('delete', hostId);
+    try {
+      const zabbixResponse = await deleteHost(conf.server, conf.token, hostId);
+      getDevices();
     } catch (error) {
       console.error(error);
     }
@@ -137,7 +151,6 @@ export default function Home({ confProp, confMessageProp }) {
         conf.token,
         deviceToAdd.serial
       );
-
       // if the host is present
       if (existingHost.result.length !== 0) {
         // store the old tags
@@ -167,6 +180,7 @@ export default function Home({ confProp, confMessageProp }) {
           variant: 'success',
           text: 'SUCCESS: Device was present on zabbix server and now it is updated and monitored by this agent',
         });
+        getDevices();
       } else {
         // else (the host is not present)
         // search template id from the device name
@@ -196,6 +210,7 @@ export default function Home({ confProp, confMessageProp }) {
             variant: 'success',
             text: 'SUCCESS: Device added to server and monitored by the agent',
           });
+          getDevices();
         }
       }
     } catch (error) {
@@ -225,7 +240,9 @@ export default function Home({ confProp, confMessageProp }) {
         onShow={() => setDevicesShow(!devicesShow)}
         show={devicesShow}
       />
-      {devicesShow && <Devices devices={devices} />}
+      {devicesShow && (
+        <Devices conf={conf} devices={devices} onDelete={deleteDevice} />
+      )}
     </>
   );
 }
