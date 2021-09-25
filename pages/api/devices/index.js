@@ -7,7 +7,6 @@ export default async function handler(req, res) {
       // to test monitor devices
       try {
         const monitorResult = await monitorDevices();
-        console.log(monitorResult);
         res.status(200).send(monitorResult);
       } catch (err) {
         res.status(500).send(err);

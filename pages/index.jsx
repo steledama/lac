@@ -96,7 +96,8 @@ export default function Home({ confProp, confMessageProp }) {
     });
     try {
       const sendResult = await axios.get(`http://localhost:3000/api/devices`);
-      setDevicesMessage(sendResult.data);
+      console.log(sendResult);
+      //setDevicesMessage({ variant: 'success', text: { message } });
     } catch (error) {
       console.error(error);
     }
