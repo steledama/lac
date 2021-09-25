@@ -75,7 +75,7 @@ export default function Home({ confProp, confMessageProp }) {
 
   const [devices, setDevices] = useState([]);
   const [devicesNumber, setDevicesNumber] = useState();
-  const [testMessage, setTestMessage] = useState({});
+  const [devicesMessage, setDevicesMessage] = useState({});
 
   // get devices monitored by this agent
   const getDevices = async () => {
@@ -90,13 +90,13 @@ export default function Home({ confProp, confMessageProp }) {
 
   // test scheduled script
   const testMonitor = async () => {
-    setTestMessage({
+    setDevicesMessage({
       variant: 'info',
       text: 'INFO: Connecting to device and sending data to zabbix. Please wait...',
     });
     try {
       const sendResult = await axios.get(`http://localhost:3000/api/devices`);
-      setTestMessage(sendResult.data);
+      setDevicesMessage(sendResult.data);
     } catch (error) {
       console.error(error);
     }
@@ -117,6 +117,9 @@ export default function Home({ confProp, confMessageProp }) {
       const completeConf = await axios.post('/api/conf', { confFromForm });
       setConf(completeConf.data.conf);
       setConfMessage(completeConf.data.message);
+      if (completeConf.data.message.variant === 'success') {
+        setConfSwhow(false);
+      } else setConfSwhow(true);
     } catch (error) {
       console.error(error);
     }
@@ -269,37 +272,41 @@ export default function Home({ confProp, confMessageProp }) {
       {confShow && <Conf conf={conf} onSaveConf={onSaveConf} />}
       <Feedback conf={conf} message={confMessage} />
 
-      <h3>Add device</h3>
-      <Add add={add} onAdd={onAdd} />
-      <Feedback message={addMessage} />
-
-      <Container>
-        <Row>
-          <Col>
-            <h3>{monitoredDeviceTitle}</h3>
-          </Col>
-          <Col>
-            {devicesNumber > 0 && (
-              <Button
-                className="mt-1"
-                variant="info"
-                onClick={() => testMonitor()}
-              >
-                Send data to zabbix
-              </Button>
-            )}
-          </Col>
-        </Row>
-      </Container>
-      {devicesNumber > 0 && (
+      {confMessage.variant === 'success' && (
         <>
-          <Feedback message={testMessage} />
-          <Devices
-            conf={conf}
-            devices={devices}
-            onDelete={deleteDevice}
-            onStop={stopDevice}
-          />
+          <h3>Add device</h3>
+          <Add add={add} onAdd={onAdd} />
+          <Feedback message={addMessage} />
+
+          <Container>
+            <Row>
+              <Col>
+                <h3>{monitoredDeviceTitle}</h3>
+              </Col>
+              <Col>
+                {devicesNumber > 0 && (
+                  <Button
+                    className="mt-1"
+                    variant="info"
+                    onClick={() => testMonitor()}
+                  >
+                    Send data to zabbix
+                  </Button>
+                )}
+              </Col>
+            </Row>
+          </Container>
+          {devicesNumber > 0 && (
+            <>
+              <Feedback message={devicesMessage} />
+              <Devices
+                conf={conf}
+                devices={devices}
+                onDelete={deleteDevice}
+                onStop={stopDevice}
+              />
+            </>
+          )}
         </>
       )}
     </>
