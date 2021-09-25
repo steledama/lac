@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import Header from './components/Header';
 import Feedback from './components/Feedback';
@@ -74,6 +75,7 @@ export default function Home({ confProp, confMessageProp }) {
 
   const [devices, setDevices] = useState([]);
   const [devicesNumber, setDevicesNumber] = useState();
+  const [testMessage, setTestMessage] = useState({});
 
   // get devices monitored by this agent
   const getDevices = async () => {
@@ -84,6 +86,20 @@ export default function Home({ confProp, confMessageProp }) {
     );
     setDevices(monitoredDevices);
     setDevicesNumber(monitoredDevices.length);
+  };
+
+  // test scheduled script
+  const testMonitor = async () => {
+    setTestMessage({
+      variant: 'info',
+      text: 'INFO: Connecting to device and sending data to zabbix. Please wait...',
+    });
+    try {
+      const sendResult = await axios.get(`http://localhost:3000/api/devices`);
+      setTestMessage(sendResult.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // get devices at start
@@ -116,6 +132,7 @@ export default function Home({ confProp, confMessageProp }) {
       console.error(error);
     }
   };
+
   // stop monitoring device
   const stopDevice = async (serial, hostId, deviceIp) => {
     // check if the host is present
@@ -230,6 +247,8 @@ export default function Home({ confProp, confMessageProp }) {
       console.error(error);
     }
   };
+
+  // build the title based on number of devices monitored
   let monitoredDeviceTitle = '';
   if (devicesNumber === 0) {
     monitoredDeviceTitle = 'No monitored devices';
@@ -238,6 +257,8 @@ export default function Home({ confProp, confMessageProp }) {
   } else {
     monitoredDeviceTitle = `${devicesNumber} monitored devices`;
   }
+
+  // render the page
   return (
     <>
       <Header
@@ -252,14 +273,34 @@ export default function Home({ confProp, confMessageProp }) {
       <Add add={add} onAdd={onAdd} />
       <Feedback message={addMessage} />
 
-      <h3>{monitoredDeviceTitle}</h3>
+      <Container>
+        <Row>
+          <Col>
+            <h3>{monitoredDeviceTitle}</h3>
+          </Col>
+          <Col>
+            {devicesNumber > 0 && (
+              <Button
+                className="mt-1"
+                variant="info"
+                onClick={() => testMonitor()}
+              >
+                Send data to zabbix
+              </Button>
+            )}
+          </Col>
+        </Row>
+      </Container>
       {devicesNumber > 0 && (
-        <Devices
-          conf={conf}
-          devices={devices}
-          onDelete={deleteDevice}
-          onStop={stopDevice}
-        />
+        <>
+          <Feedback message={testMessage} />
+          <Devices
+            conf={conf}
+            devices={devices}
+            onDelete={deleteDevice}
+            onStop={stopDevice}
+          />
+        </>
       )}
     </>
   );

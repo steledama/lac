@@ -4,12 +4,14 @@ import { getGroupId } from '../../../lib/zabbix';
 export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
+      // to get conf from file
       const data = fs.readFileSync('conf.json', 'utf8');
       const conFromFile = JSON.parse(data);
       const result = await checkZabbix(conFromFile);
       res.status(200).json(result);
       break;
     case 'POST':
+      // to save conf from module
       const confFromForm = req.body.confFromForm;
       const verifiedConf = await checkZabbix(confFromForm);
       res.status(200).json(verifiedConf);

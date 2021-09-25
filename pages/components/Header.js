@@ -14,7 +14,7 @@ const Header = ({ title, show, onShow }) => {
               variant={show ? 'secondary' : 'success'}
               onClick={onShow}
             >
-              {show ? 'Hide' : 'Show'}
+              {show ? 'Hide configuration' : 'Show configuration'}
             </Button>
           </Col>
         </Row>
