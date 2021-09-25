@@ -118,6 +118,21 @@ export default function Home({ confProp, confMessageProp }) {
       console.error(error);
     }
   };
+  // stop monitoring device
+  const stopDevice = async (serial, hostId, deviceIp) => {
+    // check if the host is present
+    const existingHost = await getHost(conf.server, conf.token, serial);
+    // if the host is present
+    if (existingHost.result.length !== 0) {
+      // store the old tags
+      const oldTags = existingHost.result[0].tags;
+      // filters the agentId's and the specific one from old tags
+      const tags = oldTags.filter((oldTag) => oldTag.value !== conf.id);
+      // update the host with the new agentId and Ip tags array
+      const response = await updateHost(conf.server, conf.token, hostId, tags);
+      getDevices();
+    }
+  };
 
   // add device
   const onAdd = async (addFromForm) => {
@@ -241,7 +256,12 @@ export default function Home({ confProp, confMessageProp }) {
         show={devicesShow}
       />
       {devicesShow && (
-        <Devices conf={conf} devices={devices} onDelete={deleteDevice} />
+        <Devices
+          conf={conf}
+          devices={devices}
+          onDelete={deleteDevice}
+          onStop={stopDevice}
+        />
       )}
     </>
   );
