@@ -71,11 +71,9 @@ export default function Home({ confProp, confMessageProp }) {
 
   const [add] = useState({ ip: '', deviceLocation: '' });
   const [addMessage, setAddMessage] = useState({});
-  const [addShow, setAddShow] = useState(true);
 
   const [devices, setDevices] = useState([]);
   const [devicesNumber, setDevicesNumber] = useState();
-  const [devicesShow, setDevicesShow] = useState(true);
 
   // get devices monitored by this agent
   const getDevices = async () => {
@@ -232,6 +230,14 @@ export default function Home({ confProp, confMessageProp }) {
       console.error(error);
     }
   };
+  let monitoredDeviceTitle = '';
+  if (devicesNumber === 0) {
+    monitoredDeviceTitle = 'No monitored devices';
+  } else if (devicesNumber == 1) {
+    monitoredDeviceTitle = '1 monitored device';
+  } else {
+    monitoredDeviceTitle = `${devicesNumber} monitored devices`;
+  }
   return (
     <>
       <Header
@@ -242,20 +248,12 @@ export default function Home({ confProp, confMessageProp }) {
       {confShow && <Conf conf={conf} onSaveConf={onSaveConf} />}
       <Feedback conf={conf} message={confMessage} />
 
-      <Header
-        title="Add device"
-        onShow={() => setAddShow(!addShow)}
-        show={addShow}
-      />
-      {addShow && <Add add={add} onAdd={onAdd} />}
+      <h3>Add device</h3>
+      <Add add={add} onAdd={onAdd} />
       <Feedback message={addMessage} />
 
-      <Header
-        title={`${devicesNumber} Monitored devices`}
-        onShow={() => setDevicesShow(!devicesShow)}
-        show={devicesShow}
-      />
-      {devicesShow && (
+      <h3>{monitoredDeviceTitle}</h3>
+      {devicesNumber > 0 && (
         <Devices
           conf={conf}
           devices={devices}

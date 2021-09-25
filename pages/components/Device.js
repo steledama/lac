@@ -18,22 +18,19 @@ const Device = ({ conf, device, onDelete, onStop }) => {
           <Card.Link className="pr-3" href={latestUrl}>
             Latest data
           </Card.Link>
-          <Button className="mx-3" variant="primary">
-            Test
-          </Button>
           <Button
             className="mx-3"
             variant="warning"
             onClick={() => onStop(device.host, device.hostid, deviceIp)}
           >
-            Stop
+            Stop monitoring device
           </Button>
           <Button
             className="mx-3"
             variant="danger"
             onClick={() => onDelete(device.hostid)}
           >
-            Delete
+            Delete device from zabbix
           </Button>
         </Card.Body>
       </Card>
