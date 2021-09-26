@@ -21,51 +21,60 @@ import {
   deleteHost,
 } from '../lib/zabbix';
 
-// get initial conf from conf.json file
+// get initial conf and pre compiled conf respectively from conf.json and autoConf.json file if they exists
 export const getServerSideProps = async () => {
-  // check if the conf file exist...
+  // initialize props
+  let confProp = {};
+  let confMessageProp = {};
+  let confAutoProp = {};
+
+  // if the autoConf.json file exist...
+  if (fs.existsSync('confAuto.json')) {
+    // get autofill data from file
+    const data = fs.readFileSync('confAuto.json', 'utf8');
+    // pass data as prop
+    confAutoProp = JSON.parse(data);
+  }
+
+  // if the conf.json file exist...
   if (fs.existsSync('conf.json')) {
-    try {
-      const response = await axios.get(`http://localhost:3000/api/conf`);
-      const confProp = response.data.conf;
-      const confMessageProp = response.data.message;
-      return {
-        props: {
-          confProp,
-          confMessageProp,
-        },
-      };
-    } catch (error) {
-      console.error(error);
-    }
+    // check zabbix connection and get groupId
+    const response = await axios.get(`http://localhost:3000/api/conf`);
+    // take from the response the complete conf with zabbix groupId
+    confProp = response.data.conf;
+    // take from the response the feedback messagge
+    confMessageProp = response.data.message;
+
+    // else conf.json does not exist...
   } else {
-    const confProp = {
+    // create an empty one
+    confProp = {
       server: '',
       token: '',
       group: '',
       id: uuidv4(),
       location: '',
     };
-    const confMessageProp = {
+    // write the empty conf.json file
+    fs.writeFileSync('conf.json', JSON.stringify(confProp), 'utf8');
+    // create a warning message
+    confMessageProp = {
       variant: 'warning',
       text: 'Please fill the form and save the configuration',
     };
-    try {
-      fs.writeFileSync('conf.json', JSON.stringify(confProp), 'utf8');
-      return {
-        props: {
-          confProp,
-          confMessageProp,
-        },
-      };
-    } catch (error) {
-      console.log(error);
-    }
   }
+  return {
+    props: {
+      confProp,
+      confAutoProp,
+      confMessageProp,
+    },
+  };
 };
 
-export default function Home({ confProp, confMessageProp }) {
+export default function Home({ confProp, confAutoProp, confMessageProp }) {
   const [conf, setConf] = useState(confProp);
+  const [confAuto] = useState(confAutoProp);
   const [confMessage, setConfMessage] = useState(confMessageProp);
   const [confShow, setConfSwhow] = useState(false);
 
@@ -73,7 +82,7 @@ export default function Home({ confProp, confMessageProp }) {
   const [addMessage, setAddMessage] = useState({});
 
   const [devices, setDevices] = useState([]);
-  const [devicesNumber, setDevicesNumber] = useState();
+  const [devicesNumber, setDevicesNumber] = useState(0);
 
   // get devices monitored by this agent
   const getDevices = async () => {
@@ -88,7 +97,11 @@ export default function Home({ confProp, confMessageProp }) {
 
   // get devices at start
   useEffect(() => {
-    getDevices();
+    if (confMessage.variant === 'success') {
+      getDevices();
+    } else {
+      setConfSwhow(true);
+    }
   }, []);
 
   // save conf
@@ -253,7 +266,9 @@ export default function Home({ confProp, confMessageProp }) {
         onShow={() => setConfSwhow(!confShow)}
         show={confShow}
       />
-      {confShow && <Conf conf={conf} onSaveConf={onSaveConf} />}
+      {confShow && (
+        <Conf conf={conf} confAuto={confAuto} onSaveConf={onSaveConf} />
+      )}
       <Feedback conf={conf} message={confMessage} />
 
       {confMessage.variant === 'success' && (

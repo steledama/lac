@@ -1,12 +1,28 @@
 import { Form, Button } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const Conf = ({ conf, onSaveConf }) => {
+const Conf = ({ conf, onSaveConf, confAuto }) => {
   const [server, setServer] = useState(conf.server);
   const [token, setToken] = useState(conf.token);
   const [group, setGroup] = useState(conf.group);
   const [location, setLocation] = useState(conf.location);
   const [id] = useState(conf.id);
+
+  // conf autofill
+  useEffect(() => {
+    // if autofill data is not empty (was passed as props)...
+    if (confAuto !== '') {
+      // find if there is a precompiled conf based on group
+      const configAuto = confAuto.find(
+        (preCompiled) => preCompiled.group === group
+      );
+      // if found a precompiled conf set fields
+      if (configAuto) {
+        setServer(configAuto.server);
+        setToken(configAuto.token);
+      }
+    }
+  }, [group]);
 
   const onSubmit = (e) => {
     e.preventDefault();
