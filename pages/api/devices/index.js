@@ -4,7 +4,8 @@ import { monitorDevices } from '../../../lib/monitor';
 export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
-      // to test monitor devices
+      // to monitor all devices (not used by the program, made for completeness)
+      console.log(req);
       try {
         const monitorResult = await monitorDevices();
         res.status(200).send(monitorResult);

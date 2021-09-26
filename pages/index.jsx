@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import Header from './components/Header';
 import Feedback from './components/Feedback';
@@ -75,7 +74,6 @@ export default function Home({ confProp, confMessageProp }) {
 
   const [devices, setDevices] = useState([]);
   const [devicesNumber, setDevicesNumber] = useState();
-  const [devicesMessage, setDevicesMessage] = useState({});
 
   // get devices monitored by this agent
   const getDevices = async () => {
@@ -86,21 +84,6 @@ export default function Home({ confProp, confMessageProp }) {
     );
     setDevices(monitoredDevices);
     setDevicesNumber(monitoredDevices.length);
-  };
-
-  // test scheduled script
-  const testMonitor = async () => {
-    setDevicesMessage({
-      variant: 'info',
-      text: 'INFO: Connecting to device and sending data to zabbix. Please wait...',
-    });
-    try {
-      const sendResult = await axios.get(`http://localhost:3000/api/devices`);
-      console.log(sendResult);
-      //setDevicesMessage({ variant: 'success', text: { message } });
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   // get devices at start
@@ -278,35 +261,14 @@ export default function Home({ confProp, confMessageProp }) {
           <h3>Add device</h3>
           <Add add={add} onAdd={onAdd} />
           <Feedback message={addMessage} />
-
-          <Container>
-            <Row>
-              <Col>
-                <h3>{monitoredDeviceTitle}</h3>
-              </Col>
-              <Col>
-                {devicesNumber > 0 && (
-                  <Button
-                    className="mt-1"
-                    variant="info"
-                    onClick={() => testMonitor()}
-                  >
-                    Send data to zabbix
-                  </Button>
-                )}
-              </Col>
-            </Row>
-          </Container>
+          <h3>{monitoredDeviceTitle}</h3>
           {devicesNumber > 0 && (
-            <>
-              <Feedback message={devicesMessage} />
-              <Devices
-                conf={conf}
-                devices={devices}
-                onDelete={deleteDevice}
-                onStop={stopDevice}
-              />
-            </>
+            <Devices
+              conf={conf}
+              devices={devices}
+              onDelete={deleteDevice}
+              onStop={stopDevice}
+            />
           )}
         </>
       )}
