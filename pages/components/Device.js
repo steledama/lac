@@ -30,13 +30,24 @@ const Device = ({ conf, device, onDelete, onStop }) => {
       const sendResult = await axios.get(
         `http://localhost:3000/api/devices/${device.host}/${deviceIp.value}`
       );
-      let processed = sendResult.data.filter((response) =>
-        response.includes('processed: 1; failed: 0; total: 1;')
-      );
-      setDeviceMessage({
-        variant: 'success',
-        text: `SUCCESS: Zabbix server processed ${processed.length} items`,
-      });
+      if (sendResult.data) {
+        let processed = sendResult.data.filter((response) =>
+          response.includes('processed: 1; failed: 0; total: 1;')
+        );
+        if (processed.length === 0) {
+          setDeviceMessage({
+            variant: 'danger',
+            text: `ERROR: Data sent but zabbix server processed ${processed.length} items. Check if the server ${conf.server} is running or has not port 10051 blocked by firewall's rules or traffic filters`,
+          });
+        } else {
+          setDeviceMessage({
+            variant: 'success',
+            text: `SUCCESS: Zabbix server processed ${processed.length} items`,
+          });
+        }
+      } else {
+        console.log(sendResult);
+      }
     } catch (error) {
       // console.error(error);
       setDeviceMessage({
