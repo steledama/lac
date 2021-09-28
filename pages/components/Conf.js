@@ -10,8 +10,8 @@ const Conf = ({ conf, onSaveConf, confAuto }) => {
 
   // conf autofill
   useEffect(() => {
-    // if autofill data is not empty (was passed as props)...
-    if (confAuto !== '') {
+    // if autofill data is not undefined (was passed as props)...
+    if (typeof variable !== 'undefined') {
       // find if there is a precompiled conf based on group
       const configAuto = confAuto.find(
         (preCompiled) => preCompiled.group === group

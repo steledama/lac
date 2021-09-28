@@ -60,7 +60,7 @@ export const getServerSideProps = async () => {
     // create a warning message
     confMessageProp = {
       variant: 'warning',
-      text: 'Please fill the form and save the configuration',
+      text: 'Please fill all the fields in the form and save the configuration',
     };
   }
   return {
