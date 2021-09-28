@@ -154,6 +154,30 @@ Allerts and notifications...
 
 Go to Administration - General - GUI and change the Max history display period to 1w (one week)
 
+## Windows Installer
+
+See [How to Create an InnoSetup Installer](http://blog.coolaj86.com/articles/how-to-create-an-innosetup-installer.html)
+for details on where this installer was based on.
+
+This is the Windows Installer for lac. It uses
+
+  * [Non-Sucking Service Manager (nssm)](https://nssm.cc/)
+  * [InnoSetup](http://jrsoftware.org)
+  * [NodeJS](http://nodejs.org)
+  * [lac](https://github.com/steledama/lac)
+
+## Beware CRLF
+
+Note that `.gitattributes` specifies `winstaller/winstart-browser.bat eof=crlf`.
+This is so that the file can be edited on Operating Systems,
+but will still function on Windows.
+
+## Resources
+
+  [How to set up Windows Firewall from Commandline](http://support.microsoft.com/kb/947709)
+  [Conditionals in InnoSetup](http://stackoverflow.com/questions/3493416/how-to-run-a-file-before-setup-with-inno-setup)
+  [How to manually delete a Windows System Service](http://geekswithblogs.net/shahedul/archive/2006/10/13/93984.aspx)
+
 ## Who maintains and contributes to LAC
 
 I am Stefano Pompa, i live and work in Florence (Italy). I have been a MFP technician for several years and now i am working with a dealer with several reseller and customers end users. My email address is stefano.pompa@gmail.com.
