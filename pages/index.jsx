@@ -95,7 +95,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
     setDevicesNumber(monitoredDevices.length);
   };
 
-  // get devices at start
+  // get devices at start in connection with zabbix was positively tested
   useEffect(() => {
     if (confMessage.variant === 'success') {
       getDevices();
@@ -124,7 +124,6 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
 
   // delete device
   const deleteDevice = async (hostId) => {
-    // console.log('delete', hostId);
     try {
       const zabbixResponse = await deleteHost(conf.server, conf.token, hostId);
       getDevices();
@@ -137,7 +136,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
   const stopDevice = async (serial, hostId, deviceIp) => {
     // check if the host is present
     const existingHost = await getHost(conf.server, conf.token, serial);
-    // if the host is present
+    // if the host is present...
     if (existingHost.result.length !== 0) {
       // store the old tags
       const oldTags = existingHost.result[0].tags;
@@ -145,6 +144,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       const tags = oldTags.filter((oldTag) => oldTag.value !== conf.id);
       // update the host with the new agentId and Ip tags array
       const response = await updateHost(conf.server, conf.token, hostId, tags);
+      // update devices
       getDevices();
     }
   };
@@ -157,22 +157,18 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       text: 'INFO: Adding device please wait...',
     });
     try {
-      // server snmp connection to get device name and serial (api)
+      // get device name and serial (server connection with api)
       const snmpResponse = await axios.post('/api/devices', { addFromForm });
-      // send error messages if device is not responding
+
+      // send error messages if ip not found
       if (snmpResponse.data.code) {
-        setAddMessage({
-          variant: 'danger',
-          text: `ERROR: The ip address was not found. Please check it`,
-        });
+        throw 'ipNotFound';
       }
+      // send error messages if device is not responding
       if (snmpResponse.data.name) {
-        setAddMessage({
-          variant: 'danger',
-          text: `ERROR: Device is not responding. Check if it is up with snmp protocol enabled`,
-        });
+        throw 'notResponding';
       }
-      // deviceName and serial if it is ok
+      // if it is ok store deviceName and serial
       const deviceToAdd = snmpResponse.data;
 
       // check if the host is present
@@ -181,7 +177,8 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
         conf.token,
         deviceToAdd.serial
       );
-      // if the host is present
+
+      // if the host is present...
       if (existingHost.result.length !== 0) {
         // store the old tags
         const oldTags = existingHost.result[0].tags;
@@ -189,7 +186,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
         const tags = oldTags.filter((oldTag) => oldTag.tag === 'agentId');
         // find if the device was allready monitored by this agent
         const monitoredByThisAgent = tags.find((tag) => tag.value === conf.id);
-        // if it was not monitored add the agent
+        // if it was NOT monitored add the agent
         if (monitoredByThisAgent === undefined) {
           tags.push({ tag: 'agentId', value: conf.id });
         }
@@ -210,15 +207,24 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
           variant: 'success',
           text: 'SUCCESS: Device was present on zabbix server and now it is updated and monitored by this agent',
         });
+        // update the devices
         getDevices();
+
+        // else the host is not present...
       } else {
-        // else (the host is not present)
         // search template id from the device name
         const zabbixTemplateResponse = await getTemplate(
           conf.server,
           conf.token,
           deviceToAdd.deviceName
         );
+
+        // if template does NOT exist send error messages
+        if (zabbixTemplateResponse === undefined) {
+          throw 'templateNotDefined';
+        }
+
+        // store the template id
         deviceToAdd.templateId = zabbixTemplateResponse;
         // create host
         const zabbixCreateResult = await createHost(
@@ -233,18 +239,40 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
           conf.id,
           addFromForm.ip
         );
-        // if there are not errors creating the new host
+        // if there are not errors creating the new host...
         if (zabbixCreateResult.result) {
           // send success message
           setAddMessage({
             variant: 'success',
             text: 'SUCCESS: Device added to server and monitored by the agent',
           });
+          // update devices
           getDevices();
         }
       }
     } catch (error) {
-      console.error(error);
+      switch (error) {
+        case 'ipNotFound':
+          setAddMessage({
+            variant: 'danger',
+            text: `ERROR: The ip address was not found. Please check it`,
+          });
+          break;
+        case 'notResponding':
+          setAddMessage({
+            variant: 'danger',
+            text: `ERROR: Device is not responding. Check if it is up with snmp protocol enabled`,
+          });
+          break;
+        case 'templateNotDefined':
+          setAddMessage({
+            variant: 'danger',
+            text: `ERROR: There is not a template in zabbix server with the device name ${deviceToAdd.deviceName}`,
+          });
+        default:
+          // undefined error
+          console.error(error);
+      }
     }
   };
 
