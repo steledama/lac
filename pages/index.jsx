@@ -218,14 +218,14 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
           conf.token,
           deviceToAdd.deviceName
         );
-        console.log(zabbixTemplateResponse);
+
         // if template does NOT exist send error messages
         if (zabbixTemplateResponse.result.length === 0) {
           throw 'templateNotDefined';
         }
 
         // store the template id
-        deviceToAdd.templateId = zabbixTemplateResponse;
+        deviceToAdd.templateId = zabbixTemplateResponse.result[0].templateid;
         // create host
         const zabbixCreateResult = await createHost(
           conf.server,
@@ -239,6 +239,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
           conf.id,
           addFromForm.ip
         );
+
         // if there are not errors creating the new host...
         if (zabbixCreateResult.result) {
           // send success message
