@@ -218,9 +218,9 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
           conf.token,
           deviceToAdd.deviceName
         );
-
+        console.log(zabbixTemplateResponse);
         // if template does NOT exist send error messages
-        if (zabbixTemplateResponse === undefined) {
+        if (zabbixTemplateResponse.result.length === 0) {
           throw 'templateNotDefined';
         }
 
@@ -267,7 +267,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
         case 'templateNotDefined':
           setAddMessage({
             variant: 'danger',
-            text: `ERROR: There is not a template in zabbix server with the device name ${deviceToAdd.deviceName}`,
+            text: `ERROR: There is not a template in zabbix server for this device`,
           });
         default:
           // undefined error

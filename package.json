@@ -23,6 +23,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "devwin": "C:/Users/stefa/Documents/GitHub/lac/node_modules/.bin/next.cmd dev",
     "build": "next build",
     "start": "next start"
   },
