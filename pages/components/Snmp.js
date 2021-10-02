@@ -20,11 +20,8 @@ const Snmp = ({ snmp, onSnmp }) => {
       alert('Please add the oid');
       return;
     }
+    console.log(ip, method, oid);
     onSnmp({ ip, method, oid });
-    setIp('');
-    setMethod('');
-    setIp('');
-    setOid('');
   };
 
   return (
@@ -37,11 +34,28 @@ const Snmp = ({ snmp, onSnmp }) => {
           onChange={(e) => setIp(e.target.value)}
         />
         <Form.Label>Snmp method</Form.Label>
-        <Form.Control
-          type="text"
-          value={method}
-          onChange={(e) => setMethod(e.target.value)}
-        />
+
+        <div key="inline-radio">
+          <Form.Check
+            inline
+            label="get"
+            value="get"
+            name="group1"
+            type="radio"
+            id="inline-radio-1"
+            onChange={(e) => setMethod(e.target.value)}
+          />
+          <Form.Check
+            inline
+            label="subtree"
+            value="subtree"
+            name="group1"
+            type="radio"
+            id="inline-radio-2"
+            onChange={(e) => setMethod(e.target.value)}
+          />
+        </div>
+
         <Form.Label>oid</Form.Label>
         <Form.Control
           type="text"

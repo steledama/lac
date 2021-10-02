@@ -3,10 +3,6 @@ import { get, subtree } from '../../../lib/snmp';
 
 export default async function handler(req, res) {
   switch (req.method) {
-    case 'GET':
-      // get method on snmp api
-      res.status(200).json('Get snmp');
-      break;
     case 'POST':
       // snmp request
       const snmpForm = req.body.snmpForm;
@@ -19,7 +15,6 @@ export default async function handler(req, res) {
       }
       if (snmpForm.method === 'subtree') {
         const snmpResponse = await subtree(snmpForm.ip, snmpForm.oid);
-        console.log(snmpResponse);
         res.status(200).send(snmpResponse);
       }
       break;
