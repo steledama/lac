@@ -10,7 +10,6 @@ export default async function handler(req, res) {
       if (snmpForm.method === 'get') {
         const oid = [snmpForm.oid];
         const snmpResponse = await get(snmpForm.ip, oid);
-
         res.status(200).send(snmpResponse);
       }
       if (snmpForm.method === 'subtree') {

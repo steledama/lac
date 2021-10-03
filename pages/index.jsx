@@ -79,7 +79,10 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
   const [confShow, setConfSwhow] = useState(false);
 
   const [add] = useState({ ip: '', deviceLocation: '' });
-  const [addMessage, setAddMessage] = useState({});
+  const [addMessage, setAddMessage] = useState({
+    variant: 'secondary',
+    text: 'Fill the ip field with a valid ip address and the device location and press the Add device button',
+  });
 
   const [devices, setDevices] = useState([]);
   const [devicesNumber, setDevicesNumber] = useState(0);
