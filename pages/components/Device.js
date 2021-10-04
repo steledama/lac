@@ -53,7 +53,7 @@ const Device = ({ conf, device, onDelete, onStop }) => {
       // console.error(error);
       setDeviceMessage({
         variant: 'danger',
-        text: `ERROR: ${error.message}. Is the device turned on, reachable and with the snmp protocol enabled?`,
+        text: `ERROR: ${error.message}. Check if zabbix server has port 10051 open, if the device is turned on, reachable and with snmp protocol enabled and if there is zabbix_sender.exe in lac folder`,
       });
     }
   };

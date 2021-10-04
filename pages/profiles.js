@@ -17,7 +17,7 @@ const Profiles = () => {
       text: 'INFO: Snmp request sent, please wait...',
     });
     const snmpResponse = await axios.post('/api/snmp', { snmpForm });
-    // console.log(snmpResponse);
+    console.log(snmpResponse);
     if (Array.isArray(snmpResponse.data)) {
       setResults(snmpResponse.data);
       setSnmpMessage({
