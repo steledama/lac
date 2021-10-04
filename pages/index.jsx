@@ -13,6 +13,7 @@ import axios from 'axios';
 
 // for zabbix comunication
 import {
+  getGroupId,
   getHost,
   updateHost,
   getTemplate,
@@ -20,6 +21,73 @@ import {
   getHostsByAgentId,
   deleteHost,
 } from '../lib/zabbix';
+
+async function checkZabbixConnection(confToCheck) {
+  try {
+    const zabbixRes = await getGroupId(
+      confToCheck.server,
+      confToCheck.token,
+      confToCheck.group
+    );
+    let checkedResult = {};
+    switch (zabbixRes.code) {
+      case 'Network Error':
+        checkedResult = {
+          variant: 'danger',
+          text: `ERROR: incorrect zabbix hostname or server in not responding. Check if the server is up and running or behind a firewall`,
+        };
+        break;
+      case 'ENOTFOUND':
+        checkedResult = {
+          variant: 'danger',
+          text: `ERROR: incorrect zabbix hostname`,
+        };
+        break;
+      case 'ETIMEDOUT':
+      case 'ECONNREFUSED':
+        checkedResult = {
+          variant: 'danger',
+          text: `ERROR: Zabbix server is not responding. Check if the server is up and running`,
+        };
+        break;
+      case 'EHOSTUNREACH':
+        checkedResult = {
+          variant: 'danger',
+          text: `ERROR: Zabbix server is not reachable. Check if it is behind a firewall or if there is a port forward rule`,
+        };
+        break;
+      default:
+        if (zabbixRes.errors) {
+          checkedResult = {
+            variant: 'danger',
+            text: `ERROR: Incorrect zabbix ip or hostname please check if it is correct`,
+          };
+        }
+        if (zabbixRes.error) {
+          checkedResult = {
+            variant: 'danger',
+            text: `ERROR: Incorrect token please check if it is correct and if it is configured in zabbix server`,
+          };
+        }
+        if (zabbixRes.result) {
+          if (zabbixRes.result.length === 0) {
+            checkedResult = {
+              variant: 'danger',
+              text: `ERROR: Group not found`,
+            };
+          }
+          if (zabbixRes.result[0]) {
+            confToCheck.groupId = zabbixRes.result[0].groupid;
+            return confToCheck;
+          }
+        }
+    }
+    return checkedResult;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
 
 // get initial conf and pre compiled conf respectively from conf.json and autoConf.json file if they exists
 export const getServerSideProps = async () => {
@@ -38,16 +106,25 @@ export const getServerSideProps = async () => {
 
   // if the conf.json file exist...
   if (fs.existsSync('conf.json')) {
+    // read conf.json to get conf from file
+    const data = fs.readFileSync('conf.json', 'utf8');
+    const confFromFile = JSON.parse(data);
     // check zabbix connection and get groupId
-    const response = await axios.get(`http://localhost:3000/api/conf`);
-    // take from the response the complete conf with zabbix groupId
-    confProp = response.data.conf;
-    // take from the response the feedback messagge
-    confMessageProp = response.data.message;
-
-    // else conf.json does not exist...
+    const response = await checkZabbixConnection(confFromFile);
+    // if response is an error pass to the page with prop
+    if (response.variant) {
+      confMessageProp = response;
+    } else {
+      // else the configuration is ok
+      confMessageProp = {
+        variant: 'success',
+        text: `SUCCESS: Connection with zabbix server established and group found`,
+      };
+    }
+    // pass the verified conf as a prop
+    confProp = response;
   } else {
-    // create an empty one
+    // else the file does not exist so create an empty one
     confProp = {
       server: '',
       token: '',
@@ -59,8 +136,8 @@ export const getServerSideProps = async () => {
     fs.writeFileSync('conf.json', JSON.stringify(confProp), 'utf8');
     // create a warning message
     confMessageProp = {
-      variant: 'warning',
-      text: 'Please fill all the fields in the form and save the configuration',
+      variant: 'secondary',
+      text: 'Fill all the fields in the form and save the configuration',
     };
   }
   return {
@@ -114,12 +191,25 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       text: 'INFO: Connecting to zabbix server. Please wait...',
     });
     try {
-      const completeConf = await axios.post('/api/conf', { confFromForm });
-      setConf(completeConf.data.conf);
-      setConfMessage(completeConf.data.message);
-      if (completeConf.data.message.variant === 'success') {
+      // check zabbix connection retriving groupId
+      const confToSave = await checkZabbixConnection(confFromForm);
+      // if the result is an error show it to the user
+      if (confToSave.variant) {
+        setConfMessage(confToSave);
+        // setConfSwhow(true);
+      } else {
+        // else the configuration i succesfully checked and complete with groupId so save it to file
+        const savedConf = await axios.post('/api/conf', { confToSave });
+        // set the conf state
+        setConf(savedConf);
+        // send messagge to user
+        setConfMessage({
+          variant: 'success',
+          text: 'SUCCESS: Configuration is correct and saved',
+        });
+        // close configuration area
         setConfSwhow(false);
-      } else setConfSwhow(true);
+      }
     } catch (error) {
       console.error(error);
     }
