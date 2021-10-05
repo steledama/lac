@@ -29,7 +29,8 @@ async function checkZabbixConnection(confToCheck) {
       confToCheck.token,
       confToCheck.group
     );
-    let checkedResult = {};
+    // Declaration of the return variable
+    let checkedResult;
     switch (zabbixRes.code) {
       case 'Network Error':
         checkedResult = {
@@ -111,18 +112,21 @@ export const getServerSideProps = async () => {
     const confFromFile = JSON.parse(data);
     // check zabbix connection and get groupId
     const response = await checkZabbixConnection(confFromFile);
-    // if response is an error pass to the page with prop
+    // if response is an error
     if (response.variant) {
+      // pass the error message
       confMessageProp = response;
+      // pass the wrong config
+      confProp = confFromFile;
     } else {
       // else the configuration is ok
       confMessageProp = {
         variant: 'success',
         text: `SUCCESS: Connection with zabbix server established and group found`,
       };
+      // pass the verified conf as a prop
+      confProp = response;
     }
-    // pass the verified conf as a prop
-    confProp = response;
   } else {
     // else the file does not exist so create an empty one
     confProp = {
@@ -179,9 +183,9 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
   useEffect(() => {
     if (confMessage.variant === 'success') {
       getDevices();
-    } else {
-      setConfSwhow(true);
+      return;
     }
+    setConfSwhow(true);
   }, []);
 
   // save conf
@@ -193,23 +197,39 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
     try {
       // check zabbix connection retriving groupId
       const confToSave = await checkZabbixConnection(confFromForm);
-      // if the result is an error show it to the user
-      if (confToSave.variant) {
-        setConfMessage(confToSave);
-        // setConfSwhow(true);
-      } else {
-        // else the configuration i succesfully checked and complete with groupId so save it to file
-        const savedConf = await axios.post('/api/conf', { confToSave });
-        // set the conf state
-        setConf(savedConf);
-        // send messagge to user
+      // if there is not response
+      if (!confToSave) {
         setConfMessage({
-          variant: 'success',
-          text: 'SUCCESS: Configuration is correct and saved',
+          variant: 'danger',
+          text: 'ERROR: zabbix hostname is not correct',
         });
-        // close configuration area
-        setConfSwhow(false);
+        // set the wrong config anyway
+        setConf(confFromForm);
+        // keep the the config section open
+        setConfSwhow(true);
+        return;
       }
+      // if the result is an error
+      if (confToSave.variant) {
+        // show the error to the user
+        setConfMessage(confToSave);
+        // set the wrong config anyway
+        setConf(confFromForm);
+        // keep the the config section open
+        setConfSwhow(true);
+        return;
+      }
+      // if the configuration is succesfully checked and complete with groupId save it to file
+      await axios.post('/api/conf', { confToSave });
+      // set the conf state
+      setConf(confToSave);
+      // send messagge to user
+      setConfMessage({
+        variant: 'success',
+        text: 'SUCCESS: Configuration is correct and saved',
+      });
+      // close configuration area
+      setConfSwhow(false);
     } catch (error) {
       console.error(error);
     }

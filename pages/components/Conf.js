@@ -1,5 +1,6 @@
 import { Form, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
+const isValidHostname = require('is-valid-hostname');
 
 const Conf = ({ conf, onSaveConf, confAuto }) => {
   const [server, setServer] = useState(conf.server);
@@ -8,38 +9,26 @@ const Conf = ({ conf, onSaveConf, confAuto }) => {
   const [location, setLocation] = useState(conf.location);
   const [id] = useState(conf.id);
 
-  // conf autofill
-  useEffect(() => {
-    // if autofill data is not undefined (was passed as props)...
-    if (!confAuto) {
-      // find if there is a precompiled conf based on group
-      const configAuto = confAuto.find(
-        (preCompiled) => preCompiled.group === group
-      );
-      // if found a precompiled conf set fields
-      if (configAuto) {
-        setServer(configAuto.server);
-        setToken(configAuto.token);
-      }
-    }
-  }, [group]);
-
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!server) {
-      alert('Please add a server');
-      return;
-    }
-    if (!token) {
-      alert('Please add zabbix token api');
-      return;
-    }
+    // minimal form validation
     if (!group) {
       alert('Please add a group name');
       return;
     }
-    if (!location) {
-      alert('Please add the agent location');
+    if (isValidHostname(server)) {
+      if (token.length !== 64) {
+        alert(
+          'The token is not correct. It must be a 64 character alfanumeric string'
+        );
+        return;
+      }
+      if (!location) {
+        alert('Please add the agent location');
+        return;
+      }
+    } else {
+      alert(`${server} is not a valid hostname`);
       return;
     }
     onSaveConf({ server, token, group, id, location });
@@ -51,7 +40,20 @@ const Conf = ({ conf, onSaveConf, confAuto }) => {
       <Form.Control
         type="text"
         value={group}
-        onChange={(e) => setGroup(e.target.value)}
+        onChange={(e) => {
+          setGroup(e.target.value);
+          // if autofill data is not passed do nothing else
+          if (Object.keys(confAuto).length === 0) return;
+          // else find if there is a precompiled conf based on group
+          const configAuto = confAuto.find(
+            (preCompiled) => preCompiled.group === e.target.value
+          );
+          // if found a precompiled conf set fields
+          if (configAuto) {
+            setServer(configAuto.server);
+            setToken(configAuto.token);
+          }
+        }}
       />
       <Form.Label>Zabbix server hostname</Form.Label>
       <Form.Control
