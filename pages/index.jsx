@@ -35,46 +35,46 @@ async function checkZabbixConnection(confToCheck) {
       case 'Network Error':
         checkedResult = {
           variant: 'danger',
-          text: `ERROR: incorrect zabbix hostname or server in not responding. Check if the server is up and running or behind a firewall`,
+          text: `ERROR: incorrect zabbix hostname ${confToCheck.server} or server in not responding. Check if the server is up and running or behind a firewall`,
         };
         break;
       case 'ENOTFOUND':
         checkedResult = {
           variant: 'danger',
-          text: `ERROR: incorrect zabbix hostname`,
+          text: `ERROR: incorrect zabbix hostname ${confToCheck.server}`,
         };
         break;
       case 'ETIMEDOUT':
       case 'ECONNREFUSED':
         checkedResult = {
           variant: 'danger',
-          text: `ERROR: Zabbix server is not responding. Check if the server is up and running`,
+          text: `ERROR: Zabbix server ${confToCheck.server} is not responding. Check if the server is up and running`,
         };
         break;
       case 'EHOSTUNREACH':
         checkedResult = {
           variant: 'danger',
-          text: `ERROR: Zabbix server is not reachable. Check if it is behind a firewall or if there is a port forward rule`,
+          text: `ERROR: Zabbix server ${confToCheck.server} is not reachable. Check if it is behind a firewall or if there is a port forward rule`,
         };
         break;
       default:
         if (zabbixRes.errors) {
           checkedResult = {
             variant: 'danger',
-            text: `ERROR: Incorrect zabbix ip or hostname please check if it is correct`,
+            text: `ERROR: Incorrect zabbix ip or hostname please check if ${confToCheck.server} is correct`,
           };
         }
         if (zabbixRes.error) {
           checkedResult = {
             variant: 'danger',
-            text: `ERROR: Incorrect token please check if it is correct and if it is configured in zabbix server`,
+            text: `ERROR: Incorrect token please check if ${confToCheck.token} is correct and if is configured in zabbix server`,
           };
         }
         if (zabbixRes.result) {
           if (zabbixRes.result.length === 0) {
             checkedResult = {
               variant: 'danger',
-              text: `ERROR: Group not found`,
+              text: `ERROR: Group ${confToCheck.group} not found`,
             };
           }
           if (zabbixRes.result[0]) {
@@ -269,20 +269,22 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       variant: 'info',
       text: 'INFO: Adding device please wait...',
     });
+    let deviceToAdd = {};
     try {
       // get device name and serial (server connection with api)
       const snmpResponse = await axios.post('/api/devices', { addFromForm });
 
-      // send error messages if ip not found
-      if (snmpResponse.data.code) {
-        throw 'ipNotFound';
+      // send error messages if ip not found or device is not reponding
+      if (
+        snmpResponse.data.code ||
+        snmpResponse.data.name ||
+        Object.keys(snmpResponse.data).length === 0
+      ) {
+        throw 'noResponse';
       }
-      // send error messages if device is not responding
-      if (snmpResponse.data.name) {
-        throw 'notResponding';
-      }
+
       // if it is ok store deviceName and serial
-      const deviceToAdd = snmpResponse.data;
+      deviceToAdd = snmpResponse.data;
 
       // check if the host is present
       const existingHost = await getHost(
@@ -318,7 +320,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
         // send feeback
         setAddMessage({
           variant: 'success',
-          text: 'SUCCESS: Device was present on zabbix server and now it is updated and monitored by this agent',
+          text: `SUCCESS: Device with serial ${addFromForm.serial} was present on zabbix server and now it is updated and monitored by this agent`,
         });
         // update the devices
         getDevices();
@@ -334,7 +336,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
 
         // if template does NOT exist send error messages
         if (zabbixTemplateResponse.result.length === 0) {
-          throw 'templateNotDefined';
+          throw 'noTemplate';
         }
 
         // store the template id
@@ -366,22 +368,16 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       }
     } catch (error) {
       switch (error) {
-        case 'ipNotFound':
+        case 'noResponse':
           setAddMessage({
             variant: 'danger',
-            text: `ERROR: The ip address was not found. Please check it`,
+            text: `ERROR: The ip address ${addFromForm.ip} is not responding. Check if it is correct, if the device is up and with snmp protocol enabled`,
           });
           break;
-        case 'notResponding':
+        case 'noTemplate':
           setAddMessage({
             variant: 'danger',
-            text: `ERROR: Device is not responding. Check if it is up with snmp protocol enabled`,
-          });
-          break;
-        case 'templateNotDefined':
-          setAddMessage({
-            variant: 'danger',
-            text: `ERROR: There is not a template in zabbix server for this device`,
+            text: `ERROR: There is not a template with name ${deviceToAdd.deviceName} in zabbix server`,
           });
         default:
           // undefined error

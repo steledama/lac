@@ -14,7 +14,7 @@ const Profiles = () => {
   const onSnmp = async (snmpForm) => {
     setSnmpMessage({
       variant: 'info',
-      text: 'INFO: Snmp request sent, please wait...',
+      text: `INFO: Snmp request sent to ${snmpForm.ip}, please wait...`,
     });
     const snmpResponse = await axios.post('/api/snmp', { snmpForm });
     console.log(snmpResponse);
@@ -22,13 +22,19 @@ const Profiles = () => {
       setResults(snmpResponse.data);
       setSnmpMessage({
         variant: 'success',
-        text: 'SUCCESS: The device responded to the snmp request',
+        text: `SUCCESS: Device with ip ${snmpForm.ip} responded to the snmp request`,
       });
     }
     if (snmpResponse.data.message) {
       setSnmpMessage({
         variant: 'danger',
-        text: `ERROR: ${snmpResponse.data.message}. No response from device`,
+        text: `ERROR: No response from devicewith ip ${snmpForm.ip} on oid ${snmpForm.oid}: ${snmpResponse.data.message}`,
+      });
+    }
+    if (snmpResponse.data.code) {
+      setSnmpMessage({
+        variant: 'danger',
+        text: `ERROR: No response from device with ip ${snmpForm.ip}: ${snmpResponse.data.code}`,
       });
     }
   };

@@ -13,6 +13,6 @@ export default async function handler(req, res) {
       }
       break;
     default:
-      res.status(200).send('NO GET OR POST METHOD');
+      res.status(200).send('SORRY. ONLY POST METHOD AVAILABLE');
   }
 }
