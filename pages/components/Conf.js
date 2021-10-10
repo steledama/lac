@@ -1,4 +1,4 @@
-import { Form, Button } from 'react-bootstrap';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 const isValidHostname = require('is-valid-hostname');
 
@@ -36,45 +36,69 @@ const Conf = ({ conf, onSaveConf, confAuto }) => {
 
   return (
     <Form onSubmit={onSubmit}>
-      <Form.Label>Zabbix group</Form.Label>
-      <Form.Control
-        type="text"
-        value={group}
-        onChange={(e) => {
-          setGroup(e.target.value);
-          // if autofill data is not passed do nothing else
-          if (Object.keys(confAuto).length === 0) return;
-          // else find if there is a precompiled conf based on group
-          const configAuto = confAuto.find(
-            (preCompiled) => preCompiled.group === e.target.value
-          );
-          // if found a precompiled conf set fields
-          if (configAuto) {
-            setServer(configAuto.server);
-            setToken(configAuto.token);
-          }
-        }}
-      />
-      <Form.Label>Zabbix server hostname</Form.Label>
-      <Form.Control
-        type="text"
-        value={server}
-        onChange={(e) => setServer(e.target.value)}
-      />
-      <Form.Label>Zabbix token</Form.Label>
-      <Form.Control
-        type="password"
-        value={token}
-        onChange={(e) => setToken(e.target.value)}
-      />
-      <Form.Label>Agent location</Form.Label>
-      <Form.Control
-        type="text"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-      />
-      <Form.Label>Agent id</Form.Label>
-      <Form.Control type="text" value={id} readOnly />
+      <Row className="mb-3">
+        <Form.Group as={Col} controlId="formGridGroup">
+          <Form.Label>Zabbix group</Form.Label>
+          <Form.Control
+            type="text"
+            value={group}
+            placeholder="GammaOffice"
+            onChange={(e) => {
+              setGroup(e.target.value);
+              // if autofill data is not passed do nothing else
+              if (Object.keys(confAuto).length === 0) return;
+              // else find if there is a precompiled conf based on group
+              const configAuto = confAuto.find(
+                (preCompiled) => preCompiled.group === e.target.value
+              );
+              // if found a precompiled conf set fields
+              if (configAuto) {
+                setServer(configAuto.server);
+                setToken(configAuto.token);
+              }
+            }}
+          />
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="formGridHostname">
+          <Form.Label>Zabbix hostname</Form.Label>
+          <Form.Control
+            type="text"
+            value={server}
+            placeholder="zabbix.server.com"
+            onChange={(e) => setServer(e.target.value)}
+          />
+        </Form.Group>
+      </Row>
+
+      <Row className="mb-3">
+        <Form.Group as={Col} controlId="formGridToken">
+          <Form.Label>Zabbix token</Form.Label>
+          <Form.Control
+            type="password"
+            value={token}
+            onChange={(e) => setToken(e.target.value)}
+          />
+        </Form.Group>
+      </Row>
+
+      <Row className="mb-3">
+        <Form.Group as={Col} controlId="formGridLocation">
+          <Form.Label>Agent location</Form.Label>
+          <Form.Control
+            type="text"
+            value={location}
+            placeholder="MEF Florence"
+            onChange={(e) => setLocation(e.target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="formGridId">
+          <Form.Label>Agent id</Form.Label>
+          <Form.Control type="text" value={id} readOnly />
+        </Form.Group>
+      </Row>
+
       <Button variant="primary" type="submit" className="mt-3">
         Save configuration
       </Button>

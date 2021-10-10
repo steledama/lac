@@ -1,4 +1,4 @@
-import { Form, Button } from 'react-bootstrap';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState } from 'react';
 
 const validateIPaddress = (ipaddress) => {
@@ -34,20 +34,28 @@ const Add = ({ add, onAdd }) => {
 
   return (
     <Form onSubmit={onSubmit}>
-      <Form.Group className="mb-3" controlId="formAddDevice">
-        <Form.Label>Device ip address</Form.Label>
-        <Form.Control
-          type="text"
-          value={ip}
-          onChange={(e) => setIp(e.target.value)}
-        />
-        <Form.Label>Device location</Form.Label>
-        <Form.Control
-          type="text"
-          value={deviceLocation}
-          onChange={(e) => setDeviceLocation(e.target.value)}
-        />
-      </Form.Group>
+      <Row className="mb-3">
+        <Form.Group as={Col} controlId="formGridIp">
+          <Form.Label>Ip address</Form.Label>
+          <Form.Control
+            type="text"
+            value={ip}
+            placeholder="192.168.1.3"
+            onChange={(e) => setIp(e.target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="formGridLocation">
+          <Form.Label>Device location</Form.Label>
+          <Form.Control
+            type="text"
+            value={deviceLocation}
+            placeholder="first floor corridor"
+            onChange={(e) => setDeviceLocation(e.target.value)}
+          />
+        </Form.Group>
+      </Row>
+
       <Button variant="primary" type="submit">
         Add device
       </Button>

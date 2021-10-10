@@ -1,4 +1,4 @@
-import { Form, Button } from 'react-bootstrap';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState } from 'react';
 
 const validateIPaddress = (ipaddress) => {
@@ -53,72 +53,84 @@ const Snmp = ({ snmp, onSnmp }) => {
 
   return (
     <Form onSubmit={onSubmit}>
-      <Form.Group className="mb-3" controlId="formSnmpRequest">
-        <Form.Label>Device ip address</Form.Label>
-        <Form.Control
-          type="text"
-          value={ip}
-          onChange={(e) => setIp(e.target.value)}
-        />
-        <Form.Label>Snmp method</Form.Label>
-        <Form.Select
-          aria-label="snmpMethod"
-          onChange={(e) => {
-            setMethod(e.target.value);
-            if (e.target.value === 'get') {
-              setOid('1.3.6.1.2.1.1.1.0');
-              setOidName('sysName');
-            }
-            if (e.target.value === 'subtree') {
-              setOid('1.3.6.1');
-              setOidName('all');
-            }
-          }}
-        >
-          <option value="get">get</option>
-          <option value="subtree">subtree</option>
-        </Form.Select>
+      <Row className="mb-3">
+        <Form.Group as={Col} controlId="formGridIp">
+          <Form.Label>Ip address</Form.Label>
+          <Form.Control
+            type="text"
+            value={ip}
+            onChange={(e) => setIp(e.target.value)}
+          />
+        </Form.Group>
 
-        <Form.Label>oid name</Form.Label>
-        <Form.Select
-          aria-label="oidName"
-          value={oidName}
-          onChange={(e) => {
-            setOidName(e.target.value);
-            let relatedOid = '';
-            if (method === 'get') {
-              relatedOid = getList.find((el) => el.name === e.target.value);
-            }
-            if (method === 'subtree') {
-              relatedOid = subtreeList.find((el) => el.name === e.target.value);
-            }
-            setOid(relatedOid.oid);
-          }}
-        >
-          {method === 'get'
-            ? getList.map((e, key) => {
-                return (
-                  <option key={key} value={e.name}>
-                    {e.name}
-                  </option>
-                );
-              })
-            : subtreeList.map((e, key) => {
-                return (
-                  <option key={key} value={e.name}>
-                    {e.name}
-                  </option>
-                );
-              })}
-        </Form.Select>
+        <Form.Group as={Col} controlId="formGridMethod">
+          <Form.Label>Snmp method</Form.Label>
+          <Form.Select
+            aria-label="snmpMethod"
+            onChange={(e) => {
+              setMethod(e.target.value);
+              if (e.target.value === 'get') {
+                setOid('1.3.6.1.2.1.1.1.0');
+                setOidName('sysName');
+              }
+              if (e.target.value === 'subtree') {
+                setOid('1.3.6.1');
+                setOidName('all');
+              }
+            }}
+          >
+            <option value="get">get</option>
+            <option value="subtree">subtree</option>
+          </Form.Select>
+        </Form.Group>
 
-        <Form.Label>oid</Form.Label>
-        <Form.Control
-          type="text"
-          value={oid}
-          onChange={(e) => setOid(e.target.value)}
-        />
-      </Form.Group>
+        <Form.Group as={Col} controlId="formGridOidName">
+          <Form.Label>Oid name</Form.Label>
+          <Form.Select
+            aria-label="oidName"
+            value={oidName}
+            onChange={(e) => {
+              setOidName(e.target.value);
+              let relatedOid = '';
+              if (method === 'get') {
+                relatedOid = getList.find((el) => el.name === e.target.value);
+              }
+              if (method === 'subtree') {
+                relatedOid = subtreeList.find(
+                  (el) => el.name === e.target.value
+                );
+              }
+              setOid(relatedOid.oid);
+            }}
+          >
+            {method === 'get'
+              ? getList.map((e, key) => {
+                  return (
+                    <option key={key} value={e.name}>
+                      {e.name}
+                    </option>
+                  );
+                })
+              : subtreeList.map((e, key) => {
+                  return (
+                    <option key={key} value={e.name}>
+                      {e.name}
+                    </option>
+                  );
+                })}
+          </Form.Select>
+        </Form.Group>
+      </Row>
+      <Row className="mb-3">
+        <Form.Group as={Col} controlId="formGridOid">
+          <Form.Label>Oid</Form.Label>
+          <Form.Control
+            type="text"
+            value={oid}
+            onChange={(e) => setOid(e.target.value)}
+          />
+        </Form.Group>
+      </Row>
 
       <Button variant="primary" type="submit">
         Send Request
