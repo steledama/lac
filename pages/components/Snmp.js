@@ -12,14 +12,14 @@ const validateIPaddress = (ipaddress) => {
   return false;
 };
 
-const getNames = [
+const getList = [
   { name: 'sysName', oid: '1.3.6.1.2.1.1.1.0' },
   { name: 'general', oid: '1.3.6.1.2.1.1.5.0' },
   { name: 'serial', oid: '1.3.6.1.2.1.43.5.1.1.17.1' },
   { name: 'custom', oid: '' },
 ];
 
-const subtreeNames = [
+const subtreeList = [
   { name: 'all', oid: '1.3.6.1' },
   { name: 'supplies', oid: '1.3.6.1.2.1.43.11.1.1' },
   { name: 'lexmarkUsage', oid: '1.3.6.1.4.1.641.6.4.2.1.1' },
@@ -85,36 +85,31 @@ const Snmp = ({ snmp, onSnmp }) => {
           value={oidName}
           onChange={(e) => {
             setOidName(e.target.value);
+            let relatedOid = '';
             if (method === 'get') {
-              const relatedOid = getNames.find(
-                (el) => el.name === e.target.value
-              );
-              setOid(relatedOid.oid);
+              relatedOid = getList.find((el) => el.name === e.target.value);
             }
             if (method === 'subtree') {
-              const relatedOid = subtreeNames.find(
-                (el) => el.name === e.target.value
-              );
-              setOid(relatedOid.oid);
+              relatedOid = subtreeList.find((el) => el.name === e.target.value);
             }
+            setOid(relatedOid.oid);
           }}
         >
-          {method === 'get' ? (
-            <>
-              <option value="sysName">sysName</option>
-              <option value="general">general</option>
-              <option value="serial">serial</option>
-              <option value="custom">custom</option>
-            </>
-          ) : (
-            <>
-              <option value="all">all</option>
-              <option value="supplies">supplies</option>
-              <option value="lexmarkUsage">lexmarkUsage</option>
-              <option value="xeroxUsage">xeroxUsage</option>
-              <option value="custom">custom</option>
-            </>
-          )}
+          {method === 'get'
+            ? getList.map((e, key) => {
+                return (
+                  <option key={key} value={e.name}>
+                    {e.name}
+                  </option>
+                );
+              })
+            : subtreeList.map((e, key) => {
+                return (
+                  <option key={key} value={e.name}>
+                    {e.name}
+                  </option>
+                );
+              })}
         </Form.Select>
 
         <Form.Label>oid</Form.Label>
