@@ -2,7 +2,7 @@ import { Table } from 'react-bootstrap';
 
 const Results = ({ results }) => {
   return (
-    <Table size="sm">
+    <Table striped bordered hover size="sm">
       <thead>
         <tr>
           <th>OID</th>

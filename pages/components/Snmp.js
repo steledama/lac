@@ -14,14 +14,14 @@ const validateIPaddress = (ipaddress) => {
 
 const getList = [
   { name: 'sysName', oid: '1.3.6.1.2.1.1.1.0' },
-  { name: 'general', oid: '1.3.6.1.2.1.1.5.0' },
+  { name: 'sysDescr', oid: '1.3.6.1.2.1.1.5.0' },
   { name: 'serial', oid: '1.3.6.1.2.1.43.5.1.1.17.1' },
   { name: 'custom', oid: '' },
 ];
 
 const subtreeList = [
-  { name: 'all', oid: '1.3.6.1' },
-  { name: 'supplies', oid: '1.3.6.1.2.1.43.11.1.1' },
+  { name: 'SNMP MIB-2', oid: '1.3.6.1.2' },
+  { name: 'prtMarkerSuppliesTable', oid: '1.3.6.1.2.1.43.11.1' },
   { name: 'lexmarkUsage', oid: '1.3.6.1.4.1.641.6.4.2.1.1' },
   { name: 'xeroxUsage', oid: '1.3.6.1.4.1.253.8.53.13.2.1.6.1.20' },
   { name: 'custom', oid: '' },
@@ -74,8 +74,8 @@ const Snmp = ({ snmp, onSnmp }) => {
                 setOidName('sysName');
               }
               if (e.target.value === 'subtree') {
-                setOid('1.3.6.1');
-                setOidName('all');
+                setOid('1.3.6.1.2.1');
+                setOidName('SNMP MIB-2');
               }
             }}
           >
