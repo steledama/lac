@@ -8,9 +8,9 @@
 #define NSSM "nssm.exe"
 #define NSSM32 "nssm-x86.exe"
 #define NSSM64 "nssm.exe"
-#define NODE32 "node-v16.10.0-x86.msi"
-#define NODE64 "node-v16.10.0-x64.msi"
-#define NODE "node-v16.10.0-x64.msi"
+#define NODE32 "node-v16.13.0-x86.msi"
+#define NODE64 "node-v16.13.0-x64.msi"
+#define NODE "node-v16.13.0-x64.msi"
 #define USERPROFILE "C:\Users\stefa"
 
 [Setup]
@@ -29,7 +29,7 @@ DefaultDirName=C:\{#MyAppName}
 DisableDirPage=yes
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
-OutputDir={#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall
+OutputDir={#USERPROFILE}\Documents\GitHub\lac-bin
 OutputBaseFilename={#MyAppName}_install
 Compression=lzma
 SolidCompression=yes
@@ -40,14 +40,13 @@ Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 
 [Files]
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\{#MyAppIcon}"; DestDir: "{app}\win"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\{#NODE32}"; DestDir: "{app}\win"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\{#NODE64}"; DestDir: "{app}\win"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\{#NSSM64}"; DestDir: "{app}\win"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\{#NSSM32}"; DestDir: "{app}\win"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\lac-bin\{#NODE32}"; DestDir: "{app}\win"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\lac-bin\{#NODE64}"; DestDir: "{app}\win"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\lac-bin\{#NSSM64}"; DestDir: "{app}\win"; Flags: ignoreversion
+Source: "{#USERPROFILE}\Documents\GitHub\lac-bin\{#NSSM32}"; DestDir: "{app}\win"; Flags: ignoreversion
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\createTask.ps1"; DestDir: "{app}\win"; Flags: ignoreversion
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\deleteTask.ps1"; DestDir: "{app}\win"; Flags: ignoreversion
 Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\lac.bat"; DestDir: "{app}\win"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\installReadMe.md"; DestDir: "{app}\win"; Flags: ignoreversion
 ;Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\*"; DestDir: "{app}"; Flags: ignoreversion
 ;Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\node_modules\*"; DestDir: "{app}\node_modules"; Flags: ignoreversion recursesubdirs createallsubdirs
 ;Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\public\*"; DestDir: "{app}\public"; Flags: ignoreversion recursesubdirs createallsubdirs
