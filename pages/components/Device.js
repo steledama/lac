@@ -30,7 +30,7 @@ const Device = ({ conf, device, onDelete, onStop }) => {
       const sendResult = await axios.get(
         `http://localhost:3000/api/devices/${device.host}/${deviceIp.value}`
       );
-
+      console.log(sendResult);
       if (sendResult.data) {
         let processed = sendResult.data.filter((response) =>
           response.includes('processed: 1; failed: 0; total: 1;')
@@ -50,11 +50,17 @@ const Device = ({ conf, device, onDelete, onStop }) => {
         console.log(sendResult);
       }
     } catch (error) {
-      // console.error(error);
-      setDeviceMessage({
-        variant: 'danger',
-        text: `ERROR: ${error.message}. Check if zabbix server has port 10051 open, if the device is turned on, reachable and with snmp protocol enabled and if there is zabbix_sender.exe in lac folder`,
-      });
+      if (error.response) {
+        setDeviceMessage({
+          variant: 'danger',
+          text: `ERROR: ${error.response.data}`,
+        });
+      } else {
+        setDeviceMessage({
+          variant: 'danger',
+          text: `ERROR: Check if zabbix server has port 10051 open, if the device is turned on, reachable and with snmp protocol enabled and if there is zabbix_sender.exe in lac folder`,
+        });
+      }
     }
   };
 
