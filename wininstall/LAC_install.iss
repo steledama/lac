@@ -3,7 +3,7 @@
 #define MyAppVersion "0.0.1"
 #define MyAppPublisher "Stefano Pompa"
 #define MyAppURL "https://github.com/steledama/lac"
-#define MyAppExeName "lac.bat"
+#define MyAppExeName "lac.cmd"
 #define MyAppIcon "lac.ico"
 #define NSSM "nssm.exe"
 #define NSSM32 "nssm-x86.exe"
@@ -29,7 +29,7 @@ DefaultDirName=C:\{#MyAppName}
 DisableDirPage=yes
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
-OutputDir={#USERPROFILE}\Documents\GitHub\lac-bin
+OutputDir={#USERPROFILE}\Desktop
 OutputBaseFilename={#MyAppName}_install
 Compression=lzma
 SolidCompression=yes
@@ -39,36 +39,26 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 
 [Files]
-Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\{#MyAppIcon}"; DestDir: "{app}\win"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\lac-bin\{#NODE32}"; DestDir: "{app}\win"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\lac-bin\{#NODE64}"; DestDir: "{app}\win"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\lac-bin\{#NSSM64}"; DestDir: "{app}\win"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\lac-bin\{#NSSM32}"; DestDir: "{app}\win"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\createTask.ps1"; DestDir: "{app}\win"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\deleteTask.ps1"; DestDir: "{app}\win"; Flags: ignoreversion
-Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\wininstall\lac.bat"; DestDir: "{app}\win"; Flags: ignoreversion
-;Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\*"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\node_modules\*"; DestDir: "{app}\node_modules"; Flags: ignoreversion recursesubdirs createallsubdirs
-;Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\public\*"; DestDir: "{app}\public"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#USERPROFILE}\Documents\GitHub\{#MyAppName}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\{#MyAppIcon}"
+Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\wininstall{#MyAppExeName}"; IconFilename: "{app}\wininstall\{#MyAppIcon}"
 
 [Run]
 ; Install Node
-Filename: "{sys}\msiexec.exe"; Parameters: "/passive /i ""{app}\win\{#NODE}""";
+Filename: "{sys}\msiexec.exe"; Parameters: "/passive /i ""{app}\wininstall\{#NODE}""";
 
 ; Add Firewall Rules
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Node In"" program=""{pf64}\nodejs\node.exe"" dir=in action=allow enable=yes"; Flags: runhidden;
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Node Out"" program=""{pf64}\nodejs\node.exe"" dir=out action=allow enable=yes"; Flags: runhidden;
 
 ; Add System Service
-Filename: "{app}\win\{#NSSM}"; Parameters: "install {#MyAppName} ""{pf64}\nodejs\node.exe"" ""{app}\server.js"""; Flags: runhidden;
+Filename: "{app}\wininstall\{#NSSM}"; Parameters: "install {#MyAppName} ""{pf64}\nodejs\npm.exe"" ""run start"""; Flags: runhidden;
 Filename: "{sys}\net.exe"; Parameters: "start {#MyAppName}"; Flags: runhidden;
 
 ; Powershell scripts to create scheduled tasks
 Filename: "powershell.exe"; \
-  Parameters: "-ExecutionPolicy Bypass -File ""{app}\win\createTask.ps1"""; \
+  Parameters: "-ExecutionPolicy Bypass -File ""{app}\wininstall\createTask.ps1"""; \
   WorkingDir: {app}\bin; Flags: runhidden
 
 ;Postinstall launch
@@ -77,7 +67,7 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 [UninstallRun]
 ; Removes System Service
 Filename: "{sys}\net.exe"; Parameters: "stop {#MyAppName}"; Flags: runhidden;
-Filename: "{app}\win\{#NSSM}"; Parameters: "remove {#MyAppName} confirm"; Flags: runhidden;
+Filename: "{app}\wininstall\{#NSSM}"; Parameters: "remove {#MyAppName} confirm"; Flags: runhidden;
 
 ; Remove Firewall Rules
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""Node In"" program=""{pf64}\nodejs\node.exe"""; Flags: runhidden;
@@ -88,7 +78,7 @@ Filename: "{sys}\msiexec.exe"; Parameters: "/passive /x ""{app}\{#NODE}""";
 
 ; Powershell script to unregister scheduled task
 Filename: "powershell.exe"; \
-  Parameters: "-ExecutionPolicy Bypass -File ""{app}\win\deleteTask.ps1"""; \
+  Parameters: "-ExecutionPolicy Bypass -File ""{app}\wininstall\deleteTask.ps1"""; \
   WorkingDir: {app}; Flags: runhidden
 
 ; Remove all leftovers

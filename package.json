@@ -25,6 +25,7 @@
     "dev": "next dev",
     "devwin": "C:/Users/stefa/Documents/GitHub/lac/node_modules/.bin/next.cmd dev",
     "build": "next build",
+    "buildwin": "C:/Users/stefa/Documents/GitHub/lac/node_modules/.bin/next.cmd build",
     "start": "next start"
   },
   "dependencies": {
