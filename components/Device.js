@@ -30,7 +30,12 @@ const Device = ({ conf, device, onDelete, onStop }) => {
       const sendResult = await axios.get(
         `http://localhost:3000/api/devices/${device.host}/${deviceIp.value}`
       );
-      console.log(sendResult);
+      if (sendResult == 'noResponse') {
+        setDeviceMessage({
+          variant: 'danger',
+          text: `ERROR: Device with ip ${deviceIp.value} is not responding. Check the ip address and if the device is up with snmp protocol enabled`,
+        });
+      }
       if (sendResult.data) {
         let processed = sendResult.data.filter((response) =>
           response.includes('processed: 1; failed: 0; total: 1;')

@@ -1,12 +1,12 @@
 import { getDeviceInfo } from '../../../lib/snmp';
-import { monitorDevices } from '../../../lib/monitor';
 
 export default async function handler(req, res) {
   switch (req.method) {
     case 'POST':
-      // to get devicename and serial (used to add device)
+      // to get devicename and serial (used to add device from index.jsx and from device.js)
       try {
         const data = await getDeviceInfo(req.body.addFromForm.ip);
+        if (data === 'noResponse') throw data;
         res.status(200).send(data);
       } catch (err) {
         res.status(500).send(err);

@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import Header from './components/Header';
-import Feedback from './components/Feedback';
-import Conf from './components/Conf';
-import Add from './components/Add';
-import Devices from './components/Devices';
+import Header from '../components/Header';
+import Feedback from '../components/Feedback';
+import Conf from '../components/Conf';
+import Add from '../components/Add';
+import Devices from '../components/Devices';
 
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';

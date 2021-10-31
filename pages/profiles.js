@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Snmp from './components/Snmp';
-import Results from './components/Results';
-import Feedback from './components/Feedback';
+import Snmp from '../components/Snmp';
+import Results from '../components/Results';
+import Feedback from '../components/Feedback';
 import axios from 'axios';
 
 const Profiles = () => {
