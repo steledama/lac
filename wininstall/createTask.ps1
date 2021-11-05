@@ -11,7 +11,7 @@
 # The name of your scheduled task.
     $taskName = "LAC"
 # Describe the scheduled task.
-    $description = "LAC MFP supplies and usage monitoring system"
+    $description = "Snmp agent to monitor remote zabbix hosts"
 # Register the scheduled task
     Register-ScheduledTask `
         -TaskName $taskName `
