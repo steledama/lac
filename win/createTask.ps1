@@ -1,6 +1,6 @@
 # Create a new task action
     $taskAction = New-ScheduledTaskAction `
-        -Execute '"C:\Program Files\nodejs\node.exe"' `
+        -Execute 'node' `
         -Argument 'C:\LAC\scheduled.js'
     $taskAction
 # Create a new trigger (Daily at time of installation)
