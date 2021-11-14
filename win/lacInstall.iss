@@ -46,8 +46,8 @@ Name: "{group}\{#MyAppName}"; Filename: "http://localhost:3000"; IconFilename: "
 ; Install Node based on x86 or x64 architecture
 Filename: "{sys}\msiexec.exe"; Parameters: "/passive /i ""{app}\win\{#NODE}"""; Flags: waituntilterminated
 
-; script to download node modules, build nextjs app and install windows service...
-Filename: "{app}\win\{#SETUP}"; Description: "Downloading node modules, building nextjs app and installing windows service..."; Flags: waituntilterminated
+; Script to download node modules, build nextjs app and install windows service...
+Filename: "{app}\win\{#SETUP}"; Description: "Downloading node modules, building nextjs app and installing windows service..."; Flags: waituntilterminated runhidden
 
 ; Create scheduled task for monitoring every 4 hour
 Filename: "powershell.exe"; \
