@@ -17,19 +17,21 @@ const Device = ({ conf, device, onDelete, onStop }) => {
 
   // monitor device at start
   useEffect(() => {
-    monitorDevice();
+    deviceMonitor();
   }, []);
 
   // monitor device
-  const monitorDevice = async () => {
+  const deviceMonitor = async () => {
     setDeviceMessage({
       variant: 'info',
       text: 'INFO: Connecting to device and sending data to zabbix. Please wait...',
     });
     try {
-      const sendResult = await axios.get(
-        `http://localhost:3000/api/devices/${device.host}/${deviceIp.value}`
-      );
+      const sendResult = await axios.post('/api/monitor', {
+        conf,
+        device,
+        deviceIp,
+      });
       if (sendResult == 'noResponse') {
         setDeviceMessage({
           variant: 'danger',
@@ -85,7 +87,7 @@ const Device = ({ conf, device, onDelete, onStop }) => {
           <Button
             className="mx-3"
             variant="primary"
-            onClick={() => monitorDevice()}
+            onClick={() => deviceMonitor()}
           >
             Monitor device
           </Button>

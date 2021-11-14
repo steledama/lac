@@ -272,7 +272,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
     let deviceToAdd = {};
     try {
       // get device name and serial (server connection with api)
-      const snmpResponse = await axios.post('/api/devices', { addFromForm });
+      const snmpResponse = await axios.post('/api/device', { addFromForm });
 
       // send error messages if ip not found or device is not reponding
       if (
