@@ -1,4 +1,5 @@
-import { monitorDevice } from '../../../../../lib/monitor';
+//import { monitorDevice } from '../../../../../lib/monitor';
+const { monitorDevice } = require('../../../../../lib/monitor.js');
 
 // api to monitor device called by Device.js component
 export default async function handler({ query: { serial, ip } }, res) {
