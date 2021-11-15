@@ -1,17 +1,24 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
+import Link from 'next/link';
+const pjson = require('../package.json');
 
 const Navigation = () => {
   return (
     <>
-      <Navbar bg="light" variant="light">
+      <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand href="https://github.com/steledama/lac">
-            LAC
-          </Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="/">Devices</Nav.Link>
-            <Nav.Link href="profiles">Profiles</Nav.Link>
-          </Nav>
+          <Navbar.Brand>LAC</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Link href="/" passHref>
+                <Nav.Link>Devices</Nav.Link>
+              </Link>
+              <Link href="profiles" passHref>
+                <Nav.Link>Profiles</Nav.Link>
+              </Link>
+            </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     </>

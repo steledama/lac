@@ -59,6 +59,9 @@ Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""L
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Nodejs In"" program=""{commonpf}\nodejs\node.exe"" dir=in action=allow enable=yes"; Flags: waituntilterminated runhidden
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Nodejs Out"" program=""{commonpf}\nodejs\node.exe"" dir=out action=allow enable=yes"; Flags: waituntilterminated runhidden
 
+; Start service
+Filename: "{sys}\net.exe"; Parameters: "start {#MyAppShortName}"; Flags: runhidden;
+
 ;Postinstall launch setup.cmd
 Filename: "http://localhost:3000"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent
 

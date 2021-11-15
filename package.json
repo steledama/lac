@@ -1,6 +1,6 @@
 {
   "name": "lac",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "snmp zabbix remote agent for monitoring MultiFuncionPrinters usage and supplies over different networks",
   "repository": {
     "type": "git",
