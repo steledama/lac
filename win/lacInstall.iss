@@ -4,7 +4,7 @@
 #define MyAppURL "https://github.com/steledama/lac"
 #define NODE "{code:GetNODE}"
 #define SETUP "{code:GetSETUP}"
-#define USERPROFILE "C:\Users\stefa"
+#define USERPROFILE "C:\Users\stefano"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -25,7 +25,7 @@ DisableProgramGroupPage=yes
 ;PrivilegesRequired=lowest
 ; Where the installer wil be produced
 OutputDir={#USERPROFILE}\Desktop
-OutputBaseFilename={#MyAppName}-v{#MyAppVersion}_setup
+OutputBaseFilename={#MyAppName}-v{#MyAppVersion}
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -50,7 +50,7 @@ Name: "{group}\{#MyAppName}"; Filename: "http://localhost:3000"; IconFilename: "
 Filename: "{sys}\msiexec.exe"; Parameters: "/passive /i ""{app}\win\{#NODE}"""; StatusMsg: "Installing nodejs..."; BeforeInstall: UpdateProgress(0); AfterInstall: UpdateProgress(40)
 
 ; Script to download node modules, build nextjs app and install windows service...
-Filename: "{app}\win\{#SETUP}"; StatusMsg: "Downloading node modules, building nextjs app and installing windows service. Pleae wait..."; AfterInstall: UpdateProgress(80); Flags: runhidden shellexec waituntilterminated
+Filename: "{app}\win\{#SETUP}"; StatusMsg: "Downloading node modules, building nextjs app and installing windows service. Please wait..."; AfterInstall: UpdateProgress(80); Flags: runhidden shellexec waituntilterminated
 
 ; Create scheduled task for monitoring every 4 hour
 Filename: "powershell.exe"; \
@@ -63,7 +63,7 @@ Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""N
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Nodejs Out"" program=""{commonpf}\nodejs\node.exe"" dir=out action=allow enable=yes"; AfterInstall: UpdateProgress(90); Flags: runhidden
 
 ; Start service
-Filename: "{sys}\net.exe"; Parameters: "start {#MyAppShortName}"; StatusMsg: "Starting service..."; Flags: runhidden;
+Filename: "{sys}\net.exe"; Parameters: "start LAC"; StatusMsg: "Starting service..."; Flags: runhidden;
 
 ;Postinstall launch setup.cmd
 Filename: "http://localhost:3000"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent
