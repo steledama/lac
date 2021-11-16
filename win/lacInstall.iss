@@ -1,5 +1,5 @@
 #define MyAppName "LAC"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.0.1"
 #define MyAppPublisher "Stefano Pompa"
 #define MyAppURL "https://github.com/steledama/lac"
 #define NODE "{code:GetNODE}"
@@ -25,11 +25,14 @@ DisableProgramGroupPage=yes
 ;PrivilegesRequired=lowest
 ; Where the installer wil be produced
 OutputDir={#USERPROFILE}\Desktop
-OutputBaseFilename={#MyAppName}_setup
+OutputBaseFilename={#MyAppName}-v{#MyAppVersion}_setup
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
 ArchitecturesInstallIn64BitMode=x64
+; For upgrade
+CreateUninstallRegKey=no
+UpdateUninstallLogAppName=no
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -44,43 +47,43 @@ Name: "{group}\{#MyAppName}"; Filename: "http://localhost:3000"; IconFilename: "
 
 [Run]
 ; Install Node based on x86 or x64 architecture
-Filename: "{sys}\msiexec.exe"; Parameters: "/passive /i ""{app}\win\{#NODE}"""; Flags: waituntilterminated
+Filename: "{sys}\msiexec.exe"; Parameters: "/passive /i ""{app}\win\{#NODE}"""; StatusMsg: "Installing nodejs..."; BeforeInstall: UpdateProgress(0); AfterInstall: UpdateProgress(40)
 
 ; Script to download node modules, build nextjs app and install windows service...
-Filename: "{app}\win\{#SETUP}"; Description: "Downloading node modules, building nextjs app and installing windows service..."; Flags: waituntilterminated runhidden
+Filename: "{app}\win\{#SETUP}"; StatusMsg: "Downloading node modules, building nextjs app and installing windows service. Pleae wait..."; AfterInstall: UpdateProgress(80); Flags: runhidden shellexec waituntilterminated
 
 ; Create scheduled task for monitoring every 4 hour
 Filename: "powershell.exe"; \
   Parameters: "-ExecutionPolicy Bypass -File ""{app}\win\createTask.ps1"""; \
-  WorkingDir: {app}; Flags: waituntilterminated runhidden
+  WorkingDir: {app}; StatusMsg: "Creating scheduled task..."; Flags: runhidden
 
 ; Add Firewall Rules
-Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""LAC"" program=""{app}\zabbix_sender.exe"" dir=out action=allow enable=yes"; Flags: waituntilterminated runhidden
-Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Nodejs In"" program=""{commonpf}\nodejs\node.exe"" dir=in action=allow enable=yes"; Flags: waituntilterminated runhidden
-Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Nodejs Out"" program=""{commonpf}\nodejs\node.exe"" dir=out action=allow enable=yes"; Flags: waituntilterminated runhidden
+Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""LAC"" program=""{app}\zabbix_sender.exe"" dir=out action=allow enable=yes"; Flags: runhidden
+Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Nodejs In"" program=""{commonpf}\nodejs\node.exe"" dir=in action=allow enable=yes"; Flags: runhidden
+Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Nodejs Out"" program=""{commonpf}\nodejs\node.exe"" dir=out action=allow enable=yes"; AfterInstall: UpdateProgress(90); Flags: runhidden
 
 ; Start service
-Filename: "{sys}\net.exe"; Parameters: "start {#MyAppShortName}"; Flags: runhidden;
+Filename: "{sys}\net.exe"; Parameters: "start {#MyAppShortName}"; StatusMsg: "Starting service..."; Flags: runhidden;
 
 ;Postinstall launch setup.cmd
 Filename: "http://localhost:3000"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent
 
 [UninstallRun]
 ; Uninstall lac service
-Filename: "{commonpf}\nodejs\node.exe"; Parameters: "{app}\win\serviceUninstall.js"; WorkingDir: {app}; Flags: waituntilterminated runhidden shellexec
+Filename: "{commonpf}\nodejs\node.exe"; Parameters: "{app}\win\serviceUninstall.js"; WorkingDir: {app}; Flags: runhidden shellexec waituntilterminated; RunOnceId: "Uninistall"
 
 ; Delete scheduled task
 Filename: "powershell.exe"; \
   Parameters: "-ExecutionPolicy Bypass -File ""{app}\win\deleteTask.ps1"""; \
-  WorkingDir: {app}; Flags: waituntilterminated runhidden shellexec
+  WorkingDir: {app}; Flags: waituntilterminated runhidden shellexec; RunOnceId: "Uninistall"
 
 ; Remove Firewall Rules
-Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""LAC"" program=""{app}\zabbix_sender.exe"""; Flags: waituntilterminated runhidden
-Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""NodeJS In"" program=""{commonpf}\nodejs\node.exe"""; Flags: waituntilterminated runhidden
-Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""NodeJS Out"" program=""{commonpf}\nodejs\node.exe"""; Flags: waituntilterminated runhidden
+Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""LAC"" program=""{app}\zabbix_sender.exe"""; Flags: runhidden; RunOnceId: "Uninistall"
+Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""NodeJS In"" program=""{commonpf}\nodejs\node.exe"""; Flags: runhidden; RunOnceId: "Uninistall"
+Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""NodeJS Out"" program=""{commonpf}\nodejs\node.exe"""; Flags: runhidden; RunOnceId: "Uninistall"
 
 ; Uninstall Node
-Filename: "{sys}\msiexec.exe"; Parameters: "/passive /x ""{app}\win\{#NODE}"""
+Filename: "{sys}\msiexec.exe"; Parameters: "/passive /x ""{app}\win\{#NODE}"""; RunOnceId: "Uninistall"
 
 [UninstallDelete]
 Type: filesandordirs; Name: "C:\LAC"
@@ -96,4 +99,10 @@ function GetSETUP(Param: string): string;
 begin
   if IsWin64 then Result := 'setup-x64.cmd'
     else Result := 'setup-x86.cmd';
+end;
+
+procedure UpdateProgress(Position: Integer);
+begin
+  WizardForm.ProgressGauge.Position :=
+    Position * WizardForm.ProgressGauge.Max div 100;
 end;

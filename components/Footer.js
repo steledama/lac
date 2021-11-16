@@ -9,9 +9,12 @@ const Footer = () => {
         className="flex-shrink-0 py-4 bg-light text-black-50"
       >
         <div className="container text-center">
-          <Link href="https://github.com/steledama/lac" passHref>
-            <small>LAC: v{pjson.version} source code on Github</small>
-          </Link>
+          <small>
+            LAC: v{pjson.version} source code on
+            <Link href="https://github.com/steledama/lac" passHref>
+              Github
+            </Link>
+          </small>
         </div>
       </footer>
     </>
