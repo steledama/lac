@@ -50,7 +50,7 @@ Filename: "http://localhost:3000"; Description: "{cm:LaunchProgram,{#StringChang
 
 [UninstallRun]
 ; Run uninstall script
-Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -File ""{app}\win\lacUninstall.ps1"""; ; Flags: runhidden; RunOnceId: "Uninistall"
+Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -File ""{app}\win\lacUninstall.ps1"""; Flags: runhidden; RunOnceId: "Uninistall"
 
 [UninstallDelete]
 Type: filesandordirs; Name: "C:\LAC"
