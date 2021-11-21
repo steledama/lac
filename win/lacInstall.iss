@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "LAC"
-#define MyAppVersion "1.0.2"
+#define MyAppVersion "1.0.3"
 #define MyAppPublisher "steledama"
 #define MyAppURL "https://github.com/steledama/lac"
-;#define USERPROFILE "C:\Users\stefano"
+#define user "C:\Users\stefano"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -24,8 +24,8 @@ DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=C:\Users\stefano\Desktop
-OutputBaseFilename=LAC-v{#MyAppVersion}_setup
+OutputDir={#user}\Documents\GitHub\lac\win
+OutputBaseFilename=LAC_setup
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -35,7 +35,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 
 [Files]
-Source: "C:\Users\stefano\Documents\GitHub\lac\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Excludes: "\.next,\node_modules,conf.json,confAuto.json"
+Source: "{#user}\Documents\GitHub\lac\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Excludes: "\.next,\node_modules,conf.json,confAuto.json"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
