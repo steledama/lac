@@ -1,6 +1,9 @@
 # LAC
 
-[Zabbix](https://www.zabbix.com/) is an enterprise-class open source distributed monitoring solution. LAC is a SNMP agent for monitoring Zabbix hosts over different networks mainly designed for monitoring MultiFunctionPrinters usage and supplies. You can start downloading the installer from here.
+[Zabbix](https://www.zabbix.com/) is an enterprise-class open source distributed monitoring solution. LAC is a SNMP agent for monitoring Zabbix hosts over different networks mainly designed for monitoring MultiFunctionPrinters usage and supplies. Get started:
+
+1. You can [download the installer now from here](https://github.com/steledama/lac/blob/master/win/LAC_setup.exe) to install the agent.
+2. [Configure the zabbix server]([#configureZabbix) to comunicate with the agent.
 
 ## What LAC does
 
@@ -111,7 +114,7 @@ and stop with:
 # sudo docker-compose -f ./docker-compose_v3_alpine_mysql_latest.yaml down
 ```
 
-#### Configure zabbix server
+#### Configure zabbix server <a name="configureZabbix"></a>
 
 Open a browser and enter as administrator (id: Admin and password: zabbix is the default account)
 
