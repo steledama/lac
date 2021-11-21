@@ -217,6 +217,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
         setConf(confFromForm);
         // keep the the config section open
         setConfSwhow(true);
+        getDevices();
         return;
       }
       // if the configuration is succesfully checked and complete with groupId save it to file
