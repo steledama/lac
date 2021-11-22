@@ -2,7 +2,7 @@
 
 [Zabbix](https://www.zabbix.com/) is an enterprise-class open source distributed monitoring solution. LAC is a SNMP agent for monitoring Zabbix hosts over different networks mainly designed for monitoring MultiFunctionPrinters usage and supplies. Get started:
 
-1. You can [download the installer now from here](https://github.com/steledama/lac/blob/master/win/LAC_setup.exe) to install the agent.
+1. You can [download the installer now from here](https://github.com/steledama/lac/releases/download/v1.0.3/LAC_setup.exe) to install the agent.
 2. [Configure the zabbix server](#configureZabbix) to comunicate with the agent.
 
 ## What LAC does
@@ -160,7 +160,7 @@ Go to Administration - General - GUI and change the Max history display period t
 
 ### Download and install the agent
 
-You can download the Windows Installer for lac from this link. [Here](https://github.com/steledama/lac/blob/master/win/lacInstall.iss) you can see the installer script, personalize it and compile yourself.
+You can download the Windows Installer for lac from the link at the top of this reedme. [Here](https://github.com/steledama/lac/blob/master/win/lacInstall.iss) you can see the installer script made for [InnoSetup](http://jrsoftware.org).
 
 ### First agent configuration
 
