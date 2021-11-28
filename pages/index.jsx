@@ -175,8 +175,8 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       conf.token,
       conf.id
     );
-    setDevices(monitoredDevices);
-    setDevicesNumber(monitoredDevices.length);
+    setDevices(monitoredDevices.result);
+    setDevicesNumber(monitoredDevices.result.length);
   };
 
   // get devices at start in connection with zabbix was positively tested

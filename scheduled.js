@@ -1,3 +1,8 @@
-const conf = require('./conf.json');
+const config = require('./conf.json');
 const { monitorDevices } = require('./lib/monitor.js');
-monitorDevices(conf.server, conf.token, conf.id);
+
+async function monitor() {
+  const result = await monitorDevices(config);
+  console.log(result);
+}
+monitor();
