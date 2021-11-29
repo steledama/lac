@@ -272,9 +272,10 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
     });
     let deviceToAdd = {};
     try {
+      console.log(addFromForm);
       // get device name and serial (server connection with api)
       const snmpResponse = await axios.post('/api/device', { addFromForm });
-
+      console.log(snmpResponse);
       // send error messages if ip not found or device is not reponding
       if (
         snmpResponse.data.code ||
@@ -321,7 +322,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
         // send feeback
         setAddMessage({
           variant: 'success',
-          text: `SUCCESS: Device with serial ${addFromForm.serial} was present on zabbix server and now it is updated and monitored by this agent`,
+          text: `SUCCESS: Device with serial ${deviceToAdd.serial} was present on zabbix server and now it is updated and monitored by this agent`,
         });
         // update the devices
         getDevices();

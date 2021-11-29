@@ -1,6 +1,6 @@
 {
   "name": "lac",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "snmp agent for zabbix remote hosts",
   "repository": {
     "type": "git",

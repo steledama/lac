@@ -34,7 +34,8 @@ Start-Process "net.exe" "start LAC" -NoNewWindow -Wait
 # Create a new task action
 $taskAction = New-ScheduledTaskAction `
     -Execute 'node' `
-    -Argument 'C:\LAC\scheduled.js'
+    -Argument 'C:\LAC\scheduled.js' `
+    -WorkingDirectory 'C:\LAC'
 $taskAction
 # Create a new trigger (Daily at time of installation)
 $time = Get-Date -DisplayHint time

@@ -25,17 +25,20 @@ DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputDir={#user}\Desktop
-OutputBaseFilename=LAC_setup
+OutputBaseFilename=LAC_upgrade
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
+; ONLY FOR UPDATE (https://jrsoftware.org/iskb.php?updateinstall): should not create a new entry in the Add/Remove Programs list, or alter the original application's entry. Nor should the application name displayed by the uninstaller change.
+CreateUninstallRegKey=no
+UpdateUninstallLogAppName=no
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 
 [Files]
-Source: "{#user}\Documents\GitHub\lac\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Excludes: "\.next,\node_modules,conf.json,confAuto.json"
+Source: "{#user}\Documents\GitHub\lac\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Excludes: "\.next,\node_modules,conf.json,confAuto.json,\win\node-v16*"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -43,7 +46,7 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "http://localhost:3000"; IconFile
 
 [Run]
 ; Run install script
-Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -File ""{app}\win\lacInstall.ps1"""; StatusMsg: "Downloading node modules, building nextjs app and installing windows service. Please wait..."; Flags: runhidden; BeforeInstall: UpdateProgress(60)
+Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -File ""{app}\win\lacUpgrade.ps1"""; StatusMsg: "Downloading node modules, building nextjs app and installing windows service. Please wait..."; Flags: runhidden; BeforeInstall: UpdateProgress(60)
 
 ;Postinstall launch setup.cmd
 Filename: "http://localhost:3000"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent
