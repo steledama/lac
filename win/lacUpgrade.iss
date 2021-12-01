@@ -5,7 +5,7 @@
 #define MyAppVersion "1.0.4"
 #define MyAppPublisher "steledama"
 #define MyAppURL "https://github.com/steledama/lac"
-#define user "C:\Users\stefa"
+#define user "C:\Users\stefano"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
