@@ -1,5 +1,5 @@
 const config = require('./conf.json');
-const pjson = require('../package.json');
+const pjson = require('./package.json');
 const { monitorDevices } = require('./lib/monitor.js');
 const {
   getLatestVersion,
@@ -9,7 +9,7 @@ const {
 const semverGt = require('semver/functions/gt');
 
 const actualVersion = pjson.version;
-console.log(`Lac agent v${actualVersion}`);
+console.log(`Lac agent actual v${actualVersion}`);
 
 async function checkUpgrade() {
   const latestVersion = await getLatestVersion(config.server, config.token);
