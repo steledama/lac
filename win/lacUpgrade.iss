@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "LAC"
-#define MyAppVersion "1.0.4"
+#define MyAppVersion "1.1.0"
 #define MyAppPublisher "steledama"
 #define MyAppURL "https://github.com/steledama/lac"
-#define user "C:\Users\stefano"
+#define user "C:\Users\stefa"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -24,7 +24,7 @@ DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir={#user}\Desktop
+OutputDir={#user}\Documents\GitHub\lac\win
 OutputBaseFilename=LAC_upgrade
 Compression=lzma
 SolidCompression=yes

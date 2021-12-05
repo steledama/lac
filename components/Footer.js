@@ -10,7 +10,7 @@ const Footer = () => {
       >
         <div className="container text-center">
           <small>
-            LAC: v{pjson.version} source code on{' '}
+            LAC - actual version: {pjson.version} - source code on{' '}
             <Link href="https://github.com/steledama/lac" passHref>
               Github
             </Link>
