@@ -17,18 +17,22 @@ async function checkUpgrade() {
 
   if (semverGt(latestVersion, actualVersion)) {
     console.log('Must upgrade');
-    await downloadUpgrade(
-      'C:\\LAC\\win',
-      'https://github.com/steledama/lac/blob/master/win/LAC_upgrade.exe'
-    );
-    await upgradeLac();
+    return true;
   } else {
     console.log('The agent is updated');
+    return false;
   }
 }
-checkUpgrade();
 
 async function monitor() {
+  let toBeUpgraded = await checkUpgrade();
+  if (toBeUpgraded) {
+    let downloaded = await downloadUpgrade(
+      'https://github.com/steledama/lac/blob/master/win/LAC_upgrade.exe',
+      'C:\\LAC\\win'
+    );
+    if (downloaded) await upgradeLac();
+  }
   const result = await monitorDevices(config);
   console.log(result);
 }
