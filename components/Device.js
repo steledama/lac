@@ -62,10 +62,16 @@ const Device = ({ conf, device, onDelete, onStop }) => {
           variant: 'danger',
           text: `ERROR: ${error.response.data}`,
         });
+      }
+      if (error == 'TypeError: response.includes is not a function') {
+        setDeviceMessage({
+          variant: 'danger',
+          text: `ERROR: Check zabbix template`,
+        });
       } else {
         setDeviceMessage({
           variant: 'danger',
-          text: `ERROR: Check if zabbix server has port 10051 open, if the device is turned on, reachable and with snmp protocol enabled and if there is zabbix_sender.exe in lac folder`,
+          text: `ERROR: ${error}. Check if zabbix server has port 10051 open, if the device is turned on, reachable and with snmp protocol enabled and if there is zabbix_sender.exe in lac folder`,
         });
       }
     }

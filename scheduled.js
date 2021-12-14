@@ -13,7 +13,7 @@ console.log(`Lac agent actual v${actualVersion}`);
 
 async function checkUpgrade() {
   const latestVersion = await getLatestVersion(config.server, config.token);
-  console.log(`Lac agent latest v${actualVersion}`);
+  console.log(`Lac agent latest v${latestVersion}`);
 
   if (semverGt(latestVersion, actualVersion)) {
     console.log('Must upgrade');
