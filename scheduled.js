@@ -3,7 +3,7 @@ const pjson = require('./package.json');
 const { monitorDevices } = require('./lib/monitor.js');
 const {
   getLatestVersion,
-  downloadUpgrade,
+  downloadFile,
   upgradeLac,
 } = require('./lib/upgrade.js');
 const semverGt = require('semver/functions/gt');
@@ -27,8 +27,8 @@ async function checkUpgrade() {
 async function monitor() {
   let toBeUpgraded = await checkUpgrade();
   if (toBeUpgraded) {
-    let downloaded = await downloadUpgrade(
-      'https://github.com/steledama/lac/blob/master/win/LAC_upgrade.exe',
+    let downloaded = await downloadFile(
+      'https://github.com/steledama/lac/raw/master/win/LAC_upgrade.exe',
       'C:\\LAC\\win'
     );
     if (downloaded) await upgradeLac();
