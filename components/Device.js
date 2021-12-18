@@ -117,7 +117,7 @@ const Device = ({ conf, device, onDelete, onStop }) => {
         <Modal.Body>
           WARNING: you are deleting this device from the zabbix server. If you
           do it you will lose all historical monitoring data. If you just want
-          this agent stop monitoring the device use the yellow 'Stop monitor'
+          this agent stop monitoring the device use the yellow Stop monitor
           button. Are you sure you want to delete the device from the server
           instead?
         </Modal.Body>

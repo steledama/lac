@@ -158,26 +158,22 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
   const [confAuto] = useState(confAutoProp);
   const [confMessage, setConfMessage] = useState(confMessageProp);
   const [confShow, setConfSwhow] = useState(false);
-
   const [add] = useState({ ip: '', deviceLocation: '' });
   const [addMessage, setAddMessage] = useState({
     variant: 'secondary',
     text: 'Fill the ip field with a valid ip address and the device location and press the Add device button',
   });
-
   const [devices, setDevices] = useState([]);
-  const [devicesNumber, setDevicesNumber] = useState(0);
 
   // get devices monitored by this agent
-  const getDevices = async () => {
+  async function getDevices() {
     const monitoredDevices = await getHostsByAgentId(
       conf.server,
       conf.token,
       conf.id
     );
     setDevices(monitoredDevices.result);
-    setDevicesNumber(monitoredDevices.result.length);
-  };
+  }
 
   // get devices at start in connection with zabbix was positively tested
   useEffect(() => {
@@ -390,12 +386,12 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
 
   // build the title based on number of devices monitored
   let monitoredDeviceTitle = '';
-  if (devicesNumber === 0) {
+  if (devices.length === 0) {
     monitoredDeviceTitle = 'No monitored devices';
-  } else if (devicesNumber == 1) {
+  } else if (devices.length == 1) {
     monitoredDeviceTitle = '1 monitored device';
   } else {
-    monitoredDeviceTitle = `${devicesNumber} monitored devices`;
+    monitoredDeviceTitle = `${devices.length} monitored devices`;
   }
 
   // render the page
@@ -417,7 +413,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
           <Add add={add} onAdd={onAdd} />
           <Feedback message={addMessage} />
           <h3>{monitoredDeviceTitle}</h3>
-          {devicesNumber > 0 && (
+          {devices.length > 0 && (
             <Devices
               conf={conf}
               devices={devices}
