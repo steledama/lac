@@ -1,4 +1,4 @@
-import { get, subtree } from '../../../lib/snmp';
+import { get, subtree } from '../../lib/snmp';
 
 export default async function handler(req, res) {
   switch (req.method) {

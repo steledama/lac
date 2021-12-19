@@ -85,8 +85,72 @@ async function checkZabbixConnection(confToCheck) {
     }
     return checkedResult;
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return err;
+  }
+}
+
+// get devices monitored by this agent
+async function getDevices(server, token, id) {
+  const monitoredDevices = await getHostsByAgentId(server, token, id);
+  // setDevices(monitoredDevices.result);
+  return monitoredDevices.result;
+}
+
+// monitor device
+async function deviceMonitor(conf, serial, ip) {
+  let result = {};
+  try {
+    const sendResult = await axios.post('/api/monitor', {
+      conf,
+      serial,
+      ip,
+    });
+    if (sendResult == 'noResponse') {
+      result = {
+        variant: 'danger',
+        text: `ERROR: Device with ip ${ip} is not responding. Check the ip address and if the device is up with snmp protocol enabled`,
+      };
+    }
+    if (sendResult.data) {
+      let processed = sendResult.data.filter((response) =>
+        response.includes('processed: 1; failed: 0; total: 1;')
+      );
+      if (processed.length === 0) {
+        result = {
+          variant: 'danger',
+          text: `ERROR: Data sent but zabbix server processed ${processed.length} items. Check if the server ${conf.server} is running or has not port 10051 blocked by firewall's rules or traffic filters`,
+        };
+      } else {
+        result = {
+          variant: 'success',
+          text: `SUCCESS: Zabbix server processed ${processed.length} items`,
+        };
+      }
+    } else {
+      console.log(sendResult);
+      result = sendResult;
+    }
+    return result;
+  } catch (error) {
+    if (error.response) {
+      result = {
+        variant: 'danger',
+        text: `ERROR: ${error.response.data}`,
+      };
+    }
+    if (error == 'TypeError: response.includes is not a function') {
+      result = {
+        variant: 'danger',
+        text: `ERROR: Check zabbix template`,
+      };
+    } else {
+      result = {
+        variant: 'danger',
+        text: `ERROR: ${error}. Check if zabbix server has port 10051 open, if the device is turned on, reachable and with snmp protocol enabled and if there is zabbix_sender.exe in lac folder`,
+      };
+    }
+    return result;
   }
 }
 
@@ -96,6 +160,7 @@ export const getServerSideProps = async () => {
   let confProp = {};
   let confMessageProp = {};
   let confAutoProp = {};
+  let devicesProp = [];
 
   // if the autoConf.json file exist...
   if (fs.existsSync('confAuto.json')) {
@@ -126,6 +191,11 @@ export const getServerSideProps = async () => {
       };
       // pass the verified conf as a prop
       confProp = response;
+      devicesProp = await getDevices(
+        confFromFile.server,
+        confFromFile.token,
+        confFromFile.id
+      );
     }
   } else {
     // else the file does not exist so create an empty one
@@ -149,11 +219,17 @@ export const getServerSideProps = async () => {
       confProp,
       confAutoProp,
       confMessageProp,
+      devicesProp,
     },
   };
 };
 
-export default function Home({ confProp, confAutoProp, confMessageProp }) {
+export default function Home({
+  confProp,
+  confAutoProp,
+  confMessageProp,
+  devicesProp,
+}) {
   const [conf, setConf] = useState(confProp);
   const [confAuto] = useState(confAutoProp);
   const [confMessage, setConfMessage] = useState(confMessageProp);
@@ -163,26 +239,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
     variant: 'secondary',
     text: 'Fill the ip field with a valid ip address and the device location and press the Add device button',
   });
-  const [devices, setDevices] = useState([]);
-
-  // get devices monitored by this agent
-  async function getDevices() {
-    const monitoredDevices = await getHostsByAgentId(
-      conf.server,
-      conf.token,
-      conf.id
-    );
-    setDevices(monitoredDevices.result);
-  }
-
-  // get devices at start in connection with zabbix was positively tested
-  useEffect(() => {
-    if (confMessage.variant === 'success') {
-      getDevices();
-      return;
-    }
-    setConfSwhow(true);
-  }, []);
+  const [devices, setDevices] = useState(devicesProp);
 
   // save conf
   const onSaveConf = async (confFromForm) => {
@@ -213,7 +270,6 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
         setConf(confFromForm);
         // keep the the config section open
         setConfSwhow(true);
-        getDevices();
         return;
       }
       // if the configuration is succesfully checked and complete with groupId save it to file
@@ -227,6 +283,10 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       });
       // close configuration area
       setConfSwhow(false);
+      // refresh devices
+      setDevices(
+        await getDevices(confToSave.server, confToSave.token, confToSave.id)
+      );
     } catch (error) {
       console.error(error);
     }
@@ -236,7 +296,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
   const deleteDevice = async (hostId) => {
     try {
       const zabbixResponse = await deleteHost(conf.server, conf.token, hostId);
-      getDevices();
+      setDevices(getDevices(conf.server, conf.token, conf.id));
     } catch (error) {
       console.error(error);
     }
@@ -255,7 +315,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       // update the host with the new agentId and Ip tags array
       const response = await updateHost(conf.server, conf.token, hostId, tags);
       // update devices
-      getDevices();
+      setDevices(getDevices(conf.server, conf.token, conf.id));
     }
   };
 
@@ -268,10 +328,8 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
     });
     let deviceToAdd = {};
     try {
-      console.log(addFromForm);
       // get device name and serial (server connection with api)
       const snmpResponse = await axios.post('/api/device', { addFromForm });
-      console.log(snmpResponse);
       // send error messages if ip not found or device is not reponding
       if (
         snmpResponse.data.code ||
@@ -321,7 +379,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
           text: `SUCCESS: Device with serial ${deviceToAdd.serial} was present on zabbix server and now it is updated and monitored by this agent`,
         });
         // update the devices
-        getDevices();
+        setDevices(getDevices(conf.server, conf.token, conf.id));
 
         // else the host is not present...
       } else {
@@ -361,7 +419,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
             text: 'SUCCESS: Device added to server and monitored by the agent',
           });
           // update devices
-          getDevices();
+          setDevices(getDevices(conf.server, conf.token, conf.id));
         }
       }
     } catch (error) {
@@ -419,6 +477,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
               devices={devices}
               onDelete={deleteDevice}
               onStop={stopDevice}
+              deviceMonitor={deviceMonitor}
             />
           )}
         </>
