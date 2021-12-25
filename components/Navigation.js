@@ -14,7 +14,7 @@ const Navigation = () => {
               <Link href="/" passHref>
                 <Nav.Link>Devices</Nav.Link>
               </Link>
-              <Link href="profiles" passHref>
+              <Link href="/profiles" passHref>
                 <Nav.Link>Profiles</Nav.Link>
               </Link>
             </Nav>

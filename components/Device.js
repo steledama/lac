@@ -19,7 +19,6 @@ const Device = ({ conf, device, onDelete, onStop, deviceMonitor }) => {
       text: 'INFO: Connecting to device and sending data to zabbix. Please wait...',
     });
     const response = await deviceMonitor(conf, device.host, deviceIp.value);
-    console.log(response);
     setDeviceMessage(response);
   }
 
@@ -53,7 +52,7 @@ const Device = ({ conf, device, onDelete, onStop, deviceMonitor }) => {
           <Button className="mx-3" variant="danger" onClick={handleShow}>
             Delete device
           </Button>
-          {!deviceMessage && <Feedback message={deviceMessage} />}
+          {deviceMessage && <Feedback message={deviceMessage} />}
         </Card.Body>
       </Card>
       <Modal show={show} onHide={handleClose}>
