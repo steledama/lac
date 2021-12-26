@@ -51,7 +51,9 @@
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "8.5.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "12.0.7",
+    "eslint-config-prettier": "^8.3.0",
     "standard-version": "^9.3.2"
   },
   "config": {

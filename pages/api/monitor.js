@@ -14,7 +14,6 @@ export default async function handler(req, res) {
         if (data === 'noResponse') throw data;
         res.status(200).send(data);
       } catch (err) {
-        console.log(err);
         res.status(500).send(err);
       }
       break;

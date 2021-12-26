@@ -1,15 +1,13 @@
-import React from 'react';
-import { useState } from 'react';
+import { React, useState } from 'react';
 
+import fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 import Header from '../components/Header';
 import Feedback from '../components/Feedback';
 import Conf from '../components/Conf';
 import Add from '../components/Add';
 import Devices from '../components/Devices';
-
-import fs from 'fs';
-import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
 
 // for zabbix comunication
 import {
@@ -78,8 +76,9 @@ async function checkZabbixConnection(confToCheck) {
             };
           }
           if (zabbixRes.result[0]) {
-            confToCheck.groupId = zabbixRes.result[0].groupid;
-            return confToCheck;
+            const confChecked = confToCheck;
+            confChecked.groupId = zabbixRes.result[0].groupid;
+            return confChecked;
           }
         }
     }
@@ -106,14 +105,14 @@ async function deviceMonitor(conf, serial, ip) {
       serial,
       ip,
     });
-    if (sendResult == 'noResponse') {
+    if (sendResult === 'noResponse') {
       result = {
         variant: 'danger',
         text: `ERROR: Device with ip ${ip} is not responding. Check the ip address and if the device is up with snmp protocol enabled`,
       };
     }
     if (sendResult.data) {
-      let processed = sendResult.data.filter((response) =>
+      const processed = sendResult.data.filter((response) =>
         response.includes('processed: 1; failed: 0; total: 1;')
       );
       if (processed.length === 0) {
@@ -128,7 +127,6 @@ async function deviceMonitor(conf, serial, ip) {
         };
       }
     } else {
-      console.log(sendResult);
       result = sendResult;
     }
     return result;
@@ -139,7 +137,7 @@ async function deviceMonitor(conf, serial, ip) {
         text: `ERROR: ${error.response.data}`,
       };
     }
-    if (error == 'TypeError: response.includes is not a function') {
+    if (error === 'TypeError: response.includes is not a function') {
       result = {
         variant: 'danger',
         text: `ERROR: Check zabbix template`,
@@ -295,7 +293,7 @@ export default function Home({
   // delete device
   const deleteDevice = async (hostId) => {
     try {
-      const zabbixResponse = await deleteHost(conf.server, conf.token, hostId);
+      await deleteHost(conf.server, conf.token, hostId);
       setDevices(getDevices(conf.server, conf.token, conf.id));
     } catch (error) {
       console.error(error);
@@ -303,7 +301,7 @@ export default function Home({
   };
 
   // stop monitoring device
-  const stopDevice = async (serial, hostId, deviceIp) => {
+  const stopDevice = async (serial, hostId) => {
     // check if the host is present
     const existingHost = await getHost(conf.server, conf.token, serial);
     // if the host is present...
@@ -313,7 +311,7 @@ export default function Home({
       // filters the agentId's and the specific one from old tags
       const tags = oldTags.filter((oldTag) => oldTag.value !== conf.id);
       // update the host with the new agentId and Ip tags array
-      const response = await updateHost(conf.server, conf.token, hostId, tags);
+      await updateHost(conf.server, conf.token, hostId, tags);
       // update devices
       setDevices(getDevices(conf.server, conf.token, conf.id));
     }
@@ -336,7 +334,7 @@ export default function Home({
         snmpResponse.data.name ||
         Object.keys(snmpResponse.data).length === 0
       ) {
-        throw 'noResponse';
+        throw new Error('noResponse');
       }
 
       // if it is ok store deviceName and serial
@@ -367,7 +365,7 @@ export default function Home({
           value: addFromForm.ip,
         });
         // update the host with the new agentId and Ip tags array
-        const response = await updateHost(
+        await updateHost(
           conf.server,
           conf.token,
           existingHost.result[0].hostid,
@@ -392,7 +390,7 @@ export default function Home({
 
         // if template does NOT exist send error messages
         if (zabbixTemplateResponse.result.length === 0) {
-          throw 'noTemplate';
+          throw new Error('noTemplate');
         }
 
         // store the template id
@@ -435,9 +433,13 @@ export default function Home({
             variant: 'danger',
             text: `ERROR: There is not a template with name ${deviceToAdd.deviceName} in zabbix server`,
           });
+          break;
         default:
           // undefined error
-          console.error(error);
+          setAddMessage({
+            variant: 'danger',
+            text: `ERROR: ${error}`,
+          });
       }
     }
   };
@@ -446,7 +448,7 @@ export default function Home({
   let monitoredDeviceTitle = '';
   if (devices.length === 0) {
     monitoredDeviceTitle = 'No monitored devices';
-  } else if (devices.length == 1) {
+  } else if (devices.length === 1) {
     monitoredDeviceTitle = '1 monitored device';
   } else {
     monitoredDeviceTitle = `${devices.length} monitored devices`;

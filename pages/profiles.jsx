@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { React, useState } from 'react';
+import axios from 'axios';
 import Snmp from '../components/Snmp';
 import Results from '../components/Results';
 import Feedback from '../components/Feedback';
-import axios from 'axios';
 
-const Profiles = () => {
+function Profiles() {
   const [results, setResults] = useState([]);
   const [snmpMessage, setSnmpMessage] = useState({
     variant: 'secondary',
@@ -17,7 +17,6 @@ const Profiles = () => {
       text: `INFO: Snmp request sent to ${snmpForm.ip}, please wait...`,
     });
     const snmpResponse = await axios.post('/api/snmp', { snmpForm });
-    console.log(snmpResponse);
     if (Array.isArray(snmpResponse.data)) {
       if (snmpResponse.data.length > 0) {
         setResults(snmpResponse.data);
@@ -54,6 +53,6 @@ const Profiles = () => {
       {results.length > 0 && <Results results={results} />}
     </div>
   );
-};
+}
 
 export default Profiles;

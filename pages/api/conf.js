@@ -25,5 +25,7 @@ export default async function handler(req, res) {
       );
       res.status(200).send(req.body.confToSave);
       break;
+    default:
+      res.status(200).send('SORRY. ONLY POST METHOD AVAILABLE');
   }
 }
