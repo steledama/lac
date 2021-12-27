@@ -1,5 +1,5 @@
 // to make http request to zabbix
-const axios = require('axios');
+import axios from 'axios';
 
 // function for general axios request to zabbix server api
 async function zabbixApiRequest(server, token, method, params, id) {
@@ -18,7 +18,7 @@ async function zabbixApiRequest(server, token, method, params, id) {
 }
 
 // check zabbix server connection getting the group id
-async function getGroupId(server, token, group) {
+export async function getGroupId(server, token, group) {
   const zabbixApiParams = {
     output: ['groupid'],
     filter: {
@@ -36,7 +36,7 @@ async function getGroupId(server, token, group) {
 }
 
 // check if the device has a defined host on zabbix server based on serial number
-async function getHost(server, token, host) {
+export async function getHost(server, token, host) {
   const zabbixApiParams = {
     output: ['hostid', 'host', 'name'],
     filter: {
@@ -54,7 +54,7 @@ async function getHost(server, token, host) {
   return zabbixResponse;
 }
 
-async function updateHost(server, token, hostId, tagsArray) {
+export async function updateHost(server, token, hostId, tagsArray) {
   const zabbixApiParams = {
     hostid: hostId,
     tags: tagsArray,
@@ -70,7 +70,7 @@ async function updateHost(server, token, hostId, tagsArray) {
 }
 
 // check if the device has a defined host on zabbix server based on agentId
-async function getHostsByAgentId(server, token, agentId) {
+export async function getHostsByAgentId(server, token, agentId) {
   const zabbixApiParams = {
     output: ['host', 'name'],
     selectTags: 'extend',
@@ -95,7 +95,7 @@ async function getHostsByAgentId(server, token, agentId) {
 }
 
 // function to get zabbix template id from name
-async function getTemplate(server, token, name) {
+export async function getTemplate(server, token, name) {
   // check if there is a template corresponding to the device name
   const zabbixApiParams = {
     output: ['host', 'templateid'],
@@ -113,7 +113,7 @@ async function getTemplate(server, token, name) {
 }
 
 // function to creat a zabbix host
-async function createHost(
+export async function createHost(
   server,
   token,
   agentLocation,
@@ -149,7 +149,7 @@ async function createHost(
 }
 
 // get device items defined in host
-async function getItems(server, token, host) {
+export async function getItems(server, token, host) {
   const zabbixApiParams = {
     output: ['key_'],
     host: `${host}`,
@@ -166,7 +166,7 @@ async function getItems(server, token, host) {
 }
 
 // get device items defined in host
-async function deleteHost(server, token, hostId) {
+export async function deleteHost(server, token, hostId) {
   const zabbixApiParams = [hostId];
   const zabbixResponse = await zabbixApiRequest(
     server,
@@ -177,14 +177,3 @@ async function deleteHost(server, token, hostId) {
   );
   return zabbixResponse.result;
 }
-
-module.exports = {
-  getGroupId,
-  getHost,
-  updateHost,
-  getHostsByAgentId,
-  getTemplate,
-  createHost,
-  getItems,
-  deleteHost,
-};

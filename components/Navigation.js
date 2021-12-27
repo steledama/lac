@@ -1,6 +1,5 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import Link from 'next/link';
-const pjson = require('../package.json');
 
 const Navigation = () => {
   return (

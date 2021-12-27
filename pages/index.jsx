@@ -1,4 +1,5 @@
 import { React, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
@@ -18,7 +19,7 @@ import {
   createHost,
   getHostsByAgentId,
   deleteHost,
-} from '../lib/zabbix';
+} from '../schedule/zabbix';
 
 async function checkZabbixConnection(confToCheck) {
   try {
@@ -84,7 +85,6 @@ async function checkZabbixConnection(confToCheck) {
     }
     return checkedResult;
   } catch (err) {
-    console.error(err);
     return err;
   }
 }

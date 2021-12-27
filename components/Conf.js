@@ -1,6 +1,6 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
-const isValidHostname = require('is-valid-hostname');
+import { useState } from 'react';
+import isValidHostname from 'is-valid-hostname';
 
 const Conf = ({ conf, onSaveConf, confAuto }) => {
   const [server, setServer] = useState(conf.server);

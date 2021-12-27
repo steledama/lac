@@ -1,14 +1,16 @@
 /* eslint-disable no-console */
-const fs = require('fs');
-const axios = require('axios').default;
-const { promisify } = require('util');
-const exec = promisify(require('child_process').exec);
-const { getHost } = require('./zabbix');
+import { promisify } from 'util';
+import * as fs from 'fs';
+import axios from 'axios';
+import { exec } from 'child_process';
+import { getHost } from './zabbix.js';
+
+const execPromised = promisify(exec);
 
 // fileUrl: the absolute url of the image or video you want to download
 // downloadFolder: the path of the downloaded file on your machine
-const downloadFile = async (fileUrl, path) =>
-  new Promise((resolve, reject) => {
+export async function downloadFile(fileUrl, path) {
+  return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: 'GET',
@@ -25,8 +27,9 @@ const downloadFile = async (fileUrl, path) =>
       reject(new Error(err));
     }
   });
+}
 
-async function getLatestVersion(server, token) {
+export async function getLatestVersion(server, token) {
   try {
     const latestVersionHost = await getHost(server, token, 'latestVersion');
     // console.log(latestVersionHost);
@@ -39,11 +42,11 @@ async function getLatestVersion(server, token) {
   }
 }
 
-async function upgradeLac() {
+export async function upgradeLac() {
   console.log('Upgrading lac agent. Please wait...');
   if (process.platform === 'win32') {
     try {
-      const { stdout, stderr } = await exec(
+      const { stdout, stderr } = await execPromised(
         'C:\\LAC\\win\\LAC_upgrade.exe /VERYSILENT'
       );
       if (stdout) {
@@ -60,9 +63,3 @@ async function upgradeLac() {
     }
   }
 }
-
-module.exports = {
-  getLatestVersion,
-  downloadFile,
-  upgradeLac,
-};

@@ -1,10 +1,10 @@
-import { get, subtree } from '../../lib/snmp';
+import { get, subtree } from '../../schedule/snmp';
 
 export default async function handler(req, res) {
+  const { snmpForm } = req.body;
   switch (req.method) {
     case 'POST':
       // snmp request
-      const { snmpForm } = req.body;
       if (snmpForm.method === 'get') {
         const oid = [snmpForm.oid];
         try {

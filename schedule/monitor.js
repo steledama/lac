@@ -1,9 +1,10 @@
 import { promisify } from 'util';
 import { hostname } from 'os';
-import { get, getDeviceInfo } from './snmp';
-import { getHostsByAgentId, getItems } from './zabbix';
+import { exec } from 'child_process';
+import { get, getDeviceInfo } from './snmp.js';
+import { getHostsByAgentId, getItems } from './zabbix.js';
 
-const exec = promisify(require('child_process').exec);
+const execPromised = promisify(exec);
 
 // get pc name hostname
 const pcName = hostname();
@@ -23,8 +24,8 @@ async function sendItemToZabbix(server, host, key, value) {
   try {
     // if in windows use xabbix_sender.exe to send items to server
     if (process.platform === 'win32') {
-      const { stdout, stderr } = await exec(
-        `${process.cwd()}\\zabbix_sender.exe -z ${server} -s ${host} -k ${key} -o ${value}`
+      const { stdout, stderr } = exec(
+        `${process.cwd()}\\schedule\\zabbix_sender.exe -z ${server} -s ${host} -k ${key} -o ${value}`
       );
       if (stdout) {
         return stdout;
@@ -35,8 +36,8 @@ async function sendItemToZabbix(server, host, key, value) {
       }
       // else we are on linux so use xabbix_sender to send items to server
     } else {
-      const { stdout, stderr } = await exec(
-        `./zabbix_sender -z ${server} -s ${host} -k ${key} -o ${value}`
+      const { stdout, stderr } = await execPromised(
+        `./schedule/zabbix_sender -z ${server} -s ${host} -k ${key} -o ${value}`
       );
       if (stdout) {
         return stdout;
@@ -53,7 +54,7 @@ async function sendItemToZabbix(server, host, key, value) {
 }
 
 // function called by api (that is called by Device.js in components)
-async function monitorDevice(conf, serial, ip) {
+export async function monitorDevice(conf, serial, ip) {
   // check if serial number corrispond
   const dataFromDevice = await getDeviceInfo(ip);
   if (dataFromDevice.name) {
@@ -72,7 +73,9 @@ async function monitorDevice(conf, serial, ip) {
   const items = await getItems(conf.server, conf.token, serial);
   // take only oids and put them into oidsArray
   const oidsArray = items
+    // eslint-disable-next-line no-underscore-dangle
     .filter((item) => item.key_ !== 'date' && item.key_ !== 'pc')
+    // eslint-disable-next-line no-underscore-dangle
     .map((item) => item.key_);
   // connect to device and get oids values
   const itemsValues = await get(ip, oidsArray);
@@ -105,7 +108,7 @@ async function monitorDevice(conf, serial, ip) {
 }
 
 // function called by scheduled.js
-async function monitorDevices(config) {
+export async function monitorDevices(config) {
   // find devices to monitor based on agentId
   const hosts = await getHostsByAgentId(config.server, config.token, config.id);
   // if server is not responding return error
@@ -132,7 +135,7 @@ async function monitorDevices(config) {
   return devicesResult;
 }
 
-export default {
-  monitorDevice,
-  monitorDevices,
-};
+// export default {
+//   monitorDevice,
+//   monitorDevices,
+// };

@@ -1,4 +1,4 @@
-import { monitorDevice } from '../../lib/monitor';
+import { monitorDevice } from '../../schedule/monitor';
 
 // api to monitor device called by Device.js component
 export default async function handler(req, res) {
