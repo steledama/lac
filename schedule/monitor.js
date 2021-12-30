@@ -1,8 +1,8 @@
 import { promisify } from 'util';
 import { hostname } from 'os';
 import { exec } from 'child_process';
-import { get, getDeviceInfo } from './snmp.js';
-import { getHostsByAgentId, getItems } from './zabbix.js';
+import { get, getDeviceInfo } from './snmp';
+import { getHostsByAgentId, getItems } from './zabbix';
 
 const execPromised = promisify(exec);
 
@@ -20,7 +20,7 @@ const year = dateOb.getFullYear();
 // store time stamp in YYYY-MM-DD format
 const timeStamp = `${year}-${month}-${date}`;
 
-async function sendItemToZabbix(server, host, key, value) {
+async function sendItem(server, host, key, value) {
   try {
     // if in windows use xabbix_sender.exe to send items to server
     if (process.platform === 'win32') {
@@ -31,7 +31,7 @@ async function sendItemToZabbix(server, host, key, value) {
         return stdout;
       }
       if (stderr) {
-        console.log(stderr);
+        console.error(stderr);
         return stderr;
       }
       // else we are on linux so use xabbix_sender to send items to server
@@ -43,7 +43,7 @@ async function sendItemToZabbix(server, host, key, value) {
         return stdout;
       }
       if (stderr) {
-        console.log(stderr);
+        console.error(stderr);
         return stderr;
       }
     }
@@ -85,25 +85,20 @@ export async function monitorDevice(conf, serial, ip) {
   const deviceResult = [];
 
   // send timestamp to zabbix
-  const timeStampResult = await sendItemToZabbix(
-    conf.server,
-    serial,
-    'date',
-    timeStamp
-  );
-  deviceResult.push(timeStampResult);
+  deviceResult.push(await sendItem(conf.server, serial, 'date', timeStamp));
+
   // send pc name to zabbix
-  await sendItemToZabbix(conf.server, serial, 'pc', pcName);
+  deviceResult.push(await sendItem(conf.server, serial, 'pc', pcName));
+
   // send items to zabbix
-  for (const item of itemsValues) {
-    const itemResult = await sendItemToZabbix(
-      conf.server,
-      serial,
-      item.oid,
-      item.value
-    );
-    deviceResult.push(itemResult);
-  }
+  deviceResult.push(
+    await Promise.all(
+      itemsValues.map((item) =>
+        sendItem(conf.server, serial, item.oid, item.value)
+      )
+    )
+  );
+
   return deviceResult;
 }
 
@@ -117,25 +112,30 @@ export async function monitorDevices(config) {
   if (hosts.error) return hosts.error.message;
   // if there are no devices to monitor return message
   if (hosts.result.length === 0) return 'no hosts to monitor';
-  // initialize final result
-  const devicesResult = [];
-  // for each device to monitor
-  for (const device of hosts.result) {
+
+  const devicesResult = await hosts.result.map(async (device) => {
     // take device ip from tags
     const tagDeviceIp = device.tags.find(
       (element) => element.tag === 'deviceIp'
     );
-    const deviceResult = await monitorDevice(
-      config,
-      device.host,
-      tagDeviceIp.value
-    );
-    devicesResult.push(deviceResult);
-  }
+    return Promise.all(monitorDevice(config, device.host, tagDeviceIp.value));
+  });
+
+  // // initialize final result
+  // const devicesResult = [];
+  // // for each device to monitor
+  // for (const device of hosts.result) {
+  //   // take device ip from tags
+  //   const tagDeviceIp = device.tags.find(
+  //     (element) => element.tag === 'deviceIp'
+  //   );
+  //   const deviceResult = await monitorDevice(
+  //     config,
+  //     device.host,
+  //     tagDeviceIp.value
+  //   );
+  //   devicesResult.push(deviceResult);
+  // }
+  // console.log(devicesResult);
   return devicesResult;
 }
-
-// export default {
-//   monitorDevice,
-//   monitorDevices,
-// };

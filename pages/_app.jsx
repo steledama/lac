@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import '../style/index.css';
 import Layout from '../components/Layout';
 

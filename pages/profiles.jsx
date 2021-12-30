@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import Snmp from '../components/Snmp';
 import Results from '../components/Results';

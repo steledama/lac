@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Service } from 'node-windows';
 
 // Create a new service object

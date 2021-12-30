@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable no-console */
 import * as fs from 'fs';
 import { monitorDevices } from './monitor.js';
 import { getLatestVersion, downloadFile, upgradeLac } from './upgrade.js';
