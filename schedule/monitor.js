@@ -92,11 +92,11 @@ export async function monitorDevice(conf, serial, ip) {
 
   // send items to zabbix
   deviceResult.push(
-    await Promise.all(
+    ...(await Promise.all(
       itemsValues.map((item) =>
         sendItem(conf.server, serial, item.oid, item.value)
       )
-    )
+    ))
   );
 
   return deviceResult;
