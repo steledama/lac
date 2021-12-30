@@ -27,6 +27,7 @@
     "build": "next build",
     "buildwin": "C:/Users/stefa/Documents/GitHub/lac/node_modules/.bin/next.cmd build",
     "start": "next start",
+    "startwin": "C:/Users/stefa/Documents/GitHub/lac/node_modules/.bin/next.cmd start",
     "lint": "next lint",
     "cz-init": "commitizen init cz-conventional-changelog --dev --exact",
     "commit": "cz",
