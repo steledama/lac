@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import isValidHostname from 'is-valid-hostname';
 
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,6 +9,8 @@ import Feedback from '../components/Feedback';
 import Conf from '../components/Conf';
 import Add from '../components/Add';
 import Devices from '../components/Devices';
+
+import { isValidIpAddress } from '../lib/isValidIpAddress';
 
 // for zabbix comunication
 import {
@@ -87,17 +90,6 @@ async function checkZabbixConnection(confToCheck) {
     return err;
   }
 }
-
-const isValidIpAddress = (ipaddress) => {
-  if (
-    /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
-      ipaddress
-    )
-  ) {
-    return true;
-  }
-  return false;
-};
 
 // get devices monitored by this agent
 async function getDevices(server, token, id) {
@@ -255,6 +247,36 @@ export default function Home({
       variant: 'info',
       text: 'INFO: Connecting to zabbix server. Please wait...',
     });
+    // minimal form validation
+    if (!confFromForm.group) {
+      setConfMessage({
+        variant: 'danger',
+        text: `ERROR: Please add a group name`,
+      });
+      return;
+    }
+    if (isValidHostname(confFromForm.server)) {
+      if (confFromForm.token.length !== 64) {
+        setConfMessage({
+          variant: 'danger',
+          text: `ERROR: The token is not correct. It must be a 64 character alfanumeric string`,
+        });
+        return;
+      }
+      if (!confFromForm.location) {
+        setConfMessage({
+          variant: 'danger',
+          text: `ERROR: Please add the agent location`,
+        });
+        return;
+      }
+    } else {
+      setConfMessage({
+        variant: 'danger',
+        text: `ERROR: ${confFromForm.server} is not a valid hostname`,
+      });
+      return;
+    }
     try {
       // check zabbix connection retriving groupId
       const confToSave = await checkZabbixConnection(confFromForm);
@@ -262,7 +284,7 @@ export default function Home({
       if (!confToSave) {
         setConfMessage({
           variant: 'danger',
-          text: 'ERROR: zabbix hostname is not correct',
+          text: `ERROR: zabbix server ${confFromForm.server} is not responding`,
         });
         // set the wrong config anyway
         setConf(confFromForm);

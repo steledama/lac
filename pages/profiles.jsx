@@ -4,6 +4,8 @@ import Snmp from '../components/Snmp';
 import Results from '../components/Results';
 import Feedback from '../components/Feedback';
 
+import { isValidIpAddress } from '../lib/isValidIpAddress';
+
 function Profiles() {
   const [results, setResults] = useState([]);
   const [snmpMessage, setSnmpMessage] = useState({
@@ -12,6 +14,28 @@ function Profiles() {
   });
 
   const onSnmp = async (snmpForm) => {
+    if (isValidIpAddress(snmpForm.ip)) {
+      if (!snmpForm.method) {
+        setSnmpMessage({
+          variant: 'danger',
+          text: `ERROR: Please select a method`,
+        });
+        return;
+      }
+      if (!snmpForm.oid) {
+        setSnmpMessage({
+          variant: 'danger',
+          text: `ERROR: Please select oid`,
+        });
+        return;
+      }
+    } else {
+      setSnmpMessage({
+        variant: 'danger',
+        text: `ERROR: Please add a valid ip address`,
+      });
+      return;
+    }
     setSnmpMessage({
       variant: 'info',
       text: `INFO: Snmp request sent to ${snmpForm.ip}, please wait...`,

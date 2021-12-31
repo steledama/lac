@@ -1,17 +1,6 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState } from 'react';
 
-const validateIPaddress = (ipaddress) => {
-  if (
-    /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
-      ipaddress
-    )
-  ) {
-    return true;
-  }
-  return false;
-};
-
 const getList = [
   { name: 'sysName', oid: '1.3.6.1.2.1.1.1.0' },
   { name: 'sysDescr', oid: '1.3.6.1.2.1.1.5.0' },
@@ -35,19 +24,6 @@ function Snmp({ onSnmp }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (validateIPaddress(ip)) {
-      if (!method) {
-        alert('Please select a method');
-        return;
-      }
-      if (!oid) {
-        alert('Please add the oid');
-        return;
-      }
-    } else {
-      alert('Please add a valid ip address');
-      return;
-    }
     onSnmp({ ip, method, oid });
   };
 

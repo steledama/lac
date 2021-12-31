@@ -1,6 +1,5 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState } from 'react';
-import isValidHostname from 'is-valid-hostname';
 
 function Conf({ conf, onSaveConf, confAuto }) {
   const [server, setServer] = useState(conf.server);
@@ -11,26 +10,6 @@ function Conf({ conf, onSaveConf, confAuto }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // minimal form validation
-    if (!group) {
-      alert('Please add a group name');
-      return;
-    }
-    if (isValidHostname(server)) {
-      if (token.length !== 64) {
-        alert(
-          'The token is not correct. It must be a 64 character alfanumeric string'
-        );
-        return;
-      }
-      if (!location) {
-        alert('Please add the agent location');
-        return;
-      }
-    } else {
-      alert(`${server} is not a valid hostname`);
-      return;
-    }
     onSaveConf({ server, token, group, id, location });
   };
 
