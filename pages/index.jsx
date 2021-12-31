@@ -18,7 +18,7 @@ import {
   createHost,
   getHostsByAgentId,
   deleteHost,
-} from '../schedule/zabbix';
+} from '../lib/zabbix.cjs';
 
 async function checkZabbixConnection(confToCheck) {
   try {

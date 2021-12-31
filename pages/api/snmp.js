@@ -1,4 +1,4 @@
-import { get, subtree } from '../../schedule/snmp';
+import { get, subtree } from '../../lib/snmp.cjs';
 
 export default async function handler(req, res) {
   const { snmpForm } = req.body;

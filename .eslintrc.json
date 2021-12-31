@@ -2,7 +2,6 @@
   "extends": ["next/core-web-vitals", "airbnb", "prettier"],
   "rules": {
     "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off",
-    "no-console": ["error", { "allow": ["warn", "error"] }]
+    "react/react-in-jsx-scope": "off"
   }
 }

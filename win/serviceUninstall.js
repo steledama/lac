@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Service } from 'node-windows';
 
 // Create a new service object
@@ -18,8 +17,8 @@ const svc = new Service({
 // Listen for the "install" event, which indicates the
 // process is available as a service.
 svc.on('uninstall', () => {
-  console.log('Uninstall complete.');
-  console.log('The service exists: ', svc.exists);
+  // eslint-disable-next-line no-console
+  console.log('Uninstall complete. The service exists: ', svc.exists);
 });
 
 svc.uninstall();

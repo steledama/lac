@@ -1,4 +1,4 @@
-import { getDeviceInfo } from '../../schedule/snmp';
+import { getDeviceInfo } from '../../lib/snmp.cjs';
 
 export default async function handler(req, res) {
   switch (req.method) {

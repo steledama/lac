@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Cors from 'cors';
-import initMiddleware from '../../schedule/init-middleware';
+import initMiddleware from '../../lib/init-middleware.cjs';
 
 // Initialize the cors middleware
 const cors = initMiddleware(

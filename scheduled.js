@@ -1,22 +1,20 @@
-/* eslint-disable import/extensions */
 /* eslint-disable no-console */
-import * as fs from 'fs';
-import { monitorDevices } from './monitor.js';
-import { getLatestVersion, downloadFile, upgradeLac } from './upgrade.js';
+const fs = require('fs');
+const { monitorDevices } = require('./lib/monitor.cjs');
+const {
+  getLatestVersion,
+  downloadFile,
+  upgradeLac,
+} = require('./lib/upgrade.cjs');
+const pjson = require('./package.json');
 
-// import pkg from './upgrade.js';
-// const { getLatestVersion, downloadFile, upgradeLac } = pkg;
+// load conf.json file
+const rawdata = fs.readFileSync('conf.json');
+const config = JSON.parse(rawdata);
+console.log(config);
 
-// import pkg2 from './monitor.js';
-// const { monitorDevices } = pkg2;
-
-// const fs = require('fs');
-// const monitorDevices = require('../lib/monitor');
-// const {
-//   getLatestVersion,
-//   downloadFile,
-//   upgradeLac,
-// } = require('../lib/upgrade');
+const actualVersion = pjson.version;
+console.log(`Lac agent actual v${actualVersion}`);
 
 function checkVersion(a, b) {
   const x = a.split('.').map((e) => parseInt(e, 10));
@@ -41,35 +39,19 @@ function checkVersion(a, b) {
   return -1;
 }
 
-// load conf,json file
-const rawdata = fs.readFileSync('conf.json');
-const config = JSON.parse(rawdata);
-console.log(config);
-
-const actualVersion = '1.1.3';
-console.log(`Lac agent actual v${actualVersion}`);
-
-async function checkUpgrade() {
+async function monitor() {
   const latestVersion = await getLatestVersion(config.server, config.token);
   console.log(`Lac agent latest v${latestVersion}`);
 
   if (checkVersion(actualVersion, latestVersion) === -1) {
     console.log('Must upgrade');
-    return true;
-  }
-  console.log('The agent is updated');
-  return false;
-}
-
-async function monitor() {
-  const toBeUpgraded = await checkUpgrade();
-  if (toBeUpgraded) {
     const downloaded = await downloadFile(
       'https://github.com/steledama/lac/raw/master/win/LAC_upgrade.exe',
       'C:\\LAC\\win'
     );
     if (downloaded) await upgradeLac();
   }
+  console.log('The agent is updated');
   const result = await monitorDevices(config);
   console.log(result);
 }
