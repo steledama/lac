@@ -1,6 +1,6 @@
 import { Table } from 'react-bootstrap';
 
-const Results = ({ results }) => {
+function Results({ results }) {
   return (
     <Table striped bordered hover size="sm">
       <thead>
@@ -19,6 +19,6 @@ const Results = ({ results }) => {
       </tbody>
     </Table>
   );
-};
+}
 
 export default Results;

@@ -1,6 +1,6 @@
 import Device from './Device';
 
-const Devices = ({ conf, devices, onDelete, onStop, deviceMonitor }) => {
+function Devices({ conf, devices, onDelete, onStop, deviceMonitor }) {
   return (
     <>
       {devices.map((device) => (
@@ -15,6 +15,6 @@ const Devices = ({ conf, devices, onDelete, onStop, deviceMonitor }) => {
       ))}
     </>
   );
-};
+}
 
 export default Devices;

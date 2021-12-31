@@ -2,7 +2,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import isValidHostname from 'is-valid-hostname';
 
-const Conf = ({ conf, onSaveConf, confAuto }) => {
+function Conf({ conf, onSaveConf, confAuto }) {
   const [server, setServer] = useState(conf.server);
   const [token, setToken] = useState(conf.token);
   const [group, setGroup] = useState(conf.group);
@@ -104,6 +104,6 @@ const Conf = ({ conf, onSaveConf, confAuto }) => {
       </Button>
     </Form>
   );
-};
+}
 
 export default Conf;

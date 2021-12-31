@@ -88,6 +88,17 @@ async function checkZabbixConnection(confToCheck) {
   }
 }
 
+const isValidIpAddress = (ipaddress) => {
+  if (
+    /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
+      ipaddress
+    )
+  ) {
+    return true;
+  }
+  return false;
+};
+
 // get devices monitored by this agent
 async function getDevices(server, token, id) {
   const monitoredDevices = await getHostsByAgentId(server, token, id);
@@ -323,6 +334,20 @@ export default function Home({
       variant: 'info',
       text: 'INFO: Adding device please wait...',
     });
+    if (!isValidIpAddress(addFromForm.ip)) {
+      setAddMessage({
+        variant: 'danger',
+        text: `ERROR: ${addFromForm.ip} is not a valid address. Please add a correct ip`,
+      });
+      return;
+    }
+    if (!addFromForm.deviceLocation) {
+      setAddMessage({
+        variant: 'danger',
+        text: `ERROR: device location is empty. Please insert a meaningfull device location for easely indetify the device`,
+      });
+      return;
+    }
     let deviceToAdd = {};
     try {
       // get device name and serial (server connection with api)

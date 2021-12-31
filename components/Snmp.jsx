@@ -27,7 +27,7 @@ const subtreeList = [
   { name: 'custom', oid: '' },
 ];
 
-const Snmp = ({ snmp, onSnmp }) => {
+function Snmp({ onSnmp }) {
   const [ip, setIp] = useState('192.168.1.3');
   const [method, setMethod] = useState('get');
   const [oidName, setOidName] = useState('sysName');
@@ -104,17 +104,16 @@ const Snmp = ({ snmp, onSnmp }) => {
             }}
           >
             {method === 'get'
-              ? getList.map((e, key) => {
+              ? getList.map((element) => (
+                  <option key={oid} value={element.name}>
+                    {element.name}
+                  </option>
+                ))
+              : // eslint-disable-next-line arrow-body-style
+                subtreeList.map((element) => {
                   return (
-                    <option key={key} value={e.name}>
-                      {e.name}
-                    </option>
-                  );
-                })
-              : subtreeList.map((e, key) => {
-                  return (
-                    <option key={key} value={e.name}>
-                      {e.name}
+                    <option key={oid} value={element.name}>
+                      {element.name}
                     </option>
                   );
                 })}
@@ -137,6 +136,6 @@ const Snmp = ({ snmp, onSnmp }) => {
       </Button>
     </Form>
   );
-};
+}
 
 export default Snmp;

@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Card, Button, Modal } from 'react-bootstrap';
 import Feedback from './Feedback';
 
-const Device = ({ conf, device, onDelete, onStop, deviceMonitor }) => {
+function Device({ conf, device, onDelete, onStop, deviceMonitor }) {
   const [deviceMessage, setDeviceMessage] = useState({});
-
   const [show, setShow] = useState(false);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   const deviceIp = device.tags.find((el) => el.tag === 'deviceIp');
   const latestUrl = `http://${conf.server}/zabbix.php?action=latest.view&filter_hostids%5B%5D=${device.hostid}&filter_set=1`;
   const configUrl = `http://${conf.server}/hosts.php?form=update&hostid=${device.hostid}`;
@@ -77,6 +78,6 @@ const Device = ({ conf, device, onDelete, onStop, deviceMonitor }) => {
       </Modal>
     </>
   );
-};
+}
 
 export default Device;
