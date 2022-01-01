@@ -1,4 +1,4 @@
-import { get, subtree } from '../../lib/snmp.cjs';
+import { getValues, subtree } from '../../lib/snmp.cjs';
 
 export default async function handler(req, res) {
   const { snmpForm } = req.body;
@@ -6,20 +6,22 @@ export default async function handler(req, res) {
     case 'POST':
       // snmp request
       if (snmpForm.method === 'get') {
+        // trasform oid single value in array
         const oid = [snmpForm.oid];
         try {
-          const snmpResponse = await get(snmpForm.ip, oid);
-          res.status(200).send(snmpResponse);
+          const getResponse = await getValues(snmpForm.ip, oid);
+          // console.log(getResponse);
+          res.status(200).send(getResponse);
         } catch (error) {
-          res.error(500).send(error);
+          res.status(500).send({ variant: 'danger', text: error.message });
         }
       }
       if (snmpForm.method === 'subtree') {
         try {
-          const snmpResponse = await subtree(snmpForm.ip, snmpForm.oid);
-          res.status(200).send(snmpResponse);
+          const subtreeResponse = await subtree(snmpForm.ip, snmpForm.oid);
+          res.status(200).send(subtreeResponse);
         } catch (error) {
-          res.error(500).send(error);
+          res.status(500).send({ variant: 'danger', text: error.message });
         }
       }
       break;

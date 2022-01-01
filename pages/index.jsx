@@ -100,57 +100,16 @@ async function getDevices(server, token, id) {
 
 // monitor device
 async function deviceMonitor(conf, serial, ip) {
-  let result = {};
+  let monitorResult = {};
   try {
-    const sendResult = await axios.post('/api/monitor', {
+    monitorResult = await axios.post('/api/monitor', {
       conf,
       serial,
       ip,
     });
-    if (sendResult === 'noResponse') {
-      result = {
-        variant: 'danger',
-        text: `ERROR: Device with ip ${ip} is not responding. Check the ip address and if the device is up with snmp protocol enabled`,
-      };
-    }
-    if (sendResult.data) {
-      const processed = sendResult.data.filter((response) =>
-        response.includes('processed: 1; failed: 0; total: 1;')
-      );
-      if (processed.length === 0) {
-        result = {
-          variant: 'danger',
-          text: `ERROR: Data sent but zabbix server processed ${processed.length} items. Check if the server ${conf.server} is running or has not port 10051 blocked by firewall's rules or traffic filters`,
-        };
-      } else {
-        result = {
-          variant: 'success',
-          text: `SUCCESS: Zabbix server processed ${processed.length} items`,
-        };
-      }
-    } else {
-      result = sendResult;
-    }
-    return result;
+    return monitorResult;
   } catch (error) {
-    if (error.response) {
-      result = {
-        variant: 'danger',
-        text: `ERROR: ${error.response.data}`,
-      };
-    }
-    if (error === 'TypeError: response.includes is not a function') {
-      result = {
-        variant: 'danger',
-        text: `ERROR: Check zabbix template`,
-      };
-    } else {
-      result = {
-        variant: 'danger',
-        text: `ERROR: ${error}. Check if zabbix server has port 10051 open, if the device is turned on, reachable and with snmp protocol enabled and if there is zabbix_sender.exe in lac folder`,
-      };
-    }
-    return result;
+    return { variant: 'danger', text: error };
   }
 }
 

@@ -6,15 +6,16 @@ export default async function handler(req, res) {
     case 'POST':
       // monitor device and sendback results
       try {
-        const data = await monitorDevice(
+        const deviceResponse = await monitorDevice(
           req.body.conf,
           req.body.serial,
           req.body.ip
         );
-        if (data === 'noResponse') throw data;
-        res.status(200).send(data);
-      } catch (err) {
-        res.status(500).send(err);
+        // console.log(deviceResponse);
+        res.status(200).send(deviceResponse);
+      } catch (error) {
+        // console.log(error);
+        res.status(500).send({ variant: 'danger', text: error.message });
       }
       break;
     default:

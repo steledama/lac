@@ -19,8 +19,16 @@ function Device({ conf, device, onDelete, onStop, deviceMonitor }) {
       variant: 'info',
       text: 'INFO: Connecting to device and sending data to zabbix. Please wait...',
     });
-    const response = await deviceMonitor(conf, device.host, deviceIp.value);
-    setDeviceMessage(response);
+    const deviceResponse = await deviceMonitor(
+      conf,
+      device.host,
+      deviceIp.value
+    );
+    // console.log(deviceResponse);
+    setDeviceMessage({
+      variant: `${deviceResponse.data.variant}`,
+      text: `${deviceResponse.data.text}`,
+    });
   }
 
   return (

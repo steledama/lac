@@ -40,32 +40,43 @@ function Profiles() {
       variant: 'info',
       text: `INFO: Snmp request sent to ${snmpForm.ip}, please wait...`,
     });
-    const snmpResponse = await axios.post('/api/snmp', { snmpForm });
-    if (Array.isArray(snmpResponse.data)) {
-      if (snmpResponse.data.length > 0) {
-        setResults(snmpResponse.data);
-        setSnmpMessage({
-          variant: 'success',
-          text: `SUCCESS: Device with ip ${snmpForm.ip} responded to the snmp request`,
-        });
-      } else {
-        setResults(snmpResponse.data);
+    try {
+      const snmpResponse = await axios.post('/api/snmp', { snmpForm });
+      setSnmpMessage({
+        variant: `${snmpResponse.variant}`,
+        text: `${snmpResponse.text}`,
+      });
+      if (Array.isArray(snmpResponse.data)) {
+        if (snmpResponse.data.length > 0) {
+          setResults(snmpResponse.data);
+          setSnmpMessage({
+            variant: 'success',
+            text: `SUCCESS: Device with ip ${snmpForm.ip} responded to the snmp request on oid ${snmpForm.oid}`,
+          });
+        } else {
+          setResults(snmpResponse.data);
+          setSnmpMessage({
+            variant: 'danger',
+            text: `ERROR: No response from devicewith ip ${snmpForm.ip} on oid ${snmpForm.oid}`,
+          });
+        }
+      }
+      if (snmpResponse.data.message) {
         setSnmpMessage({
           variant: 'danger',
-          text: `ERROR: No response from devicewith ip ${snmpForm.ip} on oid ${snmpForm.oid}`,
+          text: `ERROR: No response from devicewith ip ${snmpForm.ip} on oid ${snmpForm.oid}: ${snmpResponse.data.message}`,
         });
       }
-    }
-    if (snmpResponse.data.message) {
+      if (snmpResponse.data.code) {
+        setSnmpMessage({
+          variant: 'danger',
+          text: `ERROR: No response from device with ip ${snmpForm.ip}: ${snmpResponse.data.code}`,
+        });
+      }
+    } catch (error) {
       setSnmpMessage({
-        variant: 'danger',
-        text: `ERROR: No response from devicewith ip ${snmpForm.ip} on oid ${snmpForm.oid}: ${snmpResponse.data.message}`,
-      });
-    }
-    if (snmpResponse.data.code) {
-      setSnmpMessage({
-        variant: 'danger',
-        text: `ERROR: No response from device with ip ${snmpForm.ip}: ${snmpResponse.data.code}`,
+        variant: `danger`,
+        text: `Error: ${error.message}: ${error.response.data.text}: No response from ip ${snmpForm.ip} on oid ${snmpForm.oid}. Check if device is online with snmp protocol enabled.`,
       });
     }
   };
