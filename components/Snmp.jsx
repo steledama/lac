@@ -81,15 +81,15 @@ function Snmp({ onSnmp }) {
           >
             {method === 'get'
               ? getList.map((element) => (
-                  <option key={oid} value={element.name}>
+                  <option key={element.oid} value={element.name}>
                     {element.name}
                   </option>
                 ))
               : // eslint-disable-next-line arrow-body-style
-                subtreeList.map((element) => {
+                subtreeList.map((el) => {
                   return (
-                    <option key={oid} value={element.name}>
-                      {element.name}
+                    <option key={el.oid} value={el.name}>
+                      {el.name}
                     </option>
                   );
                 })}

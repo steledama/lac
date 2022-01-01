@@ -318,7 +318,10 @@ export default function Home({
         await getDevices(confToSave.server, confToSave.token, confToSave.id)
       );
     } catch (error) {
-      console.error(error);
+      setConfMessage({
+        variant: 'danger',
+        text: `ERROR: ${error}`,
+      });
     }
   };
 
@@ -328,7 +331,10 @@ export default function Home({
       await deleteHost(conf.server, conf.token, hostId);
       setDevices(getDevices(conf.server, conf.token, conf.id));
     } catch (error) {
-      console.error(error);
+      setConfMessage({
+        variant: 'danger',
+        text: `ERROR: ${error}`,
+      });
     }
   };
 
