@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import isValidHostname from 'is-valid-hostname';
 
 import fs from 'fs';
@@ -23,6 +23,7 @@ import {
   deleteHost,
 } from '../lib/zabbix.cjs';
 
+// function to check connection to zabbix server and geve feedback to user for errors or success. called by server side prop and save conf
 async function checkZabbixConnection(confToCheck) {
   try {
     const zabbixRes = await getGroupId(
@@ -32,6 +33,7 @@ async function checkZabbixConnection(confToCheck) {
     );
     // Declaration of the return variable
     let checkedResult;
+    // console.log(zabbixRes);
     switch (zabbixRes.code) {
       case 'Network Error':
         checkedResult = {
@@ -86,30 +88,11 @@ async function checkZabbixConnection(confToCheck) {
         }
     }
     return checkedResult;
-  } catch (err) {
-    return err;
-  }
-}
-
-// get devices monitored by this agent
-async function getDevices(server, token, id) {
-  const monitoredDevices = await getHostsByAgentId(server, token, id);
-  // setDevices(monitoredDevices.result);
-  return monitoredDevices.result;
-}
-
-// monitor device
-async function deviceMonitor(conf, serial, ip) {
-  let monitorResult = {};
-  try {
-    monitorResult = await axios.post('/api/monitor', {
-      conf,
-      serial,
-      ip,
-    });
-    return monitorResult;
   } catch (error) {
-    return { variant: 'danger', text: error };
+    return {
+      variant: 'danger',
+      text: `ERROR: ${error}`,
+    };
   }
 }
 
@@ -119,7 +102,6 @@ export const getServerSideProps = async () => {
   let confProp = {};
   let confMessageProp = {};
   let confAutoProp = {};
-  let devicesProp = [];
 
   // if the autoConf.json file exist...
   if (fs.existsSync('confAuto.json')) {
@@ -150,11 +132,6 @@ export const getServerSideProps = async () => {
       };
       // pass the verified conf as a prop
       confProp = response;
-      devicesProp = await getDevices(
-        confFromFile.server,
-        confFromFile.token,
-        confFromFile.id
-      );
     }
   } else {
     // else the file does not exist so create an empty one
@@ -178,17 +155,11 @@ export const getServerSideProps = async () => {
       confProp,
       confAutoProp,
       confMessageProp,
-      devicesProp,
     },
   };
 };
 
-export default function Home({
-  confProp,
-  confAutoProp,
-  confMessageProp,
-  devicesProp,
-}) {
+export default function Home({ confProp, confAutoProp, confMessageProp }) {
   const [conf, setConf] = useState(confProp);
   const [confAuto] = useState(confAutoProp);
   const [confMessage, setConfMessage] = useState(confMessageProp);
@@ -198,8 +169,18 @@ export default function Home({
     variant: 'secondary',
     text: 'Fill the ip field with a valid ip address and the device location and press the Add device button',
   });
-  const [devices, setDevices] = useState(devicesProp);
-
+  const [devices, setDevices] = useState([]);
+  useEffect(() => {
+    async function updateDevices() {
+      const devicesFromZabbix = await getHostsByAgentId(
+        conf.server,
+        conf.token,
+        conf.id
+      );
+      if (devicesFromZabbix.result) setDevices(devicesFromZabbix.result);
+    }
+    updateDevices();
+  }, [conf.id, conf.server, conf.token]);
   // save conf
   const onSaveConf = async (confFromForm) => {
     setConfMessage({
@@ -243,7 +224,7 @@ export default function Home({
       if (!confToSave) {
         setConfMessage({
           variant: 'danger',
-          text: `ERROR: zabbix server ${confFromForm.server} is not responding`,
+          text: `ERROR: zabbix server ${confFromForm.server} is not responding. Check the hostname`,
         });
         // set the wrong config anyway
         setConf(confFromForm);
@@ -272,10 +253,6 @@ export default function Home({
       });
       // close configuration area
       setConfSwhow(false);
-      // refresh devices
-      setDevices(
-        await getDevices(confToSave.server, confToSave.token, confToSave.id)
-      );
     } catch (error) {
       setConfMessage({
         variant: 'danger',
@@ -285,12 +262,16 @@ export default function Home({
   };
 
   // delete device
-  const deleteDevice = async (hostId) => {
+  const deleteDevice = async (hostId, serial) => {
     try {
       await deleteHost(conf.server, conf.token, hostId);
-      setDevices(getDevices(conf.server, conf.token, conf.id));
+      setDevices(devices.filter((device) => device.host !== serial));
+      setAddMessage({
+        variant: 'success',
+        text: `SUCCESS: Device with serial ${serial} deleted from zabbix server`,
+      });
     } catch (error) {
-      setConfMessage({
+      setAddMessage({
         variant: 'danger',
         text: `ERROR: ${error}`,
       });
@@ -299,18 +280,29 @@ export default function Home({
 
   // stop monitoring device
   const stopDevice = async (serial, hostId) => {
-    // check if the host is present
-    const existingHost = await getHost(conf.server, conf.token, serial);
-    // if the host is present...
-    if (existingHost.result.length !== 0) {
-      // store the old tags
-      const oldTags = existingHost.result[0].tags;
-      // filters the agentId's and the specific one from old tags
-      const tags = oldTags.filter((oldTag) => oldTag.value !== conf.id);
-      // update the host with the new agentId and Ip tags array
-      await updateHost(conf.server, conf.token, hostId, tags);
-      // update devices
-      setDevices(getDevices(conf.server, conf.token, conf.id));
+    try {
+      // check if the host is present
+      const existingHost = await getHost(conf.server, conf.token, serial);
+      // if the host is present...
+      if (existingHost.result.length !== 0) {
+        // store the old tags
+        const oldTags = existingHost.result[0].tags;
+        // filters the agentId's and the specific one from old tags
+        const tags = oldTags.filter((oldTag) => oldTag.value !== conf.id);
+        // update the host with the new agentId and Ip tags array
+        await updateHost(conf.server, conf.token, hostId, tags);
+        // update ui
+        setDevices(devices.filter((device) => device.host !== serial));
+        setAddMessage({
+          variant: 'success',
+          text: `SUCCESS: Device with serial ${serial} no more monitored from this agent`,
+        });
+      }
+    } catch (error) {
+      setAddMessage({
+        variant: 'danger',
+        text: `ERROR: ${error}`,
+      });
     }
   };
 
@@ -382,14 +374,13 @@ export default function Home({
           existingHost.result[0].hostid,
           tags
         );
+        // update the devices ui
+        setDevices([...devices, existingHost.result[0]]);
         // send feeback
         setAddMessage({
           variant: 'success',
           text: `SUCCESS: Device with serial ${deviceToAdd.serial} was present on zabbix server and now it is updated and monitored by this agent`,
         });
-        // update the devices
-        setDevices(getDevices(conf.server, conf.token, conf.id));
-
         // else the host is not present...
       } else {
         // search template id from the device name
@@ -398,37 +389,43 @@ export default function Home({
           conf.token,
           deviceToAdd.deviceName
         );
-
         // if template does NOT exist send error messages
         if (zabbixTemplateResponse.result.length === 0) {
           throw new Error('noTemplate');
         }
-
         // store the template id
         deviceToAdd.templateId = zabbixTemplateResponse.result[0].templateid;
+        // building the visible hostname
+        deviceToAdd.name = `${conf.location} ${deviceToAdd.deviceName} ${addFromForm.deviceLocation} ${deviceToAdd.serial}`;
+        // building tags
+        deviceToAdd.tags = [
+          { tag: 'deviceIp', value: addFromForm.ip },
+          { tag: 'agentId', value: conf.id },
+        ];
+
         // create host
         const zabbixCreateResult = await createHost(
           conf.server,
           conf.token,
-          conf.location,
-          deviceToAdd.deviceName,
-          addFromForm.deviceLocation,
           deviceToAdd.serial,
-          conf.groupId,
+          deviceToAdd.name,
           deviceToAdd.templateId,
-          conf.id,
-          addFromForm.ip
+          conf.groupId,
+          deviceToAdd.tags
         );
 
         // if there are not errors creating the new host...
         if (zabbixCreateResult.result) {
+          // eslint-disable-next-line prefer-destructuring
+          deviceToAdd.hostid = zabbixCreateResult.result.hostids[0];
+          deviceToAdd.host = deviceToAdd.serial;
+          // update the devices ui
+          setDevices([...devices, deviceToAdd]);
           // send success message
           setAddMessage({
             variant: 'success',
-            text: 'SUCCESS: Device added to server and monitored by the agent',
+            text: `SUCCESS: Device with serial ${deviceToAdd.serial} added to server and monitored by the agent`,
           });
-          // update devices
-          setDevices(getDevices(conf.server, conf.token, conf.id));
         }
       }
     } catch (error) {
@@ -455,16 +452,6 @@ export default function Home({
     }
   };
 
-  // build the title based on number of devices monitored
-  let monitoredDeviceTitle = '';
-  if (devices.length === 0) {
-    monitoredDeviceTitle = 'No monitored devices';
-  } else if (devices.length === 1) {
-    monitoredDeviceTitle = '1 monitored device';
-  } else {
-    monitoredDeviceTitle = `${devices.length} monitored devices`;
-  }
-
   // render the page
   return (
     <>
@@ -483,14 +470,16 @@ export default function Home({
           <h3>Add device</h3>
           <Add add={add} onAdd={onAdd} />
           <Feedback message={addMessage} />
-          <h3>{monitoredDeviceTitle}</h3>
+          <h3>
+            {devices.length > 0 ? `${devices.length}` : `No`} monitored device
+            {devices.length > 1 ? `s` : ``}
+          </h3>
           {devices.length > 0 && (
             <Devices
               conf={conf}
               devices={devices}
               onDelete={deleteDevice}
               onStop={stopDevice}
-              deviceMonitor={deviceMonitor}
             />
           )}
         </>

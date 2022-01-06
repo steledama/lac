@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Card, Button, Modal } from 'react-bootstrap';
+import axios from 'axios';
 import Feedback from './Feedback';
 
-function Device({ conf, device, onDelete, onStop, deviceMonitor }) {
-  const [deviceMessage, setDeviceMessage] = useState({});
+function Device({ conf, device, onDelete, onStop }) {
+  const [deviceMessage, setDeviceMessage] = useState();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -19,11 +20,11 @@ function Device({ conf, device, onDelete, onStop, deviceMonitor }) {
       variant: 'info',
       text: 'INFO: Connecting to device and sending data to zabbix. Please wait...',
     });
-    const deviceResponse = await deviceMonitor(
+    const deviceResponse = await axios.post('/api/monitor', {
       conf,
-      device.host,
-      deviceIp.value
-    );
+      serial: device.host,
+      ip: deviceIp.value,
+    });
     // console.log(deviceResponse);
     setDeviceMessage({
       variant: `${deviceResponse.data.variant}`,
@@ -79,7 +80,10 @@ function Device({ conf, device, onDelete, onStop, deviceMonitor }) {
           <Button variant="secondary" onClick={handleClose}>
             NO Cancel
           </Button>
-          <Button variant="danger" onClick={() => onDelete(device.hostid)}>
+          <Button
+            variant="danger"
+            onClick={() => onDelete(device.hostid, device.host)}
+          >
             YES Delete
           </Button>
         </Modal.Footer>

@@ -1,6 +1,6 @@
 import Device from './Device';
 
-function Devices({ conf, devices, onDelete, onStop, deviceMonitor }) {
+function Devices({ conf, devices, onDelete, onStop }) {
   return (
     <>
       {devices.map((device) => (
@@ -10,7 +10,6 @@ function Devices({ conf, devices, onDelete, onStop, deviceMonitor }) {
           device={device}
           onDelete={onDelete}
           onStop={onStop}
-          deviceMonitor={deviceMonitor}
         />
       ))}
     </>
