@@ -51,7 +51,7 @@ function Profiles() {
           setResults(snmpResponse.data);
           setSnmpMessage({
             variant: 'success',
-            text: `SUCCESS: Device with ip ${snmpForm.ip} responded to the snmp request on oid ${snmpForm.oid}`,
+            text: `SUCCESS: Device with ip ${snmpForm.ip} responded to the snmp ${snmpForm.method} request on oid ${snmpForm.oid}`,
           });
         } else {
           setResults(snmpResponse.data);
