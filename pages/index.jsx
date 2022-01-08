@@ -23,7 +23,7 @@ import {
   deleteHost,
 } from '../lib/zabbix.cjs';
 
-// function to check connection to zabbix server and geve feedback to user for errors or success. called by server side prop and save conf
+// function to check connection to zabbix server and give feedback to user for errors or success. Called by server side prop and save conf function inside the component
 async function checkZabbixConnection(confToCheck) {
   try {
     const zabbixRes = await getGroupId(
@@ -163,13 +163,16 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
   const [conf, setConf] = useState(confProp);
   const [confAuto] = useState(confAutoProp);
   const [confMessage, setConfMessage] = useState(confMessageProp);
-  const [confShow, setConfSwhow] = useState(false);
+  const [confShow, setConfShow] = useState(false);
+  const [addShow, setAddShow] = useState(true);
   const [add] = useState({ ip: '', deviceLocation: '' });
   const [addMessage, setAddMessage] = useState({
     variant: 'secondary',
     text: 'Fill the ip field with a valid ip address and the device location and press the Add device button',
   });
   const [devices, setDevices] = useState([]);
+
+  // use effect to update devices from zabbix server
   useEffect(() => {
     async function updateDevices() {
       const devicesFromZabbix = await getHostsByAgentId(
@@ -181,13 +184,16 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
     }
     updateDevices();
   }, [conf.id, conf.server, conf.token]);
-  // save conf
+
+  // save conf function
   const onSaveConf = async (confFromForm) => {
+    // initial message
     setConfMessage({
       variant: 'info',
       text: 'INFO: Connecting to zabbix server. Please wait...',
     });
     // minimal form validation
+    // first check the group (becouse this field trigger the autoconf)
     if (!confFromForm.group) {
       setConfMessage({
         variant: 'danger',
@@ -195,28 +201,31 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       });
       return;
     }
-    if (isValidHostname(confFromForm.server)) {
-      if (confFromForm.token.length !== 64) {
-        setConfMessage({
-          variant: 'danger',
-          text: `ERROR: The token is not correct. It must be a 64 character alfanumeric string`,
-        });
-        return;
-      }
-      if (!confFromForm.location) {
-        setConfMessage({
-          variant: 'danger',
-          text: `ERROR: Please add the agent location`,
-        });
-        return;
-      }
-    } else {
+    // check the zabbix server...
+    if (!isValidHostname(confFromForm.server)) {
       setConfMessage({
         variant: 'danger',
         text: `ERROR: ${confFromForm.server} is not a valid hostname`,
       });
       return;
     }
+    // check the token
+    if (confFromForm.token.length !== 64) {
+      setConfMessage({
+        variant: 'danger',
+        text: `ERROR: The token is not correct. It must be a 64 character alfanumeric string`,
+      });
+      return;
+    }
+    // check location
+    if (!confFromForm.location) {
+      setConfMessage({
+        variant: 'danger',
+        text: `ERROR: Please add the agent location`,
+      });
+      return;
+    }
+    // if from fileds are ok
     try {
       // check zabbix connection retriving groupId
       const confToSave = await checkZabbixConnection(confFromForm);
@@ -229,7 +238,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
         // set the wrong config anyway
         setConf(confFromForm);
         // keep the the config section open
-        setConfSwhow(true);
+        setConfShow(true);
         return;
       }
       // if the result is an error
@@ -239,7 +248,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
         // set the wrong config anyway
         setConf(confFromForm);
         // keep the the config section open
-        setConfSwhow(true);
+        setConfShow(true);
         return;
       }
       // if the configuration is succesfully checked and complete with groupId save it to file
@@ -252,7 +261,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
         text: 'SUCCESS: Configuration is correct and saved',
       });
       // close configuration area
-      setConfSwhow(false);
+      setConfShow(false);
     } catch (error) {
       setConfMessage({
         variant: 'danger',
@@ -264,8 +273,11 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
   // delete device
   const deleteDevice = async (hostId, serial) => {
     try {
+      // delete device from zabbix
       await deleteHost(conf.server, conf.token, hostId);
+      // update the ui filtering out deleted device
       setDevices(devices.filter((device) => device.host !== serial));
+      // give feedback to the user
       setAddMessage({
         variant: 'success',
         text: `SUCCESS: Device with serial ${serial} deleted from zabbix server`,
@@ -293,6 +305,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
         await updateHost(conf.server, conf.token, hostId, tags);
         // update ui
         setDevices(devices.filter((device) => device.host !== serial));
+        // give feedback to the user
         setAddMessage({
           variant: 'success',
           text: `SUCCESS: Device with serial ${serial} no more monitored from this agent`,
@@ -313,6 +326,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       variant: 'info',
       text: 'INFO: Adding device please wait...',
     });
+    // check if is a valid ip
     if (!isValidIpAddress(addFromForm.ip)) {
       setAddMessage({
         variant: 'danger',
@@ -320,6 +334,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       });
       return;
     }
+    // check device location
     if (!addFromForm.deviceLocation) {
       setAddMessage({
         variant: 'danger',
@@ -327,6 +342,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       });
       return;
     }
+    // initialize the new device
     let deviceToAdd = {};
     try {
       // get device name and serial (server connection with api)
@@ -339,17 +355,14 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
       ) {
         throw new Error('noResponse');
       }
-
       // if it is ok store deviceName and serial
       deviceToAdd = snmpResponse.data;
-
-      // check if the host is present
+      // check if the host is present in zabbix server
       const existingHost = await getHost(
         conf.server,
         conf.token,
         deviceToAdd.serial
       );
-
       // if the host is present...
       if (existingHost.result.length !== 0) {
         // store the old tags
@@ -402,7 +415,6 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
           { tag: 'deviceIp', value: addFromForm.ip },
           { tag: 'agentId', value: conf.id },
         ];
-
         // create host
         const zabbixCreateResult = await createHost(
           conf.server,
@@ -457,7 +469,7 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
     <>
       <Header
         title="Configuration"
-        onShow={() => setConfSwhow(!confShow)}
+        onClick={() => setConfShow(!confShow)}
         show={confShow}
       />
       {confShow && (
@@ -467,9 +479,14 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
 
       {confMessage.variant === 'success' && (
         <>
-          <h3>Add device</h3>
-          <Add add={add} onAdd={onAdd} />
+          <Header
+            title="Add device"
+            onClick={() => setAddShow(!addShow)}
+            show={addShow}
+          />
+          {addShow && <Add add={add} onAdd={onAdd} />}
           <Feedback message={addMessage} />
+
           <h3>
             {devices.length > 0 ? `${devices.length}` : `No`} monitored device
             {devices.length > 1 ? `s` : ``}
