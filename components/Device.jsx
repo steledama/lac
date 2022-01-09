@@ -10,10 +10,9 @@ function Device({ conf, device, onDelete, onStop }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const deviceIp = device.tags.find((el) => el.tag === 'deviceIp');
-  const latestUrl = `http://${conf.server}/zabbix.php?action=latest.view&filter_hostids%5B%5D=${device.hostid}&filter_set=1`;
-  const configUrl = `http://${conf.server}/hosts.php?form=update&hostid=${device.hostid}`;
-  const deviceUrl = `http://${deviceIp.value}`;
+  const latestUrl = `http://${conf.server}/zabbix.php?action=latest.view&filter_hostids%5B%5D=${device.hostId}&filter_set=1`;
+  const configUrl = `http://${conf.server}/hosts.php?form=update&hostid=${device.hostId}`;
+  const deviceUrl = `http://${device.ip}`;
 
   async function monitorDevice() {
     setDeviceMessage({
@@ -22,8 +21,8 @@ function Device({ conf, device, onDelete, onStop }) {
     });
     const deviceResponse = await axios.post('/api/monitor', {
       conf,
-      serial: device.host,
-      ip: deviceIp.value,
+      serial: device.serial,
+      ip: device.ip,
     });
     // console.log(deviceResponse);
     setDeviceMessage({
@@ -40,7 +39,7 @@ function Device({ conf, device, onDelete, onStop }) {
             <Card.Link href={configUrl}>{device.name}</Card.Link>
           </Card.Title>
           <Card.Text>
-            Ip address: <Card.Link href={deviceUrl}>{deviceIp.value}</Card.Link>
+            Ip address: <Card.Link href={deviceUrl}>{device.ip}</Card.Link>
           </Card.Text>
           <Card.Link className="pr-3" href={latestUrl}>
             Latest data
@@ -55,7 +54,7 @@ function Device({ conf, device, onDelete, onStop }) {
           <Button
             className="mx-3"
             variant="warning"
-            onClick={() => onStop(device.host, device.hostid, deviceIp)}
+            onClick={() => onStop(device.host, device.hostId, device.ip)}
           >
             Stop monitor
           </Button>

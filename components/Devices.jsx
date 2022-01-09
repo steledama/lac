@@ -5,7 +5,7 @@ function Devices({ conf, devices, onDelete, onStop }) {
     <>
       {devices.map((device) => (
         <Device
-          key={device.hostid}
+          key={device.serial}
           conf={conf}
           device={device}
           onDelete={onDelete}

@@ -180,7 +180,16 @@ export default function Home({ confProp, confAutoProp, confMessageProp }) {
         conf.token,
         conf.id
       );
-      if (devicesFromZabbix.result) setDevices(devicesFromZabbix.result);
+      if (devicesFromZabbix.result) {
+        const devicesFull = devicesFromZabbix.result.map((device) => ({
+          agentId: device.tags.find((el) => el.tag === 'agentId').value,
+          hostId: device.hostid,
+          ip: device.tags.find((el) => el.tag === 'deviceIp').value,
+          name: device.name,
+          serial: device.host,
+        }));
+        setDevices(devicesFull);
+      }
     }
     updateDevices();
   }, [conf.id, conf.server, conf.token]);
