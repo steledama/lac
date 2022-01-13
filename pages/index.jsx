@@ -31,67 +31,69 @@ async function checkZabbixConnection(confToCheck) {
       confToCheck.token,
       confToCheck.group
     );
+    if (zabbixRes.isAxiosError) throw zabbixRes;
     // Declaration of the return variable
     let checkedResult;
     // console.log(zabbixRes);
-    switch (zabbixRes.code) {
-      case 'Network Error':
+    // switch (zabbixRes.code) {
+    //   case 'Network Error':
+    //     checkedResult = {
+    //       variant: 'danger',
+    //       text: `ERROR: incorrect zabbix hostname ${confToCheck.server} or server in not responding. Check if the server is up and running or behind a firewall`,
+    //     };
+    //     break;
+    //   case 'ENOTFOUND':
+    //     checkedResult = {
+    //       variant: 'danger',
+    //       text: `ERROR: incorrect zabbix hostname ${confToCheck.server}`,
+    //     };
+    //     break;
+    //   case 'ETIMEDOUT':
+    //   case 'ECONNREFUSED':
+    //     checkedResult = {
+    //       variant: 'danger',
+    //       text: `ERROR: Zabbix server ${confToCheck.server} is not responding. Check if the server is up and running`,
+    //     };
+    //     break;
+    //   case 'EHOSTUNREACH':
+    //     checkedResult = {
+    //       variant: 'danger',
+    //       text: `ERROR: Zabbix server ${confToCheck.server} is not reachable. Check if it is behind a firewall or if there is a port forward rule`,
+    //     };
+    //     break;
+    //   default:
+    //     if (zabbixRes.errors) {
+    //       checkedResult = {
+    //         variant: 'danger',
+    //         text: `ERROR: Incorrect zabbix ip or hostname please check if ${confToCheck.server} is correct`,
+    //       };
+    //     }
+    //     if (zabbixRes.error) {
+    //       checkedResult = {
+    //         variant: 'danger',
+    //         text: `ERROR: Incorrect token please check if ${confToCheck.token} is correct and if is configured in zabbix server`,
+    //       };
+    //     }
+    if (zabbixRes.result) {
+      if (zabbixRes.result.length === 0) {
         checkedResult = {
           variant: 'danger',
-          text: `ERROR: incorrect zabbix hostname ${confToCheck.server} or server in not responding. Check if the server is up and running or behind a firewall`,
+          text: `ERROR: Group ${confToCheck.group} not found`,
         };
-        break;
-      case 'ENOTFOUND':
-        checkedResult = {
-          variant: 'danger',
-          text: `ERROR: incorrect zabbix hostname ${confToCheck.server}`,
-        };
-        break;
-      case 'ETIMEDOUT':
-      case 'ECONNREFUSED':
-        checkedResult = {
-          variant: 'danger',
-          text: `ERROR: Zabbix server ${confToCheck.server} is not responding. Check if the server is up and running`,
-        };
-        break;
-      case 'EHOSTUNREACH':
-        checkedResult = {
-          variant: 'danger',
-          text: `ERROR: Zabbix server ${confToCheck.server} is not reachable. Check if it is behind a firewall or if there is a port forward rule`,
-        };
-        break;
-      default:
-        if (zabbixRes.errors) {
-          checkedResult = {
-            variant: 'danger',
-            text: `ERROR: Incorrect zabbix ip or hostname please check if ${confToCheck.server} is correct`,
-          };
-        }
-        if (zabbixRes.error) {
-          checkedResult = {
-            variant: 'danger',
-            text: `ERROR: Incorrect token please check if ${confToCheck.token} is correct and if is configured in zabbix server`,
-          };
-        }
-        if (zabbixRes.result) {
-          if (zabbixRes.result.length === 0) {
-            checkedResult = {
-              variant: 'danger',
-              text: `ERROR: Group ${confToCheck.group} not found`,
-            };
-          }
-          if (zabbixRes.result[0]) {
-            const confChecked = confToCheck;
-            confChecked.groupId = zabbixRes.result[0].groupid;
-            return confChecked;
-          }
-        }
+      }
+      if (zabbixRes.result[0]) {
+        const confChecked = confToCheck;
+        confChecked.groupId = zabbixRes.result[0].groupid;
+        return confChecked;
+      }
     }
+    // console.log(checkedResult);
     return checkedResult;
   } catch (error) {
+    // console.log(error);
     return {
       variant: 'danger',
-      text: `ERROR: ${error}`,
+      text: `${error}`,
     };
   }
 }
@@ -119,6 +121,7 @@ export const getServerSideProps = async () => {
     // check zabbix connection and get groupId
     const response = await checkZabbixConnection(confFromFile);
     // if response is an error
+    // console.log(response);
     if (response.variant) {
       // pass the error message
       confMessageProp = response;

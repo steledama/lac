@@ -1,4 +1,4 @@
-import { Service } from 'node-windows';
+const { Service } = require('node-windows');
 
 // Create a new service object
 const svc = new Service({

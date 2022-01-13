@@ -1,4 +1,4 @@
-import { Service } from 'node-windows';
+const { Service } = require('node-windows');
 
 // const Service = require('node-windows').Service;
 

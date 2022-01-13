@@ -8,7 +8,7 @@ function Footer() {
     >
       <div className="container text-center">
         <small>
-          LAC - actual version: 1.1.3 - source code on{' '}
+          LAC source code on{' '}
           <Link href="https://github.com/steledama/lac" passHref>
             Github
           </Link>
