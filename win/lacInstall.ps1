@@ -11,6 +11,9 @@ else {
 # install node
 Start-Process "msiexec.exe" "/passive /i $node" -NoNewWindow -Wait
 
+# update PATH variable
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
 # add firewall rules
 Start-Process "netsh.exe" "advfirewall firewall add rule name=""LAC"" program=""C:\LAC\zabbix_sender.exe"" dir=out action=allow enable=yes" -NoNewWindow -Wait
 Start-Process "netsh.exe" "advfirewall firewall add rule name=""Nodejs In"" program=""$program\nodejs\node.exe"" dir=in action=allow enable=yes" -NoNewWindow -Wait
@@ -20,13 +23,16 @@ Start-Process "netsh.exe" "advfirewall firewall add rule name=""Nodejs Out"" pro
 Set-Location -LiteralPath C:\LAC
 
 # install node modules
-& "$program\nodejs\node.exe" "$program\nodejs\node_modules\npm\bin\npm-cli.js" "install" -NoNewWindow -Wait
+& "npm" "install" -NoNewWindow -Wait
+# & "$program\nodejs\node.exe" "$program\nodejs\node_modules\npm\bin\npm-cli.js" "install" -NoNewWindow -Wait
 
 # build nextjs production app
-Start-Process "$program\nodejs\node.exe" "C:\LAC\node_modules\next\dist\bin\next build" -NoNewWindow -Wait
+Start-Process "npm" "run build" -NoNewWindow -Wait
+# Start-Process "$program\nodejs\node.exe" "C:\LAC\node_modules\next\dist\bin\next build" -NoNewWindow -Wait
 
 # install windows service to start the app
-Start-Process "$program\nodejs\node.exe" "C:\LAC\win\serviceInstall.js" -NoNewWindow -Wait
+# Start-Process "$program\nodejs\node.exe" "C:\LAC\win\serviceInstall.js" -NoNewWindow -Wait
+Start-Process "node" "C:\LAC\win\serviceInstall.js" -NoNewWindow -Wait
 
 # start service
 Start-Process "net.exe" "start LAC" -NoNewWindow -Wait

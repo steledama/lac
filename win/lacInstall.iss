@@ -5,7 +5,7 @@
 #define MyAppVersion "1.1.4"
 #define MyAppPublisher "steledama"
 #define MyAppURL "https://github.com/steledama/lac"
-#define user "C:\Users\stefano"
+#define user "C:\Users\stefa"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -22,8 +22,7 @@ DefaultDirName=C:\{#MyAppName}
 DisableDirPage=yes
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
-; Uncomment the following line to run in non administrative install mode (install for current user only.)
-;PrivilegesRequired=lowest
+PrivilegesRequired=admin
 OutputDir={#user}\Desktop
 OutputBaseFilename=LAC_setup
 Compression=lzma
@@ -43,10 +42,11 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "http://localhost:3000"; IconFile
 
 [Run]
 ; Run install script
-Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -File ""{app}\win\lacInstall.ps1"""; StatusMsg: "Downloading node modules, building nextjs app and installing windows service. Please wait..."; Flags: runhidden; BeforeInstall: UpdateProgress(60)
+; Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -File ""{app}\win\lacInstall.ps1"""; StatusMsg: "Downloading node modules, building nextjs app and installing windows service. Please wait..."; Flags: runhidden; BeforeInstall: UpdateProgress(60)
 
-;Postinstall launch setup.cmd
-Filename: "http://localhost:3000"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent
+;Postinstall launch web page
+Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -File ""{app}\win\lacInstall.ps1"""; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall runascurrentuser
+; Filename: "http://localhost:3000"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall
 
 [UninstallRun]
 ; Run uninstall script
