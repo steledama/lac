@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.5](https://github.com/steledama/lac/compare/v1.1.4...v1.1.5) (2022-01-14)
+
+
+### Bug Fixes
+
+* **index installer serviceinstall and uninstall:** error on installer and on first start rendering ([19e6c88](https://github.com/steledama/lac/commit/19e6c88c4cab78aff13c0342715ce9a23003148a))
+
 ### [1.1.4](https://github.com/steledama/lac/compare/v1.1.1...v1.1.4) (2022-01-10)
 
 
