@@ -150,6 +150,10 @@ Create a user group from administration > user groups (i usually give the user g
 
 I prefer to create a token for each user in administration > general > api tokens > Create API token with Admin privileges.
 
+##### Create host for auto agent update
+
+Create a host with name 'latestVersion' and tag 'version' with value the latest agent version (es. 1.1.4). If you want the agents to update automaticaly update this value with the latest version agent version.
+
 ##### Allerts and notifications
 
 Allerts and notifications...
