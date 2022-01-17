@@ -4,6 +4,7 @@
 
 1. You can [download the installer 'LAC_setup.exe' from the latest release](https://github.com/steledama/lac/releases) to install the agent.
 2. [Configure the zabbix server](#configureZabbix) to comunicate with the agent.
+3. Install the agent, [configure with zabbix parameters and add device to monitor](#configureZabbix)
 
 ## What LAC does
 
@@ -124,18 +125,20 @@ Import templates from this project in zabbixServer folder: configuration > templ
 
 ###### More info about lac templates (optional)
 
-Templates are in the Templates/lac group and are tagged in three groups:
+Templates are in the Templates/lac group and are tagged in three levels (tag name 'level'):
 
-- LAC-ITEMS: These are the individual units we want to monitor (es. Total Counter, Bias Transfer Roll, Toner Cyan ecc...). We can divide them into 3 types:
-  - Usage counters: they are ok as they are. They do not need any allert
-  - Supplies: They can in turn be divided into three types:
-    - Percentage: they are ok as they are but we need an allert. In templates there are three thresholds (macro in template): 10%, 5% and 0% (HIGH, MED and LOW)
-    - To be calculated: We have the total absolute value and the remaining value. In templates they are calulated in percentage. The trigger is set as above.
-    - Boolean: They can be true (to replace) or false (they are ok)
-  - Info: general info about monitoring (eg. agent version, date ecc..)
-- LAC-MODELS (based on lac-items): These are the printers models. Templates consist of a set of items and general information (es. last pooling date, pc hostname where the agent is installed ecc...).
-- LAC-FAMILY (based on lac-models): They group models to form a general family that share the same template
-  Applications/tags are usefull in monitoring view
+- level 1: the template attacched to the host. These are the printers models and these templates are linked to a single second level template that is the family template. The only important function of this template is to have the same name that is published in snmp by the oid 1.3.6.1.2.1.1.1.0 and which is extracted from the function that you can find under lib / cleanName.cjs
+- level 3: They group models to form a general family that share the same template. They are just a set of level 3 templates
+- level 3: These are the individual units we want to monitor (es. Total Counter, Bias Transfer Roll, Toner Cyan ecc...). We can divide them into 3 types (tag name 'type'):
+  - regular: they are ok as they are. They do not need any allert
+  - percentage: they are ok as they are but we need an allert. In templates there are three thresholds (macro in template): 10%, 5% and 0% (ALERT1, ALERT2 and ALERT3)
+  - calculated: we have the total absolute value and the remaining absolute value. In templates they are calulated in percentage. The trigger is set as above.
+  - boolean: They can be true (to replace) or false (they are ok)
+  - info: general info about monitoring (eg. agent version, date ecc..)
+    Item: The tag name app applied to the single item is usefull in monitoring view to show and divide relevant items. the values of this tag are:
+- supplies: devices consumables
+- conuters: devices counters
+- info: general device and monitor info
 
 ##### Create host groups
 
@@ -152,17 +155,17 @@ I prefer to create a token for each user in administration > general > api token
 
 ##### Create host for auto agent update
 
-Create a host with name 'latestVersion' and tag 'version' with value the latest agent version (es. 1.1.4). If you want the agents to update automaticaly update this value with the latest version agent version.
+Create a host with name 'latestVersion' and tag 'version' with value the latest agent version (es. 1.1.4). If you want the agents to update automaticaly update this value with the latest agent version.
 
 ##### Allerts and notifications
 
-Allerts and notifications...
+Allerts and notifications (to write)...
 
 ##### General settings
 
 Go to Administration - General - GUI and change the Max history display period to 1w (one week)
 
-### Download and install the agent
+### Download and install the agent <a name="installAgent"></a>
 
 You can download the Windows Installer for lac from the link at the top of this reedme. [Here](https://github.com/steledama/lac/blob/master/win/lacInstall.iss) you can see the installer script made for [InnoSetup](http://jrsoftware.org).
 

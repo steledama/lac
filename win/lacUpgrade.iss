@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "LAC"
-#define MyAppVersion "1.1.4"
+#define MyAppVersion "1.1.5"
 #define MyAppPublisher "steledama"
 #define MyAppURL "https://github.com/steledama/lac"
-#define user "C:\Users\stefano"
+#define user "C:\Users\stefa"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
